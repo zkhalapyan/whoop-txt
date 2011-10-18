@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Whoop Txt | Invitations</title>
+<link rel="stylesheet" href="http://m.ucla.edu/assets/css.php" type="text/css">
+<script type="text/javascript" src="http://m.ucla.edu/assets/js.php"></script>
+<meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+</head>
+
+<body>
+
+<h1 id="header">
+    <span>Whoop Txt</span> 
+</h1>
+
+<div class="content-full content-padded"> 
+    <h1 class="content-first light" id="name"></h1> 
+    <div id="members"></div>
+    <div class="content-last">
+        <p>You have been invited to join a new Whoop-Txt group! What would you like to do?</p>
+    </div> 
+</div>
+
+<div class="menu-full menu-padded">
+    <ol>
+        <li>	
+            <a onclick=alert('Added!')> 
+            Accept
+            </a> 
+        </li>
+        <li>	
+            <a onclick=alert('Ignored!')> 
+            Ignore
+            </a> 
+        </li>	
+    </ol>
+</div>
+
+<div class="menu-full menu-padded"> 
+    <ol> 
+    	<li>
+        	<a href="invitations.html">
+            Back
+            </a>
+        </li>
+        <li>
+            <a href="menu.html"> 
+            Menu
+            </a>
+        </li>
+    </ol>
+</div>
+
+<div id="footer"> 
+    <p><a href="help.html">Help</a> | <a href="../desktop/menu.html">View Full Site</a></p> 
+</div>
+
+<script type="text/javascript">
+
+function getUrlVars()
+{
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = unescape(hash[1]);
+    }
+    return vars;
+}
+
+document.getElementById('name').innerHTML = getUrlVars()["name"];
+document.getElementById('members').innerHTML = "<strong>Members: </strong>" + getUrlVars()["members"];
+
+</script>
+
+</body>
+</html>

@@ -40,6 +40,7 @@ function addElement(subject, text) {
 	
 	var msg = document.createElement("li");
 	msg.appendChild(document.createElement("a"));
+	msg.childNodes[0].setAttribute("href", "viewinvitation.html?name="+subject+"&members="+text);
 	msg.childNodes[0].innerHTML =  subject + "<br />";
 	msg.childNodes[0].innerHTML += "<span class='smallprint'>" + text + "</span>";
 	document.getElementById('elementList').appendChild(msg);
