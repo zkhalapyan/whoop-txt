@@ -16,22 +16,8 @@
 
 <div class="menu-full menu-detailed menu-padded">
     <h1 class="light menu-first">Invitations</h1> 
-    <ol> 
-        <li>
-            <a onclick="javascript:void()"> 
-            The Band
-            <br /><span class="smallprint">Jackson, Daniel, Richard, Yorgin...</span></a>
-        </li>
-        <li>
-            <a onclick="javascript:void()"> 
-            The Turtles
-             <br /><span class="smallprint">Leonardo, Donatello, Raphael, Michaelangelo</span></a>
-        </li> 
-        <li class="menu-last">
-            <a onclick="javascript:void()"> 
-            Friends
-             <br /><span class="smallprint"></span></a>
-       </li>
+    <ol id="elementList"> 
+    
     </ol>
 </div>
 
@@ -47,6 +33,24 @@
 <div id="footer"> 
     <p><a href="help.html">Help</a> | <a href="../desktop/menu.html">View Full Site</a></p> 
 </div>
+
+<script type="text/javascript">
+
+function addElement(subject, text) {
+	
+	var msg = document.createElement("li");
+	msg.appendChild(document.createElement("a"));
+	msg.childNodes[0].innerHTML =  subject + "<br />";
+	msg.childNodes[0].innerHTML += "<span class='smallprint'>" + text + "</span>";
+	document.getElementById('elementList').appendChild(msg);
+	
+};
+
+addElement("The Band", "Jackson, Daniel, Richard");
+addElement("The Turtles", "Leonardo, Donatello, Raphael, Michaelangelo");
+addElement("Friends", "Sadly no one is in this group :(");
+
+</script>
 
 </body>
 </html>
