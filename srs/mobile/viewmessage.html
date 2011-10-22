@@ -19,23 +19,20 @@
 </a>
 
 <div class="content-full content-padded"> 
-    <h1 class="content-first light" id="name"></h1> 
-    <div id="members"></div>
-    <div class="content-last">
-        <p>You have been invited to join a new Whoop-Txt group! What would you like to do?</p>
-    </div> 
+    <h1 class="content-first light" id="subject"></h1> 
+    <div id="body"></div>
 </div>
 
 <div class="menu-full menu-padded">
     <ol>
         <li>	
-            <a onclick=alert('Added!')> 
-            Accept
+            <a onclick=alert('Replying!')> 
+            Reply
             </a> 
         </li>
         <li>	
-            <a onclick=alert('Ignored!')> 
-            Ignore
+            <a onclick=alert('Re-Sharing!')> 
+            Re-Share
             </a> 
         </li>	
     </ol>
@@ -44,7 +41,7 @@
 <div class="menu-full menu-padded"> 
     <ol> 
     	<li>
-        	<a href="invitations.html">
+        	<a href="messages.html">
             Back
             </a>
         </li>
@@ -70,8 +67,8 @@ function getUrlVars()
     return vars;
 }
 
-document.getElementById('name').innerHTML = getUrlVars()["name"];
-document.getElementById('members').innerHTML = "<strong>Members: </strong>" + getUrlVars()["body"];
+document.getElementById('subject').innerHTML = getUrlVars()["subject"];
+document.getElementById('body').innerHTML = getUrlVars()["body"];
 
 </script>
 
