@@ -5,6 +5,7 @@
 <title>Whoop Txt | Messages</title>
 <link rel="stylesheet" href="http://m.ucla.edu/assets/css.php" type="text/css">
 <script type="text/javascript" src="http://m.ucla.edu/assets/js.php"></script>
+<script type="text/javascript" src="http://m.ucla.edu/assets/js.php?standard_libs=geolocation"></script>
 <meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 </head>
 
@@ -32,6 +33,13 @@
 <div id="footer"> 
     <p><a href="help.html">Help</a> | <a href="../desktop/menu.html">View Full Site</a></p> 
 </div>
+
+<script type="text/javascript">
+mwf.touch.geolocation.getPosition(
+    function(pos){ alert("Latitude:"+pos['latitude']+", Longitude:"+pos['longitude']+", Accuracy:"+pos['accuracy']); }, 
+    function(err){ alert("Err:"+err); }
+);
+</script>
 
 </body>
 </html>
