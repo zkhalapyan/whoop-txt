@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>Whoop-Txt</title>
+</head>
+
+<body>
+<body style="background:#096FA1">
+<font size="20" face="kristen itc" color="white">
+<h1 align="center">Welcome to Whoop-Txt!</h1>
+
+<div id="fb-root"></div>
+      <script src="http://connect.facebook.net/en_US/all.js"></script>
+      <script>
+         FB.init({ 
+            appId:'188715111203638', cookie:true, 
+            status:true, xfbml:true 
+         });
+         FB.Event.subscribe('auth.login', function () {
+          window.location = "http://whoop-txt.com/messages.html";
+         });
+      </script>
+      <div class="fb-login-button" 
+         data-perms="email,user_checkins">
+        Login with Facebook
+      </div>
+
+
+
+</body>
+
+</html>
