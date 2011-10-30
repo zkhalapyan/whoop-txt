@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Whoop Txt | Messages</title>
+<title>Whoop Txt | Groups</title>
 <link rel="stylesheet" href="http://m.ucla.edu/assets/css.php" type="text/css">
 <script type="text/javascript" src="http://m.ucla.edu/assets/js.php"></script>
 <script type="text/javascript" src="javascript/CommunicationUtility.js"></script>
@@ -20,16 +20,16 @@
 </a>
 
 <div class="content-full content-padded"> 
-    <h1 class="content-first light" id="subject"></h1> 
-    <div id="body"></div>
+    <h1 class="content-first light" id="name"></h1> 
+    <div id="members" class="content-last"></div>
 </div>
 
 <div class="button-full button-padded">
-    <a onclick=alert('Responding!') class="button-first">Reply</a>
-    <a onclick=alert('Re-sharing!') class="button-last">Re-Share</a>
+    <a onclick=alert('Inviting has yet to be implemented.') class="button-first">Invite</a>
+    <a onclick=alert('Leaving groups has yet to be implemented.') class="button-last">Leave</a>
 </div>
 
-<a href="messages.html" class="button-full button-light button-padded">Back</a>
+<a href="invitations.html" class="button-full button-light button-padded">Back</a>
 
 <div id="footer"> 
     <p><a href="help.html">Help</a> | <a href="../desktop/menu.html">View Full Site</a></p> 
@@ -37,8 +37,8 @@
 
 <script type="text/javascript">
 
-document.getElementById('subject').innerHTML = getUrlVars()["subject"];
-document.getElementById('body').innerHTML = getUrlVars()["body"];
+document.getElementById('name').innerHTML = getUrlVars()["subject"];
+document.getElementById('members').innerHTML = "<strong>Members: </strong>" + getUrlVars()["body"];
 
 </script>
 
