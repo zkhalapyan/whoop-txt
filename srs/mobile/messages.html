@@ -5,6 +5,7 @@
 <title>Whoop Txt | Messages</title>
 <link rel="stylesheet" href="http://m.ucla.edu/assets/css.php" type="text/css">
 <script type="text/javascript" src="http://m.ucla.edu/assets/js.php"></script>
+<script type="text/javascript" src="javascript/MWFUtility.js"></script>
 <meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 </head>
 
@@ -31,19 +32,8 @@
 
 <script type="text/javascript">
 
-function addElement(subject, text) {
-	
-	var msg = document.createElement("li");
-	msg.appendChild(document.createElement("a"));
-	msg.childNodes[0].setAttribute("href", "viewmessage.html?subject="+subject+"&body="+text);
-	msg.childNodes[0].innerHTML =  subject + "<br />";
-	msg.childNodes[0].innerHTML += "<span class='smallprint'>" + text + "</span>";
-	document.getElementById('elementList').appendChild(msg);
-	
-};
-
-addElement("New message", "This is the message hurrrrr.");
-addElement("New Message Numero Duos", "Teh body is from within.");
+addElement("elementList", "New message", "This is the message.", "viewmessage.html");
+addElement("elementList", "Message Two", "This is the body of the second message.", "viewmessage.html");
 
 </script>
 
