@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+    <db_host>localhost</db_host>
+    <db_user>zorayrkh_whoop</db_user>
+    <db_pass>1324WHOOP</db_pass>
+    <db_name>zorayrkh_whoop_txt</db_name>
+    
+</configuration>

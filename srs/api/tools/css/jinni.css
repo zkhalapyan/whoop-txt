@@ -1,0 +1,22 @@
+/* 
+    Document   : jinni
+    Created on : Oct 24, 2011, 5:44:27 PM
+    Author     : Zorayr Khalapyan
+    Description:
+        
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+
+div.json_display
+{
+    display: block;
+    
+}
