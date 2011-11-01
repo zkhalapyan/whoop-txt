@@ -25,8 +25,8 @@
 </div>
 
 <div class="button-full button-padded">
-    <a onclick=alert('Responding!') class="button-first">Reply</a>
-    <a onclick=alert('Re-sharing!') class="button-last">Re-Share</a>
+    <a onclick=alert('Responding!',redirectMessages()) class="button-first">Reply</a>
+    <a onclick=alert('Re-sharing!',redirectMessages()) class="button-last">Re-Share</a>
 </div>
 
 <a href="messages.html" class="button-full button-light button-padded">Back</a>
@@ -39,6 +39,8 @@
 
 document.getElementById('subject').innerHTML = getUrlVars()["subject"];
 document.getElementById('body').innerHTML = getUrlVars()["body"];
+
+function redirectMessages(){window.location = "messages.html"};
 
 </script>
 
