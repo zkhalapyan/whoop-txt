@@ -28,8 +28,8 @@
 </div>
 
 <div class="button-full button-padded">
-    <a onclick=alert('Added!') class="button-first">Accept</a>
-    <a onclick=alert('Ignored!') class="button-last">Ignore</a>
+    <a onclick=alert('Added!',redirectMenu()) class="button-first">Accept</a>
+    <a onclick=alert('Ignored!',redirectMenu()) class="button-last">Ignore</a>
 </div>
 
 <a href="invitations.html" class="button-full button-light button-padded">Back</a>
@@ -42,6 +42,8 @@
 
 document.getElementById('name').innerHTML = getUrlVars()["subject"];
 document.getElementById('members').innerHTML = "<strong>Members: </strong>" + getUrlVars()["body"];
+
+function redirectMenu(){window.location = "invitations.html"};
 
 </script>
 
