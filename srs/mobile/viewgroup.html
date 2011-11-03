@@ -26,10 +26,10 @@
 
 <div class="button-full button-padded">
     <a onclick=alert('Inviting has yet to be implemented.') class="button-first">Invite</a>
-    <a onclick=alert('Leaving groups has yet to be implemented.') class="button-last">Leave</a>
+    <a id="leavegroupbutton" class="button-last">Leave</a>
 </div>
 
-<a href="invitations.html" class="button-full button-light button-padded">Back</a>
+<a href="groups.html" class="button-full button-light button-padded">Back</a>
 
 <div id="footer"> 
     <p><a href="help.html">Help</a> | <a href="../desktop/menu.html">View Full Site</a></p> 
@@ -39,6 +39,7 @@
 
 document.getElementById('name').innerHTML = getUrlVars()["subject"];
 document.getElementById('members').innerHTML = "<strong>Members: </strong>" + getUrlVars()["body"];
+document.getElementById('leavegroupbutton').setAttribute("href", "leavegroup.html?id=" + getUrlVars()["id"]);
 
 </script>
 
