@@ -23,7 +23,6 @@ class DB {
     
     private function __clone() {}
 
-
     /**
      * Singleton accessor method that returns the instance of the mysqli object.
      *
