@@ -2,32 +2,34 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Whoop Txt | Groups</title>
+<title>Whoop Txt | Messages</title>
 <link rel="stylesheet" href="http://m.ucla.edu/assets/css.php" type="text/css">
 <script type="text/javascript" src="http://m.ucla.edu/assets/js.php"></script>
-<script type="text/javascript" src="javascript/MWFUtility.js"></script>
+<script type="text/javascript" src="http://m.ucla.edu/assets/js.php?standard_libs=geolocation"></script>
 <meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 </head>
 
 <body>
 
 <h1 id="header">
-    <span>Whoop Txt</span>
+    <span>Whoop Txt</span> 
 </h1>
 
-<a id="button-top button-first" button-full class="button-full button-padded button-first" href="creategroup.html">
-	Create New Group
-</a>
-
-<a id="button-top" class="button-full button-padded button-last" href="menu.html">
+<a id="button-top" button-full class="button-full button-padded" href="menu.html">
 	Menu
 </a>
 
-<div class="menu-full menu-detailed menu-padded">
-    <h1 class="light menu-first">Groups</h1> 
-    <ol id="elementList"> 
+<form class="form-full form-padded">
+    <h1 class="light form-first">Create New Group</h1>
+<label for="group">Group Name</label>
+    <input type="text" name="group" id="group" />    
+<label for="audience">Tags</label>
+    <input type="text" name="audience" id="audience" />
+    </form>
 
-    </ol>
+
+<div class="button-full button-padded">
+    <a onclick=submitGroup() class="button-first">Create!</a>
 </div>
 
 <div id="footer"> 
@@ -35,11 +37,8 @@
 </div>
 
 <script type="text/javascript">
-
-addElement("elementList", "The Band", "Jackson, Daniel, Richard", "viewgroup.html");
-addElement("elementList", "The Turtles", "Leonardo, Donatello, Raphael, Michaelangelo", "viewgroup.html");
-addElement("elementList", "Friends", "Bill", "viewgroup.html");
-
+function submitGroup () {
+	}
 </script>
 
 </body>
