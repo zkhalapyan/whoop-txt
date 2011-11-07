@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(dirname(dirname(__FILE__))).'/config/config_factory.php';
+require_once dirname(dirname(dirname(__FILE__))).'/config/ConfigFactory.class.php';
 
 class DB {
 	
@@ -19,8 +19,7 @@ class DB {
     {
 		
     }
-
-    
+   
     private function __clone() {}
 
     /**

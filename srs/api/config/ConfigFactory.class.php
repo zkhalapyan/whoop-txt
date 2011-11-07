@@ -1,7 +1,8 @@
 <?php
 
+require_once (dirname(dirname(__FILE__))."/lib/fb/facebook.php");
 
-define("PATH_TO_CONFIG_LOADERS", "https://whoop-txt.com/api/config/loaders/");
+define("PATH_TO_CONFIG_LOADERS", "http://rocking-apps.com/whooptxt/api/config/loaders/");
 define("DEFAULT_CONFIG_LOADER", "whoop_txt.xml");
 
 ConfigFactory::load_xml(DEFAULT_CONFIG_LOADER);
@@ -39,6 +40,7 @@ class ConfigFactory
    
 		$xml = simplexml_load_file(PATH_TO_CONFIG_LOADERS.$xml_file);
 		
+                
 		self::$_vars = array();
 		
 		foreach($xml as $config_key => $config_value)

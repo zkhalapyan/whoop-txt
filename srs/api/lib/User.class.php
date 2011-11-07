@@ -1,13 +1,14 @@
 <?php
 
-require_once("./db/ActiveRecord.class.php");
+require_once(dirname(__FILE__).'/db/ActiveRecord.class.php');
 
-class Users extends ActiveToken
+class User extends ActiveRecord
 {
     
     public function __construct($key = null, $col = 'id')
     {
         parent::__construct('users', $key, $col);
+        
     }
     
     public function getMessages($limit = 100)

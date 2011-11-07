@@ -1,7 +1,6 @@
 <?php
 
-
-require_once('db.class.php');
+require_once('DB.class.php');
 
 
 class ARException extends Exception {}
@@ -38,16 +37,38 @@ class ActiveRecord
         $this->_col = $col;
     }  
 
+    /**
+     *
+     * @param type $column
+     * @return type 
+     */
     public function __get($column)
     {
         return $this->_row_data[$column];
     }
 
+    /**
+     *
+     * @param type $column
+     * @param type $value
+     * @return type 
+     */
     public function __set($column, $value)
     {   
         return $this->_row_data[$column] = $value;
     }
-        
+       
+    public function add()
+    {
+        return $this->create();
+    }
+    
+    /**
+     *
+     * @param type $array
+     * @param type $key
+     * @param type $col 
+     */
     public function load($array, $key = null, $col = 'id')
     {
         if($key)
@@ -80,7 +101,7 @@ class ActiveRecord
     }
 
 	
-    protected function create()
+    public function create()
     {
 
         $fields = '(';
@@ -103,8 +124,12 @@ class ActiveRecord
         return $this->_key = DB::mysqli()->insert_id;
     }
 
+    public function exists()
+    {
+        return $this->read();
+    }
 
-    protected function read()
+    public function read()
     {
         if($this->_key === null)
             return false;
@@ -131,14 +156,14 @@ class ActiveRecord
     }
 
 
-    protected function update()
+    public function update()
     {
 	if(count($this->_row_data) == 0)
             return false;
         
         $new = '';
         
-        foreach ($this->_buffer as $field => $value)
+        foreach ($this->_row_data as $field => $value)
         {
             $new .= DB::mysqli()->real_escape_string($field)."='".DB::mysqli()->real_escape_string($value)."', ";
         }
@@ -156,7 +181,7 @@ class ActiveRecord
     }
 
 
-    protected function delete()
+    public function delete()
     {
 
         $query = 'DELETE FROM '.$this->_table.' WHERE '.$this->_col."='".DB::mysqli()->real_escape_string($this->_key)."'";

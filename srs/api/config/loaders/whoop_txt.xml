@@ -2,6 +2,11 @@
 
 <configuration>
 
+    <app_id>188715111203638</app_id>
+    <app_secret>ac32974af39f656c4a0f3ed58328772e</app_secret>
+    <app_scope>publish_stream,offline_access,email</app_scope>
+    <app_url>https://apps.facebook.com/whoop_txt</app_url>
+    
     <db_host>localhost</db_host>
     <db_user>zorayrkh_whoop</db_user>
     <db_pass>1324WHOOP</db_pass>
