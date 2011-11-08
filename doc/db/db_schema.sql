@@ -81,15 +81,15 @@ DROP TABLE IF EXISTS `tokens_users` ;
 
 CREATE  TABLE IF NOT EXISTS `tokens_users` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `tokens_names_id` INT NOT NULL ,
+  `tokens_id` INT NOT NULL ,
   `users_id` INT NOT NULL ,
   `active` TINYINT(1)  NOT NULL ,
   `pending` TINYINT(1)  NOT NULL ,
-  PRIMARY KEY (`id`, `tokens_names_id`, `users_id`) ,
-  INDEX `fk_tokens_users_tokens` (`tokens_names_id` ASC) ,
+  PRIMARY KEY (`id`, `tokens_id`, `users_id`) ,
+  INDEX `fk_tokens_users_tokens` (`tokens_id` ASC) ,
   INDEX `fk_tokens_users_users1` (`users_id` ASC) ,
   CONSTRAINT `fk_tokens_users_tokens`
-    FOREIGN KEY (`tokens_names_id` )
+    FOREIGN KEY (`tokens_id` )
     REFERENCES `tokens` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
