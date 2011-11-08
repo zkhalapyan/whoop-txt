@@ -57,7 +57,7 @@ switch($request->getMethod())
         //Process API calls that were requested via GET method.
 	case 'get':
             
-            process_get_api_call($data);
+            process_get_api_call($user, $data);
             
             break;
         
@@ -65,7 +65,7 @@ switch($request->getMethod())
         //Process API calls that were requested via GET method.
 	case 'post':
             
-            process_post_api_call($data);
+            process_post_api_call($user, $data);
 		
             break;
         
@@ -111,7 +111,7 @@ function sendSuccessResponse($response_data)
 }
 
 
-function process_get_api_call($data)
+function process_get_api_call($user, $data)
 {
     switch($data['action'])
     {
@@ -158,11 +158,10 @@ function process_get_api_call($data)
 
     case "create_token":
 
-        $token_name = $data["token_name"];
+        $name = $data["name"];
+        $token_id = $user->createToken($name);
 
-        $token_user_id = $user->createToken($token_name);
-
-        sendSuccessResponse(array("token_user_id" => $token_user_id));
+        sendSuccessResponse(array("token_id" => $token_id));
 
         break;
 
@@ -197,7 +196,7 @@ function process_get_api_call($data)
 
 }
 
-function process_post_api_call($data)
+function process_post_api_call($user, $data)
 {
     sendErrorResponse("POST is not currently supported.");
 }

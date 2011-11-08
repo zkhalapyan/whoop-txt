@@ -59,6 +59,9 @@ class User extends ActiveRecord
      */
     public function createToken($new_token_name)
     {
+        
+        //TODO: Do bunch of "duplicate" checks before proceeding.
+        
         //Create a new token name.
         $token_name = new TokenName();
         $token_name->name = $new_token_name;
@@ -76,7 +79,7 @@ class User extends ActiveRecord
         $token_user -> active = true;
         $token_user -> pending = false;
         
-        return $token_user->add();
+        return $token->get_PK();
         
         
     }
