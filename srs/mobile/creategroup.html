@@ -29,7 +29,7 @@
 
 
 <div class="button-full button-padded">
-    <a onclick=submitGroup() class="button-first">Create!</a>
+    <a onclick=submitGroup() class="button-first" href="groups.html">Create!</a>
 </div>
 
 <div id="footer"> 
@@ -37,7 +37,11 @@
 </div>
 
 <script type="text/javascript">
-function submitGroup () {
+function submitGroup() {
+var group_element = document.getElementById('group');
+var audience_element = document.getElementById('group');
+alert("You have just added " + group_element.value + " to your list of Groups!");
+addElement("elementList", group_element.value, audience_element.value, "groups.html");
 	}
 </script>
 
