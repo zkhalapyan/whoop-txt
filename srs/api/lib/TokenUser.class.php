@@ -6,7 +6,7 @@ class TokenUser extends ActiveRecord
 {
     public function __construct($key = null, $col = 'id')
     {
-        parent::__construct('token_users', $key, $col);
+        parent::__construct('tokens_users', $key, $col);
     }
     
 }

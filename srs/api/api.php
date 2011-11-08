@@ -6,6 +6,8 @@ require_once("./config/ConfigFactory.class.php");
 require_once("./lib/rest/RestUtils.class.php");
 require_once("./lib/rest/RestRequest.class.php");
 require_once("./lib/User.class.php");
+require_once("./lib/TokenName.class.php");
+
 
 $request = RestUtils::processRequest();
 
@@ -26,17 +28,16 @@ $facebook = ConfigFactory::get_facebook();
 
 //Get currently logged in user - if the ID returned by Facebook's SDK is 0, then
 //the user is unauthenticated and should not return any data.
+//FIXME: Check if the user hasa a valid access token.
 $user_id = $facebook->getUser();
 
-
-//FIXME: Check if the user hasa a valid access token.
 
 //Detect unauthenticated users and return a failure response.
 if(!$user_id)
 {
     
     //Send an error message to the client, explainging the situation.
-    sendErrorResponse("unauthenticated user.");
+    sendErrorResponse("Unauthenticated user.");
     
     //Now exit this PHP process. No more processing after this poin     t. 
     exit();
@@ -56,96 +57,15 @@ switch($request->getMethod())
         //Process API calls that were requested via GET method.
 	case 'get':
             
-           
-            switch($data['action'])
-            {
+            process_get_api_call($data);
             
-            
-            /* * * * * * * * * * * * * 
-             * DEBUGGING CASES BELOW *
-             * * * * * * * * * * * * */
-            
-            case "say_hello":
-                sendSuccessResponse("Hello from Whoop-Txt API.");
-                break;
-
-            
-            
-            /* * * * * * * * * * * * * * * * 
-             * MESSAGE RELATED CASES BELOW *
-             * * * * * * * * * * * * * * * */
-            case "send_message":
-
-                $msg       = $data["message"];
-                $token_ids = $data["token_ids"];
-                $user_ids  = $data["user_ids"];
-                $lon       = $data["lon"];
-                $lat       = $data["lat"];
-
-
-                sendErrorResponse("action not implemented.");
-
-                break;
-
-            case "get_messages":
-                
-                sendErrorResponse("action not implemented.");
-                break;
-            
-            case "mark_message":
-                sendErrorResponse("action not implemented.");
-                break;
-                              
-               
-            /* * * * * * * * * * * * * * *
-             * TOKEN RELATED CASES BELOW *
-             * * * * * * * * * * * * * * */
-            
-            case "create_token":
-
-                $token_name = $data["token_name"];
-
-                sendErrorResponse("action not implemented.");
-
-                break;
-
-            case "get_tokens":
-
-                sendErrorResponse("action not implemented.");
-
-                break;
-            
-            case "invite_to_token":
-                
-                $token_id = $data["token_id"];
-                
-                sendErrorResponse("action not implemented.");
-
-                break;
-            
-            case "ignore_token":
-                
-                $token_id = $data["token_id"];
-                
-                sendErrorResponse("action not implemented.");
-
-                break;
-            
-            }
-
             break;
         
         
         //Process API calls that were requested via GET method.
 	case 'post':
             
-            switch($data['action'])
-            {
-                
-            
-            default:
-                
-            }
+            process_post_api_call($data);
 		
             break;
         
@@ -188,6 +108,98 @@ function sendSuccessResponse($response_data)
     
     //Send the response to the user with a JSON encoded message.
     RestUtils::sendResponse(200, json_encode($success_response), "application/json");
+}
+
+
+function process_get_api_call($data)
+{
+    switch($data['action'])
+    {
+
+
+    /* * * * * * * * * * * * * 
+     * DEBUGGING CASES BELOW *
+     * * * * * * * * * * * * */
+
+    case "say_hello":
+        sendSuccessResponse("Hello from Whoop-Txt API.");
+        break;
+
+
+
+    /* * * * * * * * * * * * * * * * 
+     * MESSAGE RELATED CASES BELOW *
+     * * * * * * * * * * * * * * * */
+    case "send_message":
+
+        $msg       = $data["message"];
+        $token_ids = $data["token_ids"];
+        $user_ids  = $data["user_ids"];
+        $lon       = $data["lon"];
+        $lat       = $data["lat"];
+
+
+        sendErrorResponse("Action not implemented.");
+        break;
+
+    case "get_messages":
+
+        sendErrorResponse("Action not implemented.");
+        break;
+
+    case "mark_message":
+        sendErrorResponse("Action not implemented.");
+        break;
+
+
+    /* * * * * * * * * * * * * * *
+     * TOKEN RELATED CASES BELOW *
+     * * * * * * * * * * * * * * */
+
+    case "create_token":
+
+        $token_name = $data["token_name"];
+
+        $token_user_id = $user->createToken($token_name);
+
+        sendSuccessResponse(array("token_user_id" => $token_user_id));
+
+        break;
+
+    case "join_token":
+        $token_id = $data["token_id"];
+
+        sendErrorResponse("Action not implemented.");
+        break;
+
+    case "get_tokens":
+
+        sendErrorResponse("Action not implemented.");
+        break;
+
+    case "invite_to_token":
+
+        $token_id = $data["token_id"];
+
+        sendErrorResponse("action not implemented.");
+
+        break;
+
+    case "ignore_token":
+
+        $token_id = $data["token_id"];
+
+        sendErrorResponse("action not implemented.");
+
+        break;
+
+    }
+
+}
+
+function process_post_api_call($data)
+{
+    sendErrorResponse("POST is not currently supported.");
 }
 
 ?>

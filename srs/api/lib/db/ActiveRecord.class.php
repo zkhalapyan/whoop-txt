@@ -44,7 +44,7 @@ class ActiveRecord
      */
     public function __get($column)
     {
-        return $this->_row_data[$column];
+        return ($column == $this->_col)? $this->_key : $this->_row_data[$column];
     }
 
     /**
@@ -84,8 +84,37 @@ class ActiveRecord
 
     }
 
+    /**
+     *
+     * @return t
+     */
+    public function get_PK()
+    {
+        return $this->_key;
+    }
+    
+    public function is_unique_tuple()
+    {
+        $where_clause = "WHERE ";
+        
+        foreach($this->_row_data as $column => $value)
+        {
+            $where_clause .= DB::mysqli()->real_escape_string($column)."='".DB::mysqli()->real_escape_string($value)."' AND ";
+        }
+        
+        $where_clause = substr($where_clause, 0, -5);
+        
+        $query = 'SELECT * FROM '.$this->_table.' '.$where_clause;
+                
+        $result = DB::mysqli()->query($query);
 
-    public function check_unique($column, $value)
+        if ($result === false)
+            throw new ARException('MySQL Error: '.DB::mysqli()->error);
+
+	return $result->num_rows == 0 ;
+    }
+    
+    public function is_unique($column, $value)
     {
         $query = 'SELECT * FROM '.$this->_table.
                 ' WHERE '.DB::mysqli()->real_escape_string($column)."='".DB::mysqli()->real_escape_string($value)."'";
@@ -95,12 +124,43 @@ class ActiveRecord
         if ($result === false)
             throw new ARException('MySQL Error: '.DB::mysqli()->error);
 
-	return $this->_read() === 1 ?
-               $result->num_rows === 1 :
-               $result->num_rows === 0 ;
+	return $result->num_rows == 0 ;
     }
 
-	
+    /**
+     * If a record can be uniquely identified by the ($column, $value) tuple,
+     * and the record exists, then the primary key of that record will be 
+     * returned. Otherwise, false will be returned.
+     * 
+     * @param string $column Column name for the query.
+     * @param string $value The value of the column for the query.
+     * @return boolean/integer Returns the primary key of the fetched record or
+     *                         false, in case the tuple is not unique or does 
+     *                         not exist.  
+     */
+    public function fetch_id($column, $value)
+    {
+        $query = 'SELECT '.$this->_col.' FROM '.$this->_table.
+                ' WHERE '.DB::mysqli()->real_escape_string($column)."='".DB::mysqli()->real_escape_string($value)."'";
+        
+        $result = DB::mysqli()->query($query);
+
+        if ($result === false)
+            throw new ARException('MySQL Error: '.DB::mysqli()->error);
+
+	if($result->num_rows == 1)
+        {
+            $record = $result->fetch_assoc();
+            return $record[$this->_col];
+            
+        }
+        else
+        {
+            return false;
+        }
+            
+    }
+    
     public function create()
     {
 
