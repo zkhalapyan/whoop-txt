@@ -10,12 +10,15 @@ DROP TABLE IF EXISTS `users` ;
 
 CREATE  TABLE IF NOT EXISTS `users` (
   `id` INT NOT NULL ,
-  `full_name` VARCHAR(45) NULL ,
+  `full_name` VARCHAR(256) NOT NULL ,
+  `email` VARCHAR(256) NULL ,
   `access_token` VARCHAR(256) NULL ,
-  `access_time` VARCHAR(45) NULL ,
-  `create_time` VARCHAR(45) NULL ,
-  `registered` TINYINT(1)  NULL ,
-  `deleted` TINYINT(1)  NULL ,
+  `access_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ,
+  `create_time` DATETIME NOT NULL ,
+  `locale` VARCHAR(45) NULL ,
+  `gender` VARCHAR(8) NULL ,
+  `active` TINYINT(1)  NOT NULL ,
+  `friends_count` INT NOT NULL DEFAULT 0 ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
@@ -26,10 +29,10 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `messages` ;
 
 CREATE  TABLE IF NOT EXISTS `messages` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `author_id` INT NOT NULL ,
-  `text` VARCHAR(256) NULL ,
-  `post_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
+  `text` VARCHAR(256) NOT NULL ,
+  `post_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
   PRIMARY KEY (`id`, `author_id`) ,
   INDEX `fk_messages_users1` (`author_id` ASC) ,
   CONSTRAINT `fk_messages_users1`
@@ -46,19 +49,20 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `token_names` ;
 
 CREATE  TABLE IF NOT EXISTS `token_names` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(256) NOT NULL ,
-  PRIMARY KEY (`id`) )
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `token`
+-- Table `tokens`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `token` ;
+DROP TABLE IF EXISTS `tokens` ;
 
-CREATE  TABLE IF NOT EXISTS `token` (
-  `id` INT NOT NULL ,
+CREATE  TABLE IF NOT EXISTS `tokens` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `token_names_id` INT NOT NULL ,
   PRIMARY KEY (`id`, `token_names_id`) ,
   INDEX `fk_token_token_names1` (`token_names_id` ASC) ,
@@ -76,16 +80,17 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `tokens_users` ;
 
 CREATE  TABLE IF NOT EXISTS `tokens_users` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `tokens_names_id` INT NOT NULL ,
   `users_id` INT NOT NULL ,
-  `deleted` BIT NULL ,
+  `active` TINYINT(1)  NOT NULL ,
+  `pending` TINYINT(1)  NOT NULL ,
   PRIMARY KEY (`id`, `tokens_names_id`, `users_id`) ,
   INDEX `fk_tokens_users_tokens` (`tokens_names_id` ASC) ,
   INDEX `fk_tokens_users_users1` (`users_id` ASC) ,
   CONSTRAINT `fk_tokens_users_tokens`
     FOREIGN KEY (`tokens_names_id` )
-    REFERENCES `token` (`id` )
+    REFERENCES `tokens` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_tokens_users_users1`
@@ -102,7 +107,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `token_messages` ;
 
 CREATE  TABLE IF NOT EXISTS `token_messages` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `messages_id` INT NOT NULL ,
   `token_id` INT NOT NULL ,
   PRIMARY KEY (`id`, `messages_id`, `token_id`) ,
@@ -115,21 +120,21 @@ CREATE  TABLE IF NOT EXISTS `token_messages` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_messages_users_token1`
     FOREIGN KEY (`token_id` )
-    REFERENCES `token` (`id` )
+    REFERENCES `tokens` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `location`
+-- Table `locations`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `location` ;
+DROP TABLE IF EXISTS `locations` ;
 
-CREATE  TABLE IF NOT EXISTS `location` (
+CREATE  TABLE IF NOT EXISTS `locations` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `longitude` VARCHAR(45) NULL ,
-  `latitude` VARCHAR(45) NULL ,
+  `longitude` VARCHAR(45) NOT NULL ,
+  `latitude` VARCHAR(45) NOT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
@@ -140,7 +145,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `message_locations` ;
 
 CREATE  TABLE IF NOT EXISTS `message_locations` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `location_id` INT NOT NULL ,
   `messages_id` INT NOT NULL ,
   PRIMARY KEY (`id`, `location_id`, `messages_id`) ,
@@ -148,7 +153,7 @@ CREATE  TABLE IF NOT EXISTS `message_locations` (
   INDEX `fk_message_location_messages1` (`messages_id` ASC) ,
   CONSTRAINT `fk_message_location_location1`
     FOREIGN KEY (`location_id` )
-    REFERENCES `location` (`id` )
+    REFERENCES `locations` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_message_location_messages1`
@@ -165,12 +170,12 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `user_messages` ;
 
 CREATE  TABLE IF NOT EXISTS `user_messages` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `users_id` INT NOT NULL ,
   `messages_id` INT NOT NULL ,
-  `read` TINYINT(1)  NULL DEFAULT false ,
-  `deleted` TINYINT(1)  NULL DEFAULT false ,
-  `important` TINYINT(1)  NULL DEFAULT false ,
+  `read` TINYINT(1)  NOT NULL DEFAULT false ,
+  `deleted` TINYINT(1)  NOT NULL DEFAULT false ,
+  `important` TINYINT(1)  NOT NULL DEFAULT false ,
   PRIMARY KEY (`id`, `users_id`, `messages_id`) ,
   INDEX `fk_user_messages_users1` (`users_id` ASC) ,
   INDEX `fk_user_messages_messages1` (`messages_id` ASC) ,
