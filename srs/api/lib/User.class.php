@@ -17,11 +17,14 @@ class User extends ActiveRecord
     
     public function getMessages($limit = 100)
     {
+    
+    	//populate UserMessage table
         
     }       
     
     public function sendMessageToTokens($msg, $token_ids)
     {
+    	//TODO: Figure out if we can delete this function.
         foreach($token_ids as $token_id)
         {
             sendMessageToToken($msg, $token_id);
@@ -33,9 +36,39 @@ class User extends ActiveRecord
         
     }
     
-    public function sendMessageToToken($msg, $token_id)
+    public function sendMessageToToken($msg, $token_ids, $lon, $lat)
     {
+    	//Create new Location
+    	$location = new Location();
+    	$location->longitude = $lon;
+    	$location->latitude = $lat;
+    	$location->add();
+    	
+    	//Create new Message
+    	//TODO: Sanitize the body of a message.
+    	$message = new Message();
+    	$message->author_id = ConfigFactory::get_facebook()->getUser();
+    	$message->text = $msg;
+    	$message->post_time = time();
+    	$message->post_time->add();
+    	
+    	//Create new message Location associated to the location
+    	$message_location = new MessageLocation();
+    	$message_location->location_id = $location->get_PK();
+    	$message_location->messages_id = $message->get_PK();
+    	$message_location->add();
+    		
+    	//Create new token Message(s)
+    	foreach($token_ids as $token_id)
+        {
+            //for each listd group, add the message to those tokens (tokenMessage)
+            $token_message = new TokenMessage();
+            $token_message->messages_id = $message->get_PK();
+            $token_message->token_id = token_id;
+            $token_message->add();
+        }
         
+        return $message->get_PK();
     }
     
     /**
