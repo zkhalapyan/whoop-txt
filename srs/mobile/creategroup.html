@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Whoop Txt | Messages</title>
+<title>Whoop Txt | Create Group</title>
 <link rel="stylesheet" href="http://m.ucla.edu/assets/css.php" type="text/css">
 <script type="text/javascript" src="http://m.ucla.edu/assets/js.php"></script>
 <script type="text/javascript" src="http://m.ucla.edu/assets/js.php?standard_libs=geolocation"></script>
@@ -21,15 +21,15 @@
 
 <form class="form-full form-padded">
     <h1 class="light form-first">Create New Group</h1>
-<label for="group">Group Name</label>
+	<label for="group">Group Name</label>
     <input type="text" name="group" id="group" />    
-<label for="audience">Tags</label>
+	<label for="audience">Tags</label>
     <input type="text" name="audience" id="audience" />
-    </form>
+</form>
 
 
 <div class="button-full button-padded">
-    <a onclick=submitGroup() class="button-first" href="groups.html">Create!</a>
+    <a onclick=submitGroup() class="button-first" href="groups.html">Create</a>
 </div>
 
 <div id="footer"> 
@@ -38,11 +38,10 @@
 
 <script type="text/javascript">
 function submitGroup() {
-var group_element = document.getElementById('group');
-var audience_element = document.getElementById('group');
-alert("You have just added " + group_element.value + " to your list of Groups!");
-addElement("elementList", group_element.value, audience_element.value, "groups.html");
-	}
+	var group_element = document.getElementById('group');
+	var audience_element = document.getElementById('group');
+	alert("You have just added " + group_element.value + " to your list of Groups!");
+}
 </script>
 
 </body>
