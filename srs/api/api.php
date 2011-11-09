@@ -134,12 +134,12 @@ function process_get_api_call($user, $data)
 
         $msg       = $data["message"];
         $token_ids = $data["token_ids"];
+        $user_ids  = $data["user_ids"];
         $lon       = $data["lon"];
         $lat       = $data["lat"];
 
-		$message_id = $user->sendMessageToToken($msg, $token_ids, $lon, $lat);
-		sendSuccessResponse(array("message_id" => $message_id));
-        //sendErrorResponse("Action not implemented.");
+
+        sendErrorResponse("Action not implemented.");
         break;
 
     case "get_messages":
@@ -158,7 +158,7 @@ function process_get_api_call($user, $data)
 
     case "create_token":
 
-        $name = $data["name"];
+        $name     = $data["name"];
         $token_id = $user->createToken($name);
 
         sendSuccessResponse(array("token_id" => $token_id));
@@ -166,14 +166,19 @@ function process_get_api_call($user, $data)
         break;
 
     case "join_token":
+        
         $token_id = $data["token_id"];
 
         sendErrorResponse("Action not implemented.");
+        
         break;
 
     case "get_tokens":
-
-        sendErrorResponse("Action not implemented.");
+        
+        $user_tokens = $user->getTokens();
+        
+        sendSuccessResponse(array("tokens" => $user_tokens));
+        
         break;
 
     case "invite_to_token":
