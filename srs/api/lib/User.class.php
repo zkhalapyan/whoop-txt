@@ -17,14 +17,11 @@ class User extends ActiveRecord
     
     public function getMessages($limit = 100)
     {
-    
-    	//populate UserMessage table
         
     }       
     
-    public function sendMessageToTokens($msg, $token_ids)
+    public function sendMessageViaTokens($msg, $token_ids)
     {
-    	//TODO: Figure out if we can delete this function.
         foreach($token_ids as $token_id)
         {
             sendMessageToToken($msg, $token_id);
@@ -36,9 +33,9 @@ class User extends ActiveRecord
         
     }
     
-    public function sendMessageToToken($msg, $token_ids, $lon, $lat)
+    public function sendMessageViaToken($msg, $token_id)
     {
-    	//Create new Location
+        //Create new Location
     	$location = new Location();
     	$location->longitude = $lon;
     	$location->latitude = $lat;
@@ -78,11 +75,51 @@ class User extends ActiveRecord
     public function getTokens()
     {
         
+        //Query to select all the user's tokens.
+        $query = "SELECT t.id, t_n.name, t_s.active, t_s.pending 
+                  FROM tokens_users t_s
+                  INNER JOIN tokens t ON t.id = t_s.tokens_id 
+                  INNER JOIN token_names t_n ON t_n.id = t.token_names_id
+                  WHERE users_id = '".$this->get_PK()."'";
+        
+        //Execute the query.
+        $result = DB::mysqli()->query($query);
+
+        //Check for any errors on query execution.
+        if ($result === false)
+        {
+            throw new ARException('MySQL Error: '.DB::mysqli()->error);
+        }
+        
+        //The constructed token list to be returned.
+        $token_list = array();
+        
+        //Read the result row by row.
+        while($row = mysqli_fetch_assoc($result))
+    	{
+            $token = array();
+            
+            $token["id"]      = $row["id"];
+            $token["name"]    = $row["name"];
+            $token["pending"] = ($row["pending"] == "1")? true : false;
+            $token["active"]  = ($row["active"] == "1")? true : false;
+            
+            $token_list[] = $token;
+
+    	}
+        
+        return $token_list;
+        
     }
     
-    public function joinToken($token)
+    public function joinToken($token_id)
     {
+        $token = new Token($token_id);
         
+        if(!$token->exists())
+        {
+            throw new APIException("Unable to join token. Token [ID: $token_id] does not exist.");
+        }
     }
     
     /**
@@ -107,10 +144,11 @@ class User extends ActiveRecord
         
         //Create a new token user.
         $token_user = new TokenUser();
-        $token_user -> users_id = ConfigFactory::get_facebook()->getUser();
+        $token_user -> users_id = $this->get_PK();
         $token_user -> tokens_id = $token->get_PK();
         $token_user -> active = true;
         $token_user -> pending = false;
+        $token_user->add();
         
         return $token->get_PK();
         
