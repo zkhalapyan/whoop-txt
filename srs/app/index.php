@@ -34,25 +34,25 @@ require_once (dirname(dirname(__FILE__))."/api/config/ConfigFactory.class.php");
               console.log(textStatus);
             });
             
-            var request_create_token = $.ajax({
-              
-              url: "https://rocking-apps.com/whooptxt/api/api.php",
-              type: "GET",
-              data: {   
-                        action   : "create_token",
-                        name     : "unique_token_name"
-                    },
-                    
-              dataType: "json"
-            });
+var request_create_token = $.ajax({
 
-            request_create_token.done(function(msg) {
-              console.log(msg);
-            });
+  url: "https://rocking-apps.com/whooptxt/api/api.php",
+  type: "GET",
+  data: {   
+            action   : "create_token",
+            name     : "unique_token_name"
+        },
 
-            request_create_token.fail(function(jqXHR, textStatus) {
-              console.log(textStatus);
-            });
+  dataType: "json"
+});
+
+request_create_token.done(function(msg) {
+  console.log(msg);
+});
+
+request_create_token.fail(function(jqXHR, textStatus) {
+  console.log(textStatus);
+});
 
 
         </script>
@@ -60,7 +60,7 @@ require_once (dirname(dirname(__FILE__))."/api/config/ConfigFactory.class.php");
     </head>
     
     <body>
-        
+        <h1> Hello Everyone!! </h1>
     </body>
     
 </html>

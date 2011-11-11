@@ -1,7 +1,8 @@
 <?php
 
-require_once(dirname(__FILE__).'/db/ActiveRecord.class.php');
 
+require_once(dirname(__FILE__).'/APIException.class.php');
+require_once(dirname(__FILE__).'/db/ActiveRecord.class.php');
 require_once(dirname(__FILE__).'/Token.class.php');
 require_once(dirname(__FILE__).'/TokenName.class.php');
 require_once(dirname(__FILE__).'/TokenUser.class.php');
@@ -18,22 +19,14 @@ class User extends ActiveRecord
     public function getMessages($limit = 100)
     {
         
-    }       
-    
-    public function sendMessageViaTokens($msg, $token_ids)
-    {
-        foreach($token_ids as $token_id)
-        {
-            sendMessageToToken($msg, $token_id);
-        }
-    }
+    } 
     
     public function sendMessageToUser($user)
     {
         
     }
     
-    public function sendMessageViaToken($msg, $token_id)
+    public function sendMessageViaToken($msg, $tokens, $lon, $lat)
     {
         //Create new Location
     	$location = new Location();
@@ -116,10 +109,18 @@ class User extends ActiveRecord
     {
         $token = new Token($token_id);
         
+        //If the specified token does not exist, throw an exception.
         if(!$token->exists())
         {
             throw new APIException("Unable to join token. Token [ID: $token_id] does not exist.");
         }
+        
+        //If the user is not part of the token, then throw an exception.
+        if(!$this->isInToken($token))
+        {
+            throw new APIException("Unable to join token. Token [ID: $token_id] does not exist.");
+        }
+        
     }
     
     /**
@@ -130,12 +131,10 @@ class User extends ActiveRecord
     public function createToken($new_token_name)
     {
         
-        //TODO: Do bunch of "duplicate" checks before proceeding.
-        
-        //Create a new token name.
-        $token_name = new TokenName();
-        $token_name->name = $new_token_name;
-        $token_name->add();
+        //If the token name already exits then retrieve it, and if it doesn't 
+        //exist, create it and then return it. Using getTokenName allows 
+        //avoiding creating duplicate token names.
+        $token_name = TokenName::getTokenName($new_token_name);
         
         //Create a new token associated with the new token name.
         $token = new Token();
@@ -150,11 +149,65 @@ class User extends ActiveRecord
         $token_user -> pending = false;
         $token_user->add();
         
+        //Return the created token's ID.
         return $token->get_PK();
         
         
     }
     
+    
+    /**
+     * Uses the token's ID and the user's ID to check if the user is associated
+     * with the token in the users_tokens table. Returns a boolean value.
+     * 
+     * @param Token $token Token object that is associated with a primary key.
+     * @return boolean True if this user is associated with the given token, 
+     *                  false, otherwise.
+     */
+    private function isInToken($token)
+    {
+        $query = "SELECT t_s.id
+                  FROM tokens_users t_s
+                  WHERE t_s.tokens_id='$token->id' AND
+                  t_s.users_id = '".$this->get_PK()."'";
+        
+        $result = DB::mysqli()->query($query);
+
+        if ($result === false)
+        {
+            throw new APIException('MySQL Error: '.DB::mysqli()->error);
+        }
+        
+        return $result->num_rows > 0;
+        
+    }
+    
+    /**
+     * Checks if the user is associated with at least one token with the 
+     * specified name. 
+     * 
+     * @param string $token_name The name of the token to check.
+     * @return boolean Returns true if a user is associated with at least one
+     *                 token with the specified name.
+     */
+    private function isInTokenByName($token_name)
+    {
+        //Get the tokens associated with users.
+        $user_tokens = $this->getTokens();
+        
+        //Walk through the tokens associated with the user, and if one of the 
+        //token's name equal to the specified token name, then return true.
+        foreach($user_tokens as $token)
+        {
+            if($token["name"] == $token_name)
+            {
+                return true;
+            }
+        }
+        
+        //If the user was not associated with a 
+        return false;
+    }
     
     
 }
