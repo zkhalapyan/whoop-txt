@@ -41,7 +41,7 @@ AJAXRequest("https://rocking-apps.com/whooptxt/api/api.php?action=get_messages",
 		return;
 	}
 	
-	var messages = response.data["Data:"];
+	var messages = response.data.messages;
 	for (index in messages)
 	{
 		addElement("elementList", messages[index]["full_name"], messages[index]["text"], "viewmessage.html?id=" + messages[index].id);
