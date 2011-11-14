@@ -1,0 +1,246 @@
+@CHARSET "ISO-8859-1";
+
+/* * * * * * * * * * * * * * * ** * * 
+ * CLASSES FOR FACEBOOK-STYLED TABS *
+ * * * * * * * * * * * * * *  * * * */
+
+/**
+* Styles are from http://forum.developers.facebook.net/viewtopic.php?id=28817.
+* Although the one he posted, is not well formed and had to be changed around.
+*/
+ 
+.tab_spinner_img
+{
+ vertical-align:top;  
+ display: inline-block;
+ margin: 0px;
+ margin-left: 3px;
+ width: 13px;
+ height: 13px;
+ 
+}
+
+.clearfix:after { content: "."; display: block; clear: both; visibility: hidden; line-height: 0; height: 0; }
+.clearfix { display: inline-block; }
+html[xmlns] .clearfix { display: block; }
+* html .clearfix { height: 1%; }
+
+
+.fb-tabs { margin-top: 5px; padding: 0px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #898989; width: 100%; }
+.fb-tabs .left_tabs { float: left; padding-left: 10px; }
+.fb-tabs .right_tabs { float: right; padding-right: 10px; }
+.fb-tabitems { display: inline; list-style: none; margin: 0; padding: 0; text-align: center; }
+.fb-tabitems li { list-style:none; float:left; background: #f1f1f1 url(http://www.facebook.com/images/components/toggle_tab_gloss.gif) top left repeat-x; margin-top: 0; margin-right: 0px; margin-bottom: -1px; margin-left: 0px; padding-top: 2px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; }
+
+
+.fb-tabitems li a { 
+                    border: 1px solid #898989;
+                    vertical-align: middle;
+                    text-decoration: none;
+                    display:inline-block; 
+                    color: #333; 
+                    font-weight: bold; 
+                    padding-top: 2px; 
+                    padding-right: 8px; 
+                    padding-bottom: 2px; 
+                    padding-left: 9px; 
+                    font-size: 11px; 
+                    font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+                  }
+                  
+.fb-tabitems li a:focus { outline: 0px; }
+.fb-tabitems li a:hover { text-decoration: underline; }
+
+.fb-tabitems li a.selected {  
+                             background: #6d84b4;
+                             border: 1px solid #3b5998; 
+                             border-left: 1px solid #5973a9; 
+                             border-right: 1px solid #5973a9; 
+                             color: #fff; 
+                             margin-left: -1px; 
+                           }
+                           
+.fb-tabitems li.last a.selected { margin-left:-1px; border-left:1px solid #5973a9; border-right:1px solid #36538f; }
+.fb-tabitems li.first a.selected { margin: 0; border-left: 1px solid #36538f; border-right: 1px solid #5973a9; }
+.fb-tabitems li.first.last a.selected { border: 1px solid #36538f; }
+.fb-tabitems li a.selected:hover { text-decoration: none; }
+
+
+
+
+body 
+	{
+	   font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+	   font-size: 11px;
+	}
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * 
+ * CLASSES FOR FACEBOOK-STYLED PRIVACY POLICY  *
+ * * * * * * * * * * * * * * * * * * * * * * * */
+
+.policy_title 
+	{
+	   color: #333;
+	   font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+	   font-size: 34px;
+	   
+	}
+
+.policy_text
+	{
+	   color: #333;
+	   font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+	   font-size: 11px;
+	}
+
+
+
+/* * * * * * * * * * * * * * * * * * * 
+ * CLASSES FOR FACEBOOK-STYLED LINKS *
+ * * * * * * * * * * * * * * * * * * */
+ 
+ a.fb_link 
+    {
+        color: #3B5998; 
+        text-decoration: none; 
+        font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
+        font-size:11px; 
+    }
+ a.fb_link:hover 
+    {
+        text-decoration: underline;
+    }
+
+
+
+/* * * * * * * * * * * * * * * * * * * * 
+ * CLASSES FOR FACEBOOK-STYLED BUTTONS *
+ * * * * * * * * * * * * * * * * * * * */
+
+
+.uiButton,.uiButtonSuppressed:active,.uiButtonSuppressed:focus,.uiButtonSuppressed:hover{background:#eee url('images/B4K_BWwP7P5.png') repeat 0 0;border:1px solid #999;border-bottom-color:#888;box-shadow:0 1px 0 rgba(0, 0, 0, .1);-webkit-box-shadow:0 1px 0 rgba(0, 0, 0, .1);cursor:pointer;display:-moz-inline-box;display:inline-block;font-size:11px;font-weight:bold;line-height:normal !important;padding:2px 6px;text-align:center;text-decoration:none;vertical-align:top;white-space:nowrap}
+.uiButton + .uiButton{margin-left:4px}
+.uiButton:hover{text-decoration:none}
+.uiButton:active,.uiButtonDepressed{background:#ddd;border-bottom-color:#999;box-shadow:0 1px 0 rgba(0, 0, 0, .05);-webkit-box-shadow:0 1px 0 rgba(0, 0, 0, .05)}
+.uiButton .img{margin-top:2px;vertical-align:top}
+.uiButtonLarge .img{margin-top:4px}
+.uiButton .customimg{margin-top:0}
+.uiButton .uiButtonText,.uiButton input{background:none;border:0;color:#333;cursor:pointer;display:-moz-inline-box;display:inline-block;font-family:'Lucida Grande', Tahoma, Verdana, Arial, sans-serif;font-size:11px;font-weight:bold;margin:0;outline:none;padding:1px 0 2px;white-space:nowrap}
+.uiButtonSpecial{background-color:#69a74e;background-position:0 -96px;border-color:#3b6e22 #3b6e22 #2c5115}
+.uiButtonSpecial:active{background:#609946;border-bottom-color:#3b6e22}
+.uiButtonSpecial.uiButtonDisabled,.uiButtonSpecial.uiButtonDisabled:active,.uiButtonSpecial.uiButtonDisabled:focus,.uiButtonSpecial.uiButtonDisabled:hover{background:#b4d3a7;border-color:#9db791}
+.uiButtonConfirm{background-color:#5b74a8;background-position:0 -48px;border-color:#29447e #29447e #1a356e}
+.uiButtonConfirm:active{background:#4f6aa3;border-bottom-color:#29447e}
+.uiButtonConfirm.uiButtonDisabled,.uiButtonConfirm.uiButtonDisabled:active,.uiButtonConfirm.uiButtonDisabled:focus,.uiButtonConfirm.uiButtonDisabled:hover{background:#adbad4;border-color:#94a2bf}
+.uiButtonSpecial .uiButtonText,.uiButtonSpecial input,.uiButtonSpecial.uiButtonDisabled .uiButtonText,.uiButtonSpecial.uiButtonDisabled input,.uiButtonConfirm .uiButtonText,.uiButtonConfirm input,.uiButtonConfirm.uiButtonDisabled .uiButtonText,.uiButtonConfirm.uiButtonDisabled input{color:#fff}
+.uiButtonDisabled,.uiButtonDisabled:active,.uiButtonDisabled:focus,.uiButtonDisabled:hover{background:#f2f2f2;border-color:#c8c8c8;box-shadow:none;-webkit-box-shadow:none}
+.uiButtonDisabled .img{opacity:.5}
+.uiButtonDisabled .uiButtonText,.uiButtonDisabled input{color:#b8b8b8}
+.uiButtonDepressed,.uiButtonDepressed .uiButtonText,.uiButtonDepressed input,.uiButtonDisabled,.uiButtonDisabled .uiButtonText,.uiButtonDisabled input{cursor:default}
+.uiButtonLarge,.uiButtonLarge .uiButtonText,.uiButtonLarge input{font-size:13px}
+.uiButtonSuppressed{background:none;border-color:transparent;box-shadow:none;-webkit-box-shadow:none}
+.uiButtonNoText .img{margin-left:-1px;margin-right:-1px}
+
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * 
+ * COMPELTE FACEBOOK COMPONENT STYLESHEET  *
+ * * * * * * * * * * * * * * * * * * * * * */
+
+/*
+ *  Examples URL: http://devtacular.com/articles/bkonrad/how-to-style-an-application-like-facebook
+ */
+
+ /* Default Facebook CSS */
+ .fbbody
+ {
+     font-family: "lucida grande" ,tahoma,verdana,arial,sans-serif;
+     font-size: 11px;
+     color: #333333;
+ }
+ 
+ /* Default Anchor Style */
+ .fbbody a
+ {
+     color: #3b5998;
+     outline-style: none;
+     text-decoration: none;
+     font-size: 11px;
+     font-weight: bold;
+ }
+ .fbbody a:hover
+ {
+     text-decoration: underline;
+ }
+ 
+ /* Facebook Box Styles */
+ .fbgreybox
+ {
+     background-color: #f7f7f7;
+     border: 1px solid #cccccc;
+     color: #333333;
+     padding: 10px;
+     font-size: 13px;
+     font-weight: bold;
+ }
+ .fbbluebox
+ {
+     background-color: #eceff6;
+     border: 1px solid #d4dae8;
+     color: #333333;
+     padding: 10px;
+     font-size: 13px;
+     font-weight: bold;
+ }
+ .fbinfobox
+ {
+     background-color: #fff9d7;
+     border: 1px solid #e2c822;
+     color: #333333;
+     padding: 10px;
+     font-size: 13px;
+     font-weight: bold;
+ }
+ .fberrorbox
+ {
+     background-color: #ffebe8;
+     border: 1px solid #dd3c10;
+     color: #333333;
+     padding: 10px;
+     font-size: 13px;
+     font-weight: bold;
+ }
+ 
+ /* Content Divider on White Background */
+ .fbcontentdivider
+ {
+     margin-top: 15px;
+     margin-bottom: 15px;
+     width: 520px;
+     height: 1px;
+     background-color: #d8dfea;
+ }
+ 
+ /* Facebook Tab Style */
+ .fbtab
+ {
+     padding: 8px;
+     background-color: #d8dfea;
+     color: #3b5998;
+     font-weight: bold;
+     float: left;
+     margin-right: 4px;
+     text-decoration: none;
+ }
+ .fbtab:hover
+ {
+     background-color: #3b5998;
+     color: #ffffff;
+     cursor: hand;
+ }
+        
+
+
+

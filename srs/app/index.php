@@ -16,7 +16,7 @@ require_once (dirname(dirname(__FILE__))."/api/config/ConfigFactory.class.php");
         
         <script type="text/javascript">
 
-
+/*
             var request_say_hello = $.ajax({
               url: "https://rocking-apps.com/whooptxt/api/api.php",
               type: "GET",
@@ -34,33 +34,50 @@ require_once (dirname(dirname(__FILE__))."/api/config/ConfigFactory.class.php");
               console.log(textStatus);
             });
             
-var request_create_token = $.ajax({
+            var request_create_token = $.ajax({
 
-  url: "https://rocking-apps.com/whooptxt/api/api.php",
-  type: "GET",
-  data: {   
-            action   : "create_token",
-            name     : "unique_token_name"
-        },
+              url: "https://rocking-apps.com/whooptxt/api/api.php",
+              type: "GET",
+              data: {   
+                        action   : "create_token",
+                        name     : "unique_token_name"
+                    },
 
-  dataType: "json"
-});
+              dataType: "json"
+            });
 
-request_create_token.done(function(msg) {
-  console.log(msg);
-});
+            request_create_token.done(function(msg) {
+              alert(msg);
+              console.log(msg);
+            });
 
-request_create_token.fail(function(jqXHR, textStatus) {
-  console.log(textStatus);
-});
+            request_create_token.fail(function(jqXHR, textStatus) {
+              console.log(jqXHR);
+            });
 
-
+*/
         </script>
         
+    <link rel="stylesheet" href="css/app_styles.css" type="text/css" />    
+    <link rel="stylesheet" href="css/fb_styles.css" type="text/css" />    
+    
     </head>
     
     <body>
-        <h1> Hello Everyone!! </h1>
+        
+        <?PHP include("app_header.php"); ?>
+        
+        <h1> Whoop-Txt </h1>
+        
+
+        <ul id="menu">
+               <li><a href="index.php" target="_self">Messages</a></li>
+               <li><a href="messages.php" target="_self">Whoop It</a></li>
+               <li><a href="groups.php" target="_self">Groups</a></li>
+               <li><a href="invitations.php" target="_self">Invitations</a></li>
+               <li><a href="help.php" target="_self">Help</a></li>
+        </ul>
+
     </body>
     
 </html>
