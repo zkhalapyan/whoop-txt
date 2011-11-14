@@ -31,6 +31,24 @@ class User extends ActiveRecord
         
     }
     
+public function markMessage($message_id, $opened, $delete, $important)
+    {
+        $query = "UPDATE user_messages 
+                  SET opened = $opened, deleted = $delete, important = $important 
+                  WHERE users_id = '".$this->getKey(). "' and messages_id = '$message_id'";
+        
+        $result = DB::mysqli()->query($query);
+        
+        //Check for any errors on query execution
+        if($result === false)
+        {
+            throw new ARException('MySQL Error: '.DB::mysqli()->error);
+        }
+        
+        
+        return $this->getKey();
+    }
+    
     public function sendMessageViaToken($msg, $tokens, $lon, $lat)
     {
         //Create new Location
@@ -42,7 +60,7 @@ class User extends ActiveRecord
     	//Create new Message
     	//TODO: Sanitize the body of a message.
     	$message = new Message();
-    	$message->author_id = ConfigFactory::get_facebook()->getUser();
+    	$message->author_id = $this->getKey();
     	$message->text = $msg;
     	$message->post_time = time();
     	$message->add();
@@ -52,7 +70,17 @@ class User extends ActiveRecord
     	$message_location->location_id = $location->getKey();
     	$message_location->messages_id = $message->getKey();
     	$message_location->add();
-    		
+    	
+        //Create new Message user to associate the current user to the new message
+        $message_current_user = new UserMessage();
+        $message_current_user->users_id =$this->getKey();
+        $message_current_user->messages_id = $message->getKey();
+        $message_current_user->opened = true;
+        $message_current_user->deleted = false;
+        $message_current_user->important = false;
+        $message_current_user->add();
+        
+        
     	//Create new token Message(s)
     	foreach($tokens as $token_id)
         {
