@@ -247,7 +247,7 @@ class User extends ActiveRecord
      * @return boolean True if this user is associated with the given token, 
      *                  false, otherwise.
      */
-    private function isInToken($token)
+    public function isInToken($token)
     {
         $query = "SELECT t_s.id
                   FROM tokens_users t_s

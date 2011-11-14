@@ -55,18 +55,24 @@ class Token extends ActiveRecord
                 $user->add();
                 
             }
-           
             
-            
-            
+            if(!$user->isInToken($this))
+            {
+                $tokenUser = new TokenUser();
+                
+                $tokenUser->users_id = $user_id;
+                $tokenUser->tokens_id = $this->getKey();
+                
+                $tokenUser->active = 0;
+                $tokenUser->pending = 1;
+                
+                $tokenUser->add();
+            }
+               
         }
-
-        
-        
-        
-        
+      
     }
-    
+  
 
 }
 
