@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="http://m.ucla.edu/assets/css.php" type="text/css">
 <script type="text/javascript" src="http://m.ucla.edu/assets/js.php"></script>
 <script type="text/javascript" src="javascript/MWFUtility.js"></script>
+<script type="text/javascript" src="javascript/CommunicationUtility.js"></script>
 <meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 </head>
 
@@ -36,9 +37,23 @@
 
 <script type="text/javascript">
 
-addElement("elementList", "The Band", "Jackson, Daniel, Richard", "viewgroup.html?id=1");
-addElement("elementList", "The Turtles", "Leonardo, Donatello, Raphael, Michaelangelo", "viewgroup.html?id=2");
-addElement("elementList", "Friends", "Bill", "viewgroup.html?id=3");
+AJAXRequest("https://rocking-apps.com/whooptxt/api/api.php?action=get_tokens", function (response) {
+	
+	if(response.status != "success")
+	{
+		alert("Connection to server failed!");
+		return;
+	}
+	
+	var tokens = response.data.tokens;
+	for (index in tokens)
+	{
+		if(tokens[index].pending === false)
+		{
+			addElement("elementList", tokens[index].name, "Members data will go here.", "viewgroup.html?id=" + tokens[index].id);
+		}
+	}
+});
 
 </script>
 
