@@ -137,7 +137,6 @@ function process_get_api_call($user, $data)
         $important = $data["important"];
         sendSuccessResponse(array("mark_status"=>$user->markMessage($msg_id, $opened, $delete, $important)));
         
-        throw new APIException("Action [".$data['action']."] not implemented.");
         break;
 
 
