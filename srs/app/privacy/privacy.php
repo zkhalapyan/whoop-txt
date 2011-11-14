@@ -68,7 +68,7 @@ $app_name = "Whoop-Txt";
 	
 	<hr>
 	
-	<a href="http://apps.facebook.com/sexy_quotes">Back to the App</a>
+	<a href="https://apps.facebook.com/whoop_txt">Back to the App</a>
 	
 
 </body>
