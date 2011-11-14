@@ -28,8 +28,8 @@
 </div>
 
 <div class="button-full button-padded">
-    <a onclick=alert('Added!',redirectInvitation()) class="button-first">Accept</a>
-    <a onclick=alert('Ignored!',redirectInvitation()) class="button-last">Ignore</a>
+    <a onclick=acceptInvite() class="button-first">Accept</a>
+    <a onclick=rejectInvite() class="button-last">Ignore</a>
 </div>
 
 <a href="invitations.html" class="button-full button-light button-padded">Back</a>
@@ -40,10 +40,57 @@
 
 <script type="text/javascript">
 
-document.getElementById('name').innerHTML = getUrlVars()["subject"];
-document.getElementById('members').innerHTML = "<strong>Members: </strong>" + getUrlVars()["body"];
+var myId = getUrlVars()["id"];
+var myToken;
 
-function redirectInvitation(){window.location = "invitations.html"};
+AJAXRequest("https://rocking-apps.com/whooptxt/api/api.php?action=get_tokens", function (response) {
+	
+	if(response.status != "success")
+	{
+		alert("Connection to server failed!");
+		return;
+	}
+	
+	var tokens = response.data.tokens;
+	for (index in tokens)
+	{
+		if(tokens[index].id === myId)
+		{
+			myToken = tokens[index];
+		}
+	}
+});
+
+document.getElementById('name').innerHTML = myToken.name;
+document.getElementById('members').innerHTML = "<strong>Members: </strong>" + "Members will go here.";
+
+function acceptInvite() {
+	var url = "https://rocking-apps.com/whooptxt/api/api.php?action=join_token&id=" + myId;
+	AJAXRequest(url, function (response) {
+		if(response.status == "success")
+		{
+			window.location = "invitations.html";
+		}
+		else
+		{
+			alert("Error connecting to server!");
+		}
+	});
+};
+
+function rejectInvite() {
+	var url = "https://rocking-apps.com/whooptxt/api/api.php?action=ingore_token&id=" + myId;
+	AJAXRequest(url, function (response) {
+		if(response.status == "success")
+		{
+			window.location = "invitations.html";
+		}
+		else
+		{
+			alert("Error connecting to server!");
+		}
+	});
+};
 
 </script>
 
