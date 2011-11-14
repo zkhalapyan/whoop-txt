@@ -125,7 +125,9 @@ function process_get_api_call($user, $data)
 
     case "get_messages":
 
-        throw new APIException("Action [".$data['action']."] not implemented.");
+        //TODO: Consider adding filter arguments so that a call can download messages that are deleted along with
+        //normal messages, or only get messages within a specified time frame. 
+        sendSuccessResponse(array("Data:"=>$user->getMessages()));
         break;
 
     case "mark_message":

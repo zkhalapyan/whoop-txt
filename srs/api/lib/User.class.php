@@ -23,7 +23,41 @@ class User extends ActiveRecord
     
     public function getMessages($limit = 100)
     {
+        //query that gets the messages out of UserMessages with their text
+       $query = "SELECT messages.id, messages.text, users.full_name, messages.post_time, 
+                 user_messages.opened, user_messages.important
+                 FROM users INNER JOIN messages on users.id = messages.author_id 
+                 INNER JOIN user_messages ON messages.id = user_messages.messages_id
+                 WHERE user_messages.users_id = '".$this->getKey()."' and user_messages.deleted != '1'
+                 LIMIT 0, $limit";
+       
+       $result = DB::mysqli()->query($query);
         
+        //Check for any errors on query execution
+        if($result === false)
+        {
+            throw new ARException('MySQL Error: '.DB::mysqli()->error);
+        }
+        
+        $message_list = array();
+        
+        //Read the result row by row.
+        while($row = mysqli_fetch_assoc($result))
+    	{
+            $message = array();
+            
+            $message["id"]        = $row["id"];
+            $message["text"]      = $row["text"];
+            $message["full_name"] = $row["full_name"];
+            $message["post_time"] = $row["post_time"];
+            $message["opened"]    = ($row["opened"] == "1")? true : false;
+            $message["important"] = ($row["important"] == "1")? true : false;
+            
+            $message_list[] = $message;
+
+    	}
+        
+        return $message_list;        
     } 
     
     public function sendMessageToUser($user)
