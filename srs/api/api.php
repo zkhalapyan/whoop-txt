@@ -115,12 +115,11 @@ function process_get_api_call($user, $data)
         param_check($data, array("message", "token_ids", "lon", "lat"));
         
         $msg       = $data["message"];
-        $token_ids = $data["token_ids"];
+        $token_ids = array($data["token_ids"]);
         $lon       = $data["lon"];
         $lat       = $data["lat"];
-
         
-        throw new APIException("Action [".$data['action']."] not implemented.");
+        sendSuccessResponse(array("message_id"=>$user->sendMessageViaToken($msg, $token_ids, $lon, $lat)));
         break;
 
     case "get_messages":

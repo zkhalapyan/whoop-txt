@@ -40,25 +40,53 @@ class User extends ActiveRecord
     	$message->author_id = ConfigFactory::get_facebook()->getUser();
     	$message->text = $msg;
     	$message->post_time = time();
-    	$message->post_time->add();
+    	$message->add();
     	
     	//Create new message Location associated to the location
     	$message_location = new MessageLocation();
-    	$message_location->location_id = $location->get_PK();
-    	$message_location->messages_id = $message->get_PK();
+    	$message_location->location_id = $location->getKey();
+    	$message_location->messages_id = $message->getKey();
     	$message_location->add();
     		
     	//Create new token Message(s)
-    	foreach($token_ids as $token_id)
+    	foreach($tokens as $token_id)
         {
             //for each listd group, add the message to those tokens (tokenMessage)
             $token_message = new TokenMessage();
-            $token_message->messages_id = $message->get_PK();
-            $token_message->token_id = token_id;
+            $token_message->messages_id = $message->getKey();
+            $token_message->token_id = $token_id;
             $token_message->add();
+            
+            //For each token, get every user id associated to it.
+            $query = "SELECT t.id, t_s.users_id
+                  FROM tokens_users t_s
+                  INNER JOIN tokens t ON t.id = t_s.tokens_id 
+                  INNER JOIN token_names t_n ON t_n.id = t.token_names_id
+                  WHERE tokens_id = $token_id";
+            
+            //Execute the query
+            $result = DB::mysqli()->query($query);
+            
+            //Check for any errors on query execution
+            if($result === false)
+            {
+                throw new ARException('MySQL Error: '.DB::mysqli()->error);
+            }
+            
+        
+            //Read the result row by row.
+            
+            while($row = mysqli_fetch_assoc($result))
+            {   
+                $user_message = new UserMessage();
+                $user_message->users_id = $row["users_id"];
+                $user_message->messages_id = $message->getKey();
+                $user_message->add();
+            }            
         }
         
-        return $message->get_PK();
+        
+        return $message->getKey();
     }
     
     /**
