@@ -7,6 +7,7 @@ require_once("./config/ConfigFactory.class.php");
 require_once("./lib/rest/RestUtils.class.php");
 require_once("./lib/rest/RestRequest.class.php");
 require_once("./lib/User.class.php");
+require_once("./lib/Token.class.php");
 require_once("./lib/TokenName.class.php");
 
 
@@ -79,7 +80,7 @@ try
     
 }
 //Catch any exceptions thrown while processing the API call.
-catch(APIException $ex)
+catch(Exception $ex)
 {
     
     sendErrorResponse($ex->getMessage());
@@ -115,7 +116,7 @@ function process_get_api_call($user, $data)
         param_check($data, array("message", "token_ids", "lon", "lat"));
         
         $msg       = $data["message"];
-        $token_ids = array($data["token_ids"]);
+        $token_ids = explode(',', $data["token_ids"]);
         $lon       = $data["lon"];
         $lat       = $data["lat"];
         
@@ -128,6 +129,14 @@ function process_get_api_call($user, $data)
         break;
 
     case "mark_message":
+        param_check($data, array("message_id", "opened", "delete", "important"));
+        
+        $msg_id = $data["message_id"];
+        $opened = $data["opened"];
+        $delete = $data["delete"];
+        $important = $data["important"];
+        sendSuccessResponse(array("mark_status"=>$user->markMessage($msg_id, $opened, $delete, $important)));
+        
         throw new APIException("Action [".$data['action']."] not implemented.");
         break;
 
@@ -141,10 +150,7 @@ function process_get_api_call($user, $data)
         //Set the parameter requirements for this API call.
         param_check($data, array("name"));
         
-        $name     = $data["name"];
-        $token_id = $user->createToken($name);
-
-        sendSuccessResponse(array("token_id" => $token_id));
+        sendSuccessResponse(array("token_id"=>$user->createToken($data["name"])));
 
         break;
 
@@ -161,25 +167,38 @@ function process_get_api_call($user, $data)
 
     case "get_tokens":
         
-        $user_tokens = $user->getTokens();
-        
-        sendSuccessResponse(array("tokens" => $user_tokens));
+        sendSuccessResponse(array("tokens" => $user->getTokens()));
         
         break;
 
-    case "invite_to_token":
+    case "send_invites":
 
+        //Set the parameter requirements for this API call.
+        param_check($data, array("token_id", "user_ids"));
+        
         $token_id = $data["token_id"];
-
-        throw new APIException("Action [".$data['action']."] not implemented.");
+        $user_ids = explode(",", $data["user_ids"]);
+        
+        $token = new Token($token_id);
+        
+        //If the specified token does not exist, throw an exception.
+        if(!$token->exists())
+        {
+            throw new APIException("Unable to join token. Token [ID: $token_id] does not exist.");
+        }
+        
+        $token->inviteUsers($user_ids);
 
         break;
 
     case "ignore_token":
 
-        $token_id = $data["token_id"];
-
-        throw new APIException("Action [".$data['action']."] not implemented.");
+        //Set the parameter requirements for this API call.
+        param_check($data, array("token_id"));
+        
+        $user->ignoreToken($data["token_id"]);
+        
+        sendSuccessResponse();
 
         break;
 

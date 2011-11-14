@@ -6,6 +6,11 @@ require_once(dirname(__FILE__).'/db/ActiveRecord.class.php');
 require_once(dirname(__FILE__).'/Token.class.php');
 require_once(dirname(__FILE__).'/TokenName.class.php');
 require_once(dirname(__FILE__).'/TokenUser.class.php');
+require_once(dirname(__FILE__).'/Location.class.php');
+require_once(dirname(__FILE__).'/Message.class.php');
+require_once(dirname(__FILE__).'/TokenMessage.class.php');
+require_once(dirname(__FILE__).'/MessageLocation.class.php');
+require_once(dirname(__FILE__).'/UserMessage.class.php');
 
 class User extends ActiveRecord
 {
@@ -89,6 +94,7 @@ class User extends ActiveRecord
         return $message->getKey();
     }
     
+    
     /**
      * 
      * @return All token objects associated with the user.
@@ -101,7 +107,7 @@ class User extends ActiveRecord
                   FROM tokens_users t_s
                   INNER JOIN tokens t ON t.id = t_s.tokens_id 
                   INNER JOIN token_names t_n ON t_n.id = t.token_names_id
-                  WHERE users_id = '".$this->get_PK()."'";
+                  WHERE users_id = '".$this->getKey()."'";
         
         //Execute the query.
         $result = DB::mysqli()->query($query);
@@ -129,8 +135,7 @@ class User extends ActiveRecord
 
     	}
         
-        return $token_list;
-        
+        return $token_list;        
     }
     
     public function joinToken($token_id)
@@ -146,10 +151,60 @@ class User extends ActiveRecord
         //If the user is not part of the token, then throw an exception.
         if(!$this->isInToken($token))
         {
+            throw new APIException("Unable to join token. User [".$this->getKey()."] is not invited to token [ID: $token_id].");
+        }
+        
+        $query = "UPDATE tokens_users 
+                  SET active=1, pending=0 
+                  WHERE tokens_id=$token_id AND
+                        pending = 1 AND
+                        users_id=".$this->getKey();
+        
+        
+        $result = DB::mysqli()->query($query);
+        
+        if ($result === false)
+        {
+            throw new APIException('MySQL Error: '.DB::mysqli()->error);
+        }        
+        
+        return $result;
+        
+    }
+    
+    public function ignoreToken($token_id)
+    {
+        $token = new Token($token_id);
+        
+        //If the specified token does not exist, throw an exception.
+        if(!$token->exists())
+        {
             throw new APIException("Unable to join token. Token [ID: $token_id] does not exist.");
         }
         
+        //If the user is not part of the token, then throw an exception.
+        if(!$this->isInToken($token))
+        {
+            throw new APIException("Unable to join token. User [".$this->getKey()."] is not invited to token [ID: $token_id].");
+        }
+        
+        $query = "UPDATE tokens_users 
+                  SET active=0, pending=0 
+                  WHERE tokens_id=$token_id AND
+                        users_id=".$this->getKey();
+        
+        
+        $result = DB::mysqli()->query($query);
+        
+        if ($result === false)
+        {
+            throw new APIException('MySQL Error: '.DB::mysqli()->error);
+        }        
+        
+        return $result;
+        
     }
+    
     
     /**
      * 
@@ -166,19 +221,19 @@ class User extends ActiveRecord
         
         //Create a new token associated with the new token name.
         $token = new Token();
-        $token -> token_names_id = $token_name->get_PK();
+        $token -> token_names_id = $token_name->getKey();
         $token -> add();
         
         //Create a new token user.
         $token_user = new TokenUser();
-        $token_user -> users_id = $this->get_PK();
-        $token_user -> tokens_id = $token->get_PK();
+        $token_user -> users_id = $this->getKey();
+        $token_user -> tokens_id = $token->getKey();
         $token_user -> active = true;
         $token_user -> pending = false;
         $token_user->add();
         
         //Return the created token's ID.
-        return $token->get_PK();
+        return $token->getKey();
         
         
     }
@@ -197,7 +252,7 @@ class User extends ActiveRecord
         $query = "SELECT t_s.id
                   FROM tokens_users t_s
                   WHERE t_s.tokens_id='$token->id' AND
-                  t_s.users_id = '".$this->get_PK()."'";
+                  t_s.users_id = '".$this->getKey()."'";
         
         $result = DB::mysqli()->query($query);
 
@@ -218,7 +273,7 @@ class User extends ActiveRecord
      * @return boolean Returns true if a user is associated with at least one
      *                 token with the specified name.
      */
-    private function isInTokenByName($token_name)
+    public function isInTokenByName($token_name)
     {
         //Get the tokens associated with users.
         $user_tokens = $this->getTokens();
@@ -237,7 +292,23 @@ class User extends ActiveRecord
         return false;
     }
     
-    
+    /**
+     * Returns false if the user is an invalid Facebook users; otherwise,
+     * retreives public information about the user and returns it.
+     */
+    public function getProfile()
+    {
+        try 
+        {
+            $profile = ConfigFactory::get_facebook()->api("/".$this->getKey());
+        }
+        catch(Exception $ex)
+        {
+            return false;
+        }
+        
+        return $profile;
+    }
 }
 
 ?>

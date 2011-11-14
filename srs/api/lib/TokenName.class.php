@@ -35,7 +35,6 @@ class TokenName extends ActiveRecord
             $token_name_id  = $token_name->create();
         }
         
-        echo $token_name_id;
         
         $produced_token_name = new TokenName($token_name_id);
         $produced_token_name->read();
