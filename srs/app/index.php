@@ -64,20 +64,13 @@ require_once (dirname(dirname(__FILE__))."/api/config/ConfigFactory.class.php");
     </head>
     
     <body>
-        
         <?PHP include("app_header.php"); ?>
         
-        <h1> Whoop-Txt </h1>
+        <div id="bodyContent">
+        <h1> Messages </h1>
+        </div>
         
-
-        <ul id="menu">
-               <li><a href="index.php" target="_self">Messages</a></li>
-               <li><a href="messages.php" target="_self">Whoop It</a></li>
-               <li><a href="groups.php" target="_self">Groups</a></li>
-               <li><a href="invitations.php" target="_self">Invitations</a></li>
-               <li><a href="help.php" target="_self">Help</a></li>
-        </ul>
-
+        <?PHP include("app_footer.php"); ?>
     </body>
     
 </html>

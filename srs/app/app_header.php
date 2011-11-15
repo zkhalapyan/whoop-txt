@@ -30,26 +30,28 @@
 	//-->
 </script>
  
- 
-
-<!-- TOP REPORT OPTIONS -->
-<a class="fb_link" href="privacy/privacy.php">Privacy Policy</a>
-
-&#183;
-
-<a class="fb_link" href="privacy/report_app.php">Report/Contact this Application</a>
-
-&#183;
-
-<a class="fb_link" href="">Settings</a>
-
-
-<hr style="color:#D9D9D9;"/>
-
-
 <!-- GOOGLE AD DISPLAY -->
 <div align="center">
 	<script type="text/javascript"
 	src="//pagead2.googlesyndication.com/pagead/show_ads.js">
 	</script>
 </div>
+
+    <div style="fixed; width: 728px; margin: auto;">
+    <img style="float:left;" alt="" src="images/menu_left2.png"/>
+        <ul id="menu">
+            <li class="logo">
+                
+            </li>
+               <li><a href="messages.php" target="_self">Messages</a></li>
+               <li><a href="share.php" target="_self">Whoop It</a></li>
+               <li><a href="groups.php" target="_self">Groups</a></li>
+               <li><a href="invitations.php" target="_self">Invitations</a></li>
+               <li><a href="help.php" target="_self">Help</a></li> 
+        </ul>
+        <img style="float:left;" alt="" src="images/menu_right.png"/>
+    </div>
+    <div style="float:none; clear:both;"></div>
+
+
+
