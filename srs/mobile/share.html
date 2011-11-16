@@ -7,6 +7,9 @@
 <link rel="stylesheet" href="http://m.ucla.edu/assets/css.php" type="text/css">
 <script type="text/javascript" src="http://m.ucla.edu/assets/js.php"></script>
 <script type="text/javascript" src="http://m.ucla.edu/assets/js.php?standard_libs=geolocation"></script>
+<script type="text/javascript" src="javascript/CommunicationUtility.js"></script>
+<script type="text/javascript" src="javascript/common.js"></script>
+<script type="text/javascript" src="javascript/actb.js"></script>
 </head>
 
 <body>
@@ -22,7 +25,7 @@
 <form class="form-full form-padded">
     <h1 class="light form-first">Share New Whoop</h1>
     <label for="audience">Tags</label>
-    <input type="text" name="audience" id="audience" />
+    <input type="textbox" name="audience" id="audience" />
     <label for="subject">Subject</label>
     <input type="text" name="subject" id="subject" />
     <label for="body">Message</label>
@@ -35,12 +38,39 @@
 </div>
 
 <script type="text/javascript">
+
+autoCompleteArray = new Array();
+autoCompleteIds = new Array();
+
+AJAXRequest("https://rocking-apps.com/whooptxt/api/api.php?action=get_tokens", function (response) {
+	
+	if(response.status != "success")
+	{
+		alert("Connection to server failed!");
+		return;
+	}
+	
+	var tokens = response.data.tokens;
+	for (index in tokens)
+	{
+		if(tokens[index].pending === false && tokens[index].active === true)
+		{
+			autoCompleteArray.push(tokens[index].name);
+			autoCompleteIds.push(tokens[index].id);
+		}
+	}
+	
+	actb(document.getElementById('audience'), autoCompleteArray);
+	
+});
+
 function submitWhoop () {
 	mwf.touch.geolocation.getPosition(
 		function(pos){ alert("Latitude:"+pos['latitude']+", Longitude:"+pos['longitude']+", Accuracy:"+pos['accuracy']); }, 
 		function(err){ alert("Err:"+err); }
 	);
 }
+
 </script>
 
 </body>
