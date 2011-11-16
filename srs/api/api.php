@@ -94,6 +94,9 @@ catch(Exception $ex)
 
 function process_get_api_call($user, $data)
 {
+    
+    $facebook = ConfigFactory::get_facebook();
+    
     switch($data['action'])
     {
 
@@ -124,10 +127,10 @@ function process_get_api_call($user, $data)
         break;
 
     case "get_messages":
-
+        
         //TODO: Consider adding filter arguments so that a call can download messages that are deleted along with
         //normal messages, or only get messages within a specified time frame. 
-        sendSuccessResponse(array("Data:"=>$user->getMessages()));
+        sendSuccessResponse(array("messages"=>$user->getMessages()));
         break;
 
     case "mark_message":
@@ -137,11 +140,21 @@ function process_get_api_call($user, $data)
         $opened = $data["opened"];
         $delete = $data["delete"];
         $important = $data["important"];
-        sendSuccessResponse(array("mark_status"=>$user->markMessage($msg_id, $opened, $delete, $important)));
+        sendSuccessResponse(array("mark_succes"=>$user->markMessage($msg_id, $opened, $delete, $important)));
         
         break;
 
-
+    case "whoop":
+        param_check($data, array("message", "lon", "lat"));
+        
+        
+        throw new APIException("Action [".$data['action']."] not implemented.");
+        break;
+    
+    case "get_whoops":
+        param_check($data, array("message", "lon", "lat"));
+        throw new APIException("Action [".$data['action']."] not implemented.");
+        break;
     /* * * * * * * * * * * * * * *
      * TOKEN RELATED CASES BELOW *
      * * * * * * * * * * * * * * */
@@ -190,6 +203,8 @@ function process_get_api_call($user, $data)
         
         $token->inviteUsers($user_ids);
 
+        sendSuccessResponse();
+        
         break;
 
     case "ignore_token":
@@ -203,6 +218,23 @@ function process_get_api_call($user, $data)
 
         break;
 
+    case "get_token_users":
+        
+        //Set the parameter requirements for this API call.
+        param_check($data, array("token_id"));
+        
+        $token = new Token($data["token_id"]);
+        
+        sendSuccessResponse($token->getUsers());
+     
+    case "get_friends":
+        
+        $friends = $facebook->api("me/friends");
+        
+        sendSuccessResponse($friends["data"]);
+        
+        break;
+        
     default:
         throw new APIException("Action [".$data['action']."] not supported.");
         
