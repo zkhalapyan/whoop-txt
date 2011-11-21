@@ -15,3 +15,17 @@ function handleError(response) {
 		return;
 	}
 };
+
+function deleteMessage (id) {
+	AJAXRequest("https://rocking-apps.com/whooptxt/api/api.php?action=mark_message&delete=true&opened=true&important=false&message_id="+id, function (response) {
+		
+		if(response.status != "success")
+		{
+			handleError(response);
+			return;
+		}
+		
+		window.location = "messages.html";
+		
+	});
+};
