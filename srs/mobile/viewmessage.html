@@ -31,7 +31,7 @@
 </div>
 
 <div class="button-full button-padded">
-    <a onclick="deleteMessage()" class="button-first">Delete</a>
+    <a onclick="deleteMessage(id)">Delete</a>
 </div>
 
 <a href="messages.html" class="button-full button-light button-padded">Back</a>
@@ -45,20 +45,6 @@
 document.getElementById('subject').innerHTML = getUrlVars()["subject"];
 document.getElementById('body').innerHTML = getUrlVars()["body"];
 var id = getUrlVars()["id"];
-
-function deleteMessage () {
-	AJAXRequest("https://rocking-apps.com/whooptxt/api/api.php?action=mark_message&delete=true&opened=true&important=false&message_id="+id, function (response) {
-		
-		if(response.status != "success")
-		{
-			handleError(response);
-			return;
-		}
-		
-		window.location = "messages.html";
-		
-	});
-};
 
 </script>
 
