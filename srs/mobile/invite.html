@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>Whoop Txt | Invite</title>
+<link rel="stylesheet" href="http://m.ucla.edu/assets/css.php" type="text/css">
+<script type="text/javascript" src="http://m.ucla.edu/assets/js.php"></script>
+<script type="text/javascript" src="javascript/CommunicationUtility.js"></script>
+<script type="text/javascript" src="javascript/WhoopTxtUtility.js"></script>
+<script type="text/javascript" src="javascript/common.js"></script>
+<script type="text/javascript" src="javascript/actb.js"></script>
+</head>
+
+<body>
+
+<h1 id="header">
+    <span>Whoop Txt</span> 
+</h1>
+
+<a id="button-top" button-full class="button-full button-padded" href="menu.html">
+	Menu
+</a>
+
+<form name="inviteForm" class="form-full form-padded">
+    <h1 class="light form-first">Invite</h1>
+	<label for="invite">New Members</label>
+    <input type="text" name="invite" id="invite" />
+</form>
+
+
+<div class="button-full button-padded">
+    <a href="#" onclick="InviteMembers()" class="button-first">Invite</a>
+</div>
+
+<div id="footer"> 
+    <p><a href="help.html">Help</a> | <a href="../desktop/menu.html">View Full Site</a></p> 
+</div>
+
+<script type="text/javascript">
+
+var id = getUrlVars()["id"];
+
+autoCompleteArray = new Array();
+autoCompleteIds = new Array();
+
+AJAXRequest("https://rocking-apps.com/whooptxt/api/api.php?action=get_friends", function (response) {
+	
+	if(response.status != "success")
+	{
+		handleError(response);
+		return;
+	}
+	
+	var tokens = response.data;
+	for (index in tokens)
+	{
+		autoCompleteArray.push(tokens[index].name);
+		autoCompleteIds.push(tokens[index].id);
+	}
+	
+	actb(document.getElementById('invite'), autoCompleteArray);
+	
+});
+
+function InviteMembers() {
+	
+	var tokenIds = "";
+	var tokenNames = document.getElementById('invite').value.split(',');
+	for (var i=0; i<tokenNames.length; i++)
+	{
+		for (index in autoCompleteArray)
+		{
+			if(tokenNames[i] == autoCompleteArray[index] || tokenNames[i] == " " + autoCompleteArray[index])
+			{
+				tokenIds += autoCompleteIds[index] + ",";
+			}
+		}
+	}
+	
+	if(tokenIds.length > 0)
+	{
+		tokenIds = tokenIds.substr(0, tokenIds.length-1);
+	}
+	
+	var url = "https://rocking-apps.com/whooptxt/api/api.php?action=send_invites";
+	url += "&token_id=" + id;
+	url += "&user_ids=" + tokenIds;
+	
+	AJAXRequest(url, function (response) {
+		if(response.status != "success")
+		{
+			alert("Connection to server failed!");
+			return;
+		}
+		window.location = "groups.html";
+	});
+	
+};
+
+</script>
+
+</body>
+</html>
