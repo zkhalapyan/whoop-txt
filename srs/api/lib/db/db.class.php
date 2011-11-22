@@ -52,6 +52,20 @@ class DB {
         
         return self::$_mysqli;
     }
+    
+    /**
+     * Returns the number of rows matched by the query. Note that this is 
+     * different than number rows affected by the query. 
+     * 
+     * @return integer The number of rows matche by the query.
+     */
+    public static function matched_rows()
+    {
+        //Parse the digits from the info string that has the following format:
+        //Rows matched: 0 Changed: 0 Warnings: 0
+        preg_match_all('!\d+!', DB::mysqli()->info, $m);
+        return $m[0][0]; 
+    }
 }
 
 ?>
