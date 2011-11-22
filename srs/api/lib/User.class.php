@@ -61,7 +61,7 @@ class User extends ActiveRecord
             $msg = new Message($row["id"]);
             
             $message["id"]          = $row["id"];
-            $message["text"]        = $row["text"];
+            $message["text"]        = stripslashes($row["text"]);
             $message["author_name"] = $row["full_name"];
             $message["author_id"]   = $row["author_id"];
             $message["tokens"]      = $msg->getUserMessageTokens($this);
@@ -203,14 +203,9 @@ class User extends ActiveRecord
                   WHERE users_id = '".$this->getKey()."'";
         
         //Execute the query.
-        $result = DB::mysqli()->query($query);
+        $result = DB::query($query);
 
-        //Check for any errors on query execution.
-        if ($result === false)
-        {
-            throw new ARException('MySQL Error: '.DB::mysqli()->error);
-        }
-        
+
         //The constructed token list to be returned.
         $token_list = array();
         
@@ -220,7 +215,7 @@ class User extends ActiveRecord
             $token = array();
             
             $token["id"]      = $row["id"];
-            $token["name"]    = $row["name"];
+            $token["name"]    = stripslashes($row["name"]);
             $token["pending"] = ($row["pending"] == "1")? true : false;
             $token["active"]  = ($row["active"] == "1")? true : false;
             
@@ -316,7 +311,7 @@ class User extends ActiveRecord
         //If the token name already exits then retrieve it, and if it doesn't 
         //exist, create it and then return it. Using getTokenName allows 
         //avoiding creating duplicate token names.
-        $token_name = TokenName::getTokenName($new_token_name);
+        $token_name = TokenName::getTokenByName($new_token_name);
         
         //Create a new token associated with the new token name.
         $token = new Token();

@@ -81,7 +81,7 @@ class Message extends ActiveRecord
             $token = array();
             
             $token["id"]      = $row["id"];
-            $token["name"]    = $row["name"];
+            $token["name"]    = stripslashes($row["name"]);
             
             $tokens[] = $token;
 

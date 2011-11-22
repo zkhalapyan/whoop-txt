@@ -1,5 +1,6 @@
 <?php
 
+require_once(dirname(__FILE__).'/db/DB.class.php');
 require_once(dirname(__FILE__).'/db/ActiveRecord.class.php');
 
 class TokenName extends ActiveRecord 
@@ -17,8 +18,12 @@ class TokenName extends ActiveRecord
      * 
      * @return TokenName A token name object with the specified token name.
      */
-    public static function getTokenName($name)
+    public static function getTokenByName($name)
     {
+        
+        //Sanitize the token name.
+        $name = DB::mysqli()->real_escape_string($name);
+        
         $token_name = new TokenName();
         
         //Try to retrieve a token with the given name. If a token with the 
