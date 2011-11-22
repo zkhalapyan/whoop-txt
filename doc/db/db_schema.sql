@@ -133,8 +133,8 @@ DROP TABLE IF EXISTS `locations` ;
 
 CREATE  TABLE IF NOT EXISTS `locations` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `longitude` VARCHAR(45) NOT NULL ,
-  `latitude` VARCHAR(45) NOT NULL ,
+  `longitude` DOUBLE NOT NULL ,
+  `latitude` DOUBLE NOT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
@@ -173,7 +173,7 @@ CREATE  TABLE IF NOT EXISTS `user_messages` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `users_id` INT NOT NULL ,
   `messages_id` INT NOT NULL ,
-  `read` TINYINT(1)  NOT NULL DEFAULT false ,
+  `opened` TINYINT(1)  NOT NULL DEFAULT false ,
   `deleted` TINYINT(1)  NOT NULL DEFAULT false ,
   `important` TINYINT(1)  NOT NULL DEFAULT false ,
   PRIMARY KEY (`id`, `users_id`, `messages_id`) ,
