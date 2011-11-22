@@ -1,5 +1,9 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors','On');
+
+require_once('ARException.class.php');
 require_once dirname(dirname(dirname(__FILE__))).'/config/ConfigFactory.class.php';
 
 class DB {
@@ -51,6 +55,48 @@ class DB {
         }
         
         return self::$_mysqli;
+    }
+    
+    /**
+     * Executes a query on the current connection, and in case of errors,
+     * throws an ARException(...) with an appropriate message.
+     * 
+     * @param string $query The query string.
+     * @return type Result associated with the MySQL query.
+     */
+    public static function query($query)
+    {
+        $result = DB::mysqli()->query($query);
+        
+        //Check for any errors on query execution
+        if($result === false)
+        {
+            throw new ARException('MySQL Error: '.DB::mysqli()->error);
+        }
+        
+        return $result;
+    }
+    
+    /**
+     * Executes multiple queries on the current connection, and in case of 
+     * errors, throws an ARException(...) with an appropriate message.
+     * 
+     * @param string $query The query string. Multiple queries are separated 
+     *                      with as semicolon.
+     * 
+     * @return type Result associated with the MySQL query.
+     */
+    public static function multi_query($query)
+    {
+        $result = DB::mysqli()->multi_query($query);
+        
+        //Check for any errors on query execution
+        if($result === false)
+        {
+            throw new ARException('MySQL Error: '.DB::mysqli()->error);
+        }
+        
+        return $result;
     }
     
     /**
