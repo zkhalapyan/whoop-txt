@@ -28,13 +28,8 @@ class Message extends ActiveRecord
                   INNER JOIN token_names t_n ON t_n.id = t.token_names_id
                   WHERE t_m.messages_id = ".$this->getKey();
         
-        $result = DB::mysqli()->query($query);
+        $result = DB::query($query);
 
-        if ($result === false)
-        {
-            throw new ARException('MySQL Error: '.DB::mysqli()->error);
-        }
-        
         $tokens = array();
         
         //Read the result row by row.
@@ -51,6 +46,48 @@ class Message extends ActiveRecord
         
         return $tokens;
         
+    }
+    
+    /**
+     * Returns the message's tokens associated with the specified users. The
+     * user must be an active member of the token to be considered associated
+     * with that token - in other words, active = 1, pending = 0.
+     * 
+     * @param User $user All returned tokens will be associated with this user.
+     * @retur Token IDs and names associated with this message 
+     *        and specified user.
+     */
+    public function getUserMessageTokens($user)
+    {
+        $user_id = $user->getKey();
+        
+        $query = "SELECT t.id, t_n.name
+                  FROM token_messages t_m 
+                  INNER JOIN tokens t ON t.id = t_m.token_id
+                  INNER JOIN token_names t_n ON t_n.id = t.token_names_id
+                  INNER JOIN tokens_users t_u ON t_u.tokens_id = t.id
+                  WHERE t_u.users_id = $user_id
+                  AND t_u.active = 1
+                  AND t_u.pending = 0
+                  AND t_m.messages_id = ".$this->getKey();
+        
+        $result = DB::query($query);
+
+        $tokens = array();
+        
+        //Read the result row by row.
+        while($row = mysqli_fetch_assoc($result))
+    	{
+            $token = array();
+            
+            $token["id"]      = $row["id"];
+            $token["name"]    = $row["name"];
+            
+            $tokens[] = $token;
+
+    	}
+        
+        return $tokens;
     }
     
     

@@ -25,7 +25,6 @@ class User extends ActiveRecord
     {
        $user_id = $this->getKey();
         
-        //query that gets the messages out of UserMessages with their text
        $query = "SELECT messages.id, 
                         messages.text, 
                         messages.post_time, 
@@ -42,8 +41,10 @@ class User extends ActiveRecord
                  INNER JOIN user_messages ON messages.id = user_messages.messages_id 
                  
                  WHERE user_messages.users_id = '$user_id' 
-                   AND user_messages.deleted != 1 
-               
+                   AND user_messages.deleted <> 1 
+                 
+                 ORDER BY messages.post_time DESC 
+       
                  LIMIT 0, $limit";
        
       
@@ -63,7 +64,7 @@ class User extends ActiveRecord
             $message["text"]        = $row["text"];
             $message["author_name"] = $row["full_name"];
             $message["author_id"]   = $row["author_id"];
-            $message["tokens"]      = $msg->getTokens();
+            $message["tokens"]      = $msg->getUserMessageTokens($this);
             $message["post_time"]   = $row["post_time"];
             $message["opened"]      = ($row["opened"] == "1")? true : false;
             $message["important"]   = ($row["important"] == "1")? true : false;
@@ -123,20 +124,25 @@ class User extends ActiveRecord
                          INNER JOIN tokens_users t_u ON t_u.tokens_id = t.id
                          INNER JOIN users u ON u.id = t_u.users_id 
                          
-                         WHERE t.id IN (".implode(',', $tokens).");";
+                         WHERE t_u.active = 1
+                         AND t_u.pending <> 1
+                         AND t.id IN (".implode(',', $tokens).");";
+        
+        $result = DB::multi_query($insert_query);
         
         //Second query that creates association between tokens and the 
         //new message.
-        $insert_query .= "INSERT INTO token_messages
-                            (messages_id, token_id)
-                         
-                         SELECT $message_id, t.id 
-                         
-                         FROM tokens t
-                         
-                         WHERE t.id IN (".implode(',', $tokens).");";
-         
-        $result = DB::multi_query($insert_query);
+        $token_messages_query = "INSERT INTO token_messages
+                                     (messages_id, token_id)
+
+                                 SELECT $message_id, t.id 
+
+                                 FROM tokens t
+
+                                 WHERE t.id IN (".implode(',', $tokens).");";
+
+        
+        $result = DB::multi_query($token_messages_query);
         
         //Mark the author's message as read.
         $message->mark($this, 1, 0, 0);
@@ -148,7 +154,8 @@ class User extends ActiveRecord
     
     /**
      * Provided an array of token IDs, returns all those token IDs that the
-     * current user is associated with. 
+     * current user is associated with. The token_user association has to be 
+     * active and not pending in order for it to be valid.
      */
     public function filterInvalidTokens($tokens)
     {
@@ -157,6 +164,8 @@ class User extends ActiveRecord
         $valid_tokens_query = "SELECT t_u.tokens_id
                                FROM tokens_users t_u
                                WHERE t_u.users_id = '".$this->getKey()."' 
+                               AND t_u.active = 1
+                               AND t_u.pending <> 1
                                AND t_u.tokens_id IN (".implode(',', $tokens).")";
         
         $result = DB::query($valid_tokens_query);
