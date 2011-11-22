@@ -23,22 +23,33 @@ class User extends ActiveRecord
     
     public function getMessages($limit = 100)
     {
+       $user_id = $this->getKey();
+        
         //query that gets the messages out of UserMessages with their text
-       $query = "SELECT messages.id, messages.text, users.full_name, messages.post_time, 
-                 user_messages.opened, user_messages.important
-                 FROM users INNER JOIN messages on users.id = messages.author_id 
-                 INNER JOIN user_messages ON messages.id = user_messages.messages_id
-                 WHERE user_messages.users_id = '".$this->getKey()."' and user_messages.deleted != '1'
+       $query = "SELECT messages.id, 
+                        messages.text, 
+                        messages.post_time, 
+                        
+                        users.full_name, 
+                        users.id as author_id,
+                        
+                        user_messages.opened, 
+                        user_messages.important
+                        
+                 FROM messages 
+                 
+                 INNER JOIN users on users.id = messages.author_id 
+                 INNER JOIN user_messages ON messages.id = user_messages.messages_id 
+                 
+                 WHERE user_messages.users_id = '$user_id' 
+                   AND user_messages.deleted != 1 
+               
                  LIMIT 0, $limit";
        
-       $result = DB::mysqli()->query($query);
+      
+        $result = DB::query($query);
         
-        //Check for any errors on query execution
-        if($result === false)
-        {
-            throw new ARException('MySQL Error: '.DB::mysqli()->error);
-        }
-        
+        //Will store a list of messages to be returned.
         $message_list = array();
         
         //Read the result row by row.
@@ -46,12 +57,16 @@ class User extends ActiveRecord
     	{
             $message = array();
             
-            $message["id"]        = $row["id"];
-            $message["text"]      = $row["text"];
-            $message["full_name"] = $row["full_name"];
-            $message["post_time"] = $row["post_time"];
-            $message["opened"]    = ($row["opened"] == "1")? true : false;
-            $message["important"] = ($row["important"] == "1")? true : false;
+            $msg = new Message($row["id"]);
+            
+            $message["id"]          = $row["id"];
+            $message["text"]        = $row["text"];
+            $message["author_name"] = $row["full_name"];
+            $message["author_id"]   = $row["author_id"];
+            $message["tokens"]      = $msg->getTokens();
+            $message["post_time"]   = $row["post_time"];
+            $message["opened"]      = ($row["opened"] == "1")? true : false;
+            $message["important"]   = ($row["important"] == "1")? true : false;
             
             $message_list[] = $message;
 
@@ -60,104 +75,106 @@ class User extends ActiveRecord
         return $message_list;        
     } 
     
-    public function sendMessageToUser($user)
+
+    /**
+     * Sends a message to all the users in the specified tokens. 
+     * 
+     * 1) Filters out the tokens that the user doesn't belong to. If the user 
+     *    doesn't belong to any of the tokens specified then throw an exception.
+     * 2) Get distinct user IDs belonging to the provided tokens.
+     * 3) Create a new message mapped to a location, and this author.
+     * 4) Associate the created message to all the distinct users.
+     * 5) Associate the created message with all the valid tokens.
+     * 
+     * 
+     * @param type $msg      The message body to be sent.
+     * @param type $tokens   An array of token IDs to send the message to.
+     * @param type $lon      The longitude of the message geolocation.
+     * @param type $lat      The latitude of the message geolocation.
+     * 
+     * @return type   
+     */
+    public function sendMessageViaToken($msg, $tokens, $lon = 0, $lat = 0)
     {
         
-    }
-    
-public function markMessage($message_id, $opened, $delete, $important)
-    {
-        $query = "UPDATE user_messages 
-                  SET opened = $opened, deleted = $delete, important = $important 
-                  WHERE users_id = '".$this->getKey(). "' and messages_id = '$message_id'";
+        //Filter out the tokens to only those that the user belongs to.
+        $valid_tokens = $this->filterInvalidTokens($tokens);
         
-        $result = DB::mysqli()->query($query);
-        
-        //Check for any errors on query execution
-        if($result === false)
+        //If the user doesn't belong to any of the specified tokens, then 
+        //throw an exception.
+        if(count($valid_tokens) == 0)
         {
-            throw new ARException('MySQL Error: '.DB::mysqli()->error);
+            throw new APIException("User [".$this->getKey()."] does not belong to tokens [".implode(',', $tokens)."]");
         }
         
+        //Create a new message, and retrieve its ID.
+        $message = Message::createGeoMessage($this, $msg, $lon, $lat);
+        $message_id = $message->getKey();
         
-        return $this->getKey();
-    }
-    
-    public function sendMessageViaToken($msg, $tokens, $lon, $lat)
-    {
-        //Create new Location
-    	$location = new Location();
-    	$location->longitude = $lon;
-    	$location->latitude = $lat;
-    	$location->add();
-    	
-    	//Create new Message
-    	//TODO: Sanitize the body of a message.
-    	$message = new Message();
-    	$message->author_id = $this->getKey();
-    	$message->text = $msg;
-    	$message->post_time = time();
-    	$message->add();
-    	
-    	//Create new message Location associated to the location
-    	$message_location = new MessageLocation();
-    	$message_location->location_id = $location->getKey();
-    	$message_location->messages_id = $message->getKey();
-    	$message_location->add();
-    	
-        //Create new Message user to associate the current user to the new message
-        $message_current_user = new UserMessage();
-        $message_current_user->users_id =$this->getKey();
-        $message_current_user->messages_id = $message->getKey();
-        $message_current_user->opened = true;
-        $message_current_user->deleted = false;
-        $message_current_user->important = false;
-        $message_current_user->add();
+
+        //Initial query that populates the 
+        $insert_query = "INSERT INTO user_messages 
+                           (users_id, messages_id, opened, deleted, important)
+                         
+                         SELECT DISTINCT(u.id), $message_id, 1, 0, 0
+                         
+                         FROM tokens t
+                         
+                         INNER JOIN tokens_users t_u ON t_u.tokens_id = t.id
+                         INNER JOIN users u ON u.id = t_u.users_id 
+                         
+                         WHERE t.id IN (".implode(',', $tokens).");";
         
+        //Second query that creates association between tokens and the 
+        //new message.
+        $insert_query .= "INSERT INTO token_messages
+                            (messages_id, token_id)
+                         
+                         SELECT $message_id, t.id 
+                         
+                         FROM tokens t
+                         
+                         WHERE t.id IN (".implode(',', $tokens).");";
+         
+        $result = DB::multi_query($insert_query);
         
-    	//Create new token Message(s)
-    	foreach($tokens as $token_id)
-        {
-            //for each listd group, add the message to those tokens (tokenMessage)
-            $token_message = new TokenMessage();
-            $token_message->messages_id = $message->getKey();
-            $token_message->token_id = $token_id;
-            $token_message->add();
-            
-            //For each token, get every user id associated to it.
-            $query = "SELECT t.id, t_s.users_id
-                  FROM tokens_users t_s
-                  INNER JOIN tokens t ON t.id = t_s.tokens_id 
-                  INNER JOIN token_names t_n ON t_n.id = t.token_names_id
-                  WHERE tokens_id = $token_id";
-            
-            //Execute the query
-            $result = DB::mysqli()->query($query);
-            
-            //Check for any errors on query execution
-            if($result === false)
-            {
-                throw new ARException('MySQL Error: '.DB::mysqli()->error);
-            }
-            
-        
-            //Read the result row by row.
-            
-            while($row = mysqli_fetch_assoc($result))
-            {   
-                $user_message = new UserMessage();
-                $user_message->users_id = $row["users_id"];
-                $user_message->messages_id = $message->getKey();
-                $user_message->add();
-            }            
-        }
-        
-        
+        //Mark the author's message as read.
+        $message->mark($this, 1, 0, 0);
+
         return $message->getKey();
+      
     }
     
     
     /**
+     * Provided an array of token IDs, returns all those token IDs that the
+     * current user is associated with. 
+     */
+    public function filterInvalidTokens($tokens)
+    {
+        //Filters the provided tokens to only those 
+        //that the user is associated with.
+        $valid_tokens_query = "SELECT t_u.tokens_id
+                               FROM tokens_users t_u
+                               WHERE t_u.users_id = '".$this->getKey()."' 
+                               AND t_u.tokens_id IN (".implode(',', $tokens).")";
+        
+        $result = DB::query($valid_tokens_query);
+        
+        $token_list = array();
+        
+        while($fetched_token_ids = mysqli_fetch_assoc($result))
+    	{           
+            $token_list[]     = $fetched_token_ids["tokens_id"];
+    	}
+        
+        return $token_list;
+    }
+    
+    /**
+     * Returns a list of all the tokens associated with the user. Information
+     * such as token ID, token name, and flags active and pending will be 
+     * included in the returned data.
      * 
      * @return All token objects associated with the user.
      */
@@ -165,10 +182,15 @@ public function markMessage($message_id, $opened, $delete, $important)
     {
         
         //Query to select all the user's tokens.
-        $query = "SELECT t.id, t_n.name, t_s.active, t_s.pending 
+        $query = "SELECT t.id, 
+                         t_n.name, 
+                         t_s.active, 
+                         t_s.pending 
                   FROM tokens_users t_s
+                  
                   INNER JOIN tokens t ON t.id = t_s.tokens_id 
                   INNER JOIN token_names t_n ON t_n.id = t.token_names_id
+                  
                   WHERE users_id = '".$this->getKey()."'";
         
         //Execute the query.
@@ -200,9 +222,14 @@ public function markMessage($message_id, $opened, $delete, $important)
         return $token_list;        
     }
     
-    public function joinToken($token_id)
+    /**
+     * Joins a token that the user was previously invited to.
+     * 
+     * @param Token $token The token to join.
+     * @return type 
+     */
+    public function joinToken($token)
     {
-        $token = new Token($token_id);
         
         //If the specified token does not exist, throw an exception.
         if(!$token->exists())
@@ -217,26 +244,28 @@ public function markMessage($message_id, $opened, $delete, $important)
         }
         
         $query = "UPDATE tokens_users 
-                  SET active=1, pending=0 
-                  WHERE tokens_id=$token_id AND
+                  SET active=1, 
+                      pending=0 
+                  WHERE tokens_id=".$token->getKey()." AND
                         pending = 1 AND
                         users_id=".$this->getKey();
         
         
-        $result = DB::mysqli()->query($query);
-        
-        if ($result === false)
-        {
-            throw new APIException('MySQL Error: '.DB::mysqli()->error);
-        }        
+        $result = DB::query($query);
         
         return $result;
         
     }
     
-    public function ignoreToken($token_id)
+    /**
+     * If the token doesn't represent an actual token, then this method will
+     * throw an exception stating the error.
+     * 
+     * @param  Token $token The token to ignore.
+     * @return boolean True if the token was successfully ignored.
+     */
+    public function ignoreToken($token)
     {
-        $token = new Token($token_id);
         
         //If the specified token does not exist, throw an exception.
         if(!$token->exists())
@@ -247,31 +276,30 @@ public function markMessage($message_id, $opened, $delete, $important)
         //If the user is not part of the token, then throw an exception.
         if(!$this->isInToken($token))
         {
-            throw new APIException("Unable to join token. User [".$this->getKey()."] is not invited to token [ID: $token_id].");
+            throw new APIException("Unable to join token. User [".$this->getKey()."] is not associated to token [ID: $token_id].");
         }
         
         $query = "UPDATE tokens_users 
-                  SET active=0, pending=0 
-                  WHERE tokens_id=$token_id AND
+                  SET active=0, 
+                      pending=0 
+                  WHERE tokens_id=".$token->getKey()." AND
                         users_id=".$this->getKey();
         
         
-        $result = DB::mysqli()->query($query);
+       return DB::query($query);
         
-        if ($result === false)
-        {
-            throw new APIException('MySQL Error: '.DB::mysqli()->error);
-        }        
-        
-        return $result;
+       
         
     }
     
     
     /**
+     * Creates a new token, associates it with the current user, and returns
+     * the token ID.
      * 
      * @param string $new_token_name The name of the token to create.
-     * @return int The primary key of the created token->user coupling record.
+     * 
+     * @return int The primary key of the created token.
      */
     public function createToken($new_token_name)
     {
@@ -307,7 +335,7 @@ public function markMessage($message_id, $opened, $delete, $important)
      * 
      * @param Token $token Token object that is associated with a primary key.
      * @return boolean True if this user is associated with the given token, 
-     *                  false, otherwise.
+     *                 false, otherwise.
      */
     public function isInToken($token)
     {
@@ -315,43 +343,51 @@ public function markMessage($message_id, $opened, $delete, $important)
                   FROM tokens_users t_s
                   WHERE t_s.tokens_id='$token->id' AND
                   t_s.users_id = '".$this->getKey()."'";
-        
-        $result = DB::mysqli()->query($query);
 
-        if ($result === false)
-        {
-            throw new APIException('MySQL Error: '.DB::mysqli()->error);
-        }
-        
+        $result = DB::query($query);
+
+
         return $result->num_rows > 0;
         
     }
     
-    /**
-     * Checks if the user is associated with at least one token with the 
-     * specified name. 
-     * 
-     * @param string $token_name The name of the token to check.
-     * @return boolean Returns true if a user is associated with at least one
-     *                 token with the specified name.
-     */
-    public function isInTokenByName($token_name)
+    public function isInTokens($tokens)
     {
-        //Get the tokens associated with users.
-        $user_tokens = $this->getTokens();
-        
-        //Walk through the tokens associated with the user, and if one of the 
-        //token's name equal to the specified token name, then return true.
-        foreach($user_tokens as $token)
+        if(count($tokens) == 0)
         {
-            if($token["name"] == $token_name)
+            return false;
+        }
+
+        $query = "SELECT t_u.tokens_id
+                  FROM tokens_users t_u
+                  WHERE t_u.users_id = '".$this->getKey()."' 
+                  AND t_u.tokens_id IN (".implode(',', $tokens).")";
+        
+
+        $result = DB::query($query);
+
+        if($result->num_rows == 0)
+        {
+            throw new APIException("User[".$this->getKey()."] doesn't belong to Token(s)[".implode(",", $token_ids)."].");
+        }    
+        
+        $token_list = array();
+        
+        while($fetched_token_ids = mysqli_fetch_assoc($result))
+    	{           
+            $token_list[]     = $fetched_token_ids["tokens_id"];
+    	}
+        
+        foreach($token_ids as $token_id)
+        {
+            if(!in_array($token_id, $token_list))
             {
-                return true;
+                throw new APIException("User[".$this->getKey()."] doesn't belong to Token[$token_id]. No message sent.");
             }
         }
         
-        //If the user was not associated with a 
-        return false;
+        return $token_list;
+        
     }
     
     /**

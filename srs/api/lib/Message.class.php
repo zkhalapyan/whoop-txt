@@ -57,15 +57,15 @@ class Message extends ActiveRecord
     /**
      * Marks the message as opened, deleted, or important.
      * 
-     * @param boolean $opened Indicates the the user has opened the message.
-     * @param boolean $deleted Indicates if the user has deleted a message.
-     * @param boolean $important Indicates if a message is important to the user.
+     * @param integer $opened Indicates the the user has opened the message.
+     * @param integer $deleted Indicates if the user has deleted a message.
+     * @param integer $important Indicates if a message is important to the user.
      * 
      * @return boolean True, if the message was marked successfully. 
      * 
      * @precondition This message exists.
      */
-    public function mark($user, $opened = true, $deleted = false, $important = false)
+    public function mark($user, $opened = 1, $deleted = 0, $important = 0)
     {
         
         //Sanitize the body of the message.
@@ -82,13 +82,7 @@ class Message extends ActiveRecord
                   WHERE users_id    = '".$user->getKey()."' 
                     AND messages_id = '".$this->getKey()."'";
         
-        $result = DB::mysqli()->query($query);
-        
-        //Check for any errors on query execution
-        if($result === false)
-        {
-            throw new ARException('MySQL Error: '.DB::mysqli()->error);
-        }
+        DB::query($query);
         
         //If the update query matched any records, then the user was not associated
         //with the given message ID.
