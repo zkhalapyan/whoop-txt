@@ -21,9 +21,6 @@ class TokenName extends ActiveRecord
     public static function getTokenByName($name)
     {
         
-        //Sanitize the token name.
-        $name = DB::mysqli()->real_escape_string($name);
-        
         $token_name = new TokenName();
         
         //Try to retrieve a token with the given name. If a token with the 
