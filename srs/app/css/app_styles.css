@@ -12,12 +12,22 @@
 */
 
 #bodyContent{
-    width : 770px ;
+    font-family:Arial, Helvetica, Sans-Serif;
+    font-size: 14px;
+    width : 670px ;
     text-align : left ;
     margin-left : auto ;
     margin-right : auto ;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
     position : static ;
-    background-color: #f8f8ff;
+    border-width: .2em; 
+    border-style: groove; 
+    border-color: navy-blue; 
+    background-color: white;
 }
 
 body {
@@ -27,73 +37,70 @@ body {
     margin:0px;
     text-align : center ;
     min-width : 770px ;
+    color: #172322;
+    background-image:url("../img/stripe_bg.gif");
+    background-repeat:repeat;
     
-    
-}
-
-/*
-#menu {
-    background: #333;
-    float:left;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-
 
 }
-#menu li {
-    float: left;
-    font: 80% "Lucida Sans Unicode", "Bitstream Vera Sans", "Trebuchet Unicode MS", "Lucida Grande", Verdana, Helvetica, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-#menu a {
-    background: #333 url("images/seperator.gif") bottom right no-repeat;
-    color: #ccc;
-    display: block;
-    float: left;
-    margin: 0;
-    padding: 10px 14px;
-    text-decoration: none;
-    font-weight:normal;
-}
-#menu a:hover {
-    background: #154f7d url("images/hover.gif") bottom center no-repeat;
-    color: #fff;
-    padding-bottom: 8px;
-}
-*/
 
 
-/* menu */ 
+/***************replay, share, delete ***************/
+#edit_menu
+{
+   
+}
+#edit_menu a
+{
+    line-height:18px;
+    font-size:12px;
+    color:#999999;     
+}
+
+#edit_menu a:hover
+{
+    color:blue;  
+    text-decoration:underline;
+    cursor: pointer;
+}
+
+
+
 #menu{ 
 margin:0px; 
 padding:0px; 
 list-style:none; 
-background-color:#172322;
+background-color:#1547a2;
 line-height:45px; 
 display:inline-block; 
 float:left;
-width:560px;
-z-index:1000;  
+width:578px;
+z-index:1000; 
+-moz-border-bottom-right-radius: 15px;
+border-bottom-right-radius: 15px;
 }
 
 #menu a 
 { 
 color:#fff; 
 text-decoration:none; 
+font-size: 12px;
 }
 
 #menu > li 
-{background:#172322 none repeat scroll 0 0; 
+{background:#1547a2 none repeat scroll 0 0; 
 cursor:pointer; float:left; 
 position:relative;
-padding:0px 10px;}
+padding:0px 10px;
+
+}
+
+
 
 #menu > li a:hover 
 {
-color:#0075EB;
+color:#a5beec; 
+text-decoration:underline;
 }
 
 /* corners*/
@@ -106,19 +113,210 @@ color:#0075EB;
 
 
 
-textarea{
-
-    font-size: 16px;
-    height: 20px;width: 500px;
-    resize:vertical; max-height:100px; min-height:0px;
-}
 
 #form_div{
     font-family:Arial, Helvetica, Sans-Serif; 
     font-size:18px; 
     }
     
-    #audience, #subject{    
-        font-family:Arial, Helvetica, Sans-Serif; 
-        font-size:16px; 
+  /************** COMMENT BOX ******************/
+
+table,td
+{
+border-collapse:collapse;
+border:  1px solid #999999;
+}
+
+#tbl_msg{
+    
+    border-bottom-width: 0;
+}
+
+
+#tbl_buttons{
+    background-color: gainsboro;  
+}
+
+#text_area{
+
+    font-size: 18px;
+    height: 35px;width: 670px;
+    resize:vertical; max-height:100px; min-height:0px;
+    border-right-color:white;
+    border-left-color: white;
+    border-top-color:white;
+    border-bottom-color:white;
+}
+
+#tag_img{
+        float:left;
+        margin-right:5px;
+        padding-right: 5px;
+        padding-left:5px;      
     }
+    
+#audience{    
+        font-size:18px;
+        color: #172322;
+        width: 300px;
+        height: 30px;
+        border-width: 1px;
+        line-height: 30px;
+        color: #122cbb;              
+    }
+    
+#whoop_butn{
+    float:right; 
+    background: url("../img/whoop_btn.png");
+    background-color:#2363a5;
+    height: 35px;
+    width:100px;
+    font-size: 0;
+    margin-right:2px;
+}
+
+#whoop_butn:hover{
+
+    background-color:#2d87e3;
+    cursor:pointer;
+}    
+
+/***************  list of messages ***************/
+    
+    
+#elementList{
+
+    margin:0;
+    padding: 0;
+}
+
+#elementList li {
+
+    position:relative;
+    border-bottom:1px solid #D2DADA;
+    padding:15px 15px 15px 10px;
+    list-style:none;
+    font-size:14px;
+}
+
+
+#elementList li:first-child{
+
+    border-top:1px solid #D2DADA;
+
+}
+
+ 
+
+#elementList li:hover {
+
+    background-color:#F7F7F7;
+    
+
+}
+
+#msg_txt{
+    float:left;
+    width: 545px;
+    overflow:hidden;
+    display:block;
+}
+
+#elementList #profile_pic
+{
+    float:left;
+    margin-right:10px;
+    border: 1px solid #446600;
+}
+
+/***************replay, share, delete ***************/
+#edit_menu
+{
+   
+}
+#edit_menu a
+{
+    line-height:18px;
+    font-size:12px;
+    color:#999999;     
+}
+
+#edit_menu a:hover
+{
+    color:blue;  
+    text-decoration:underline;
+    cursor: pointer;
+}
+
+
+/*************** groups ***************/
+#edit_menu
+{
+   
+}
+#edit_menu a
+{
+    line-height:18px;
+    font-size:12px;
+    color:#999999;     
+}
+
+#edit_menu a:hover
+{
+    color:blue;  
+    text-decoration:underline;
+    cursor: pointer;
+}
+
+
+
+#elementList2{
+
+    margin:0;
+    padding: 0;
+}
+
+#elementList2 li {
+
+    position:relative;
+    border-bottom:1px solid #D2DADA;
+    padding:15px 15px 15px 10px;
+    list-style:none;
+    font-size:14px;
+}
+
+
+#elementList2 li:first-child{
+
+    border-top:1px solid #D2DADA;
+
+}
+
+ 
+
+#elementList2 li:hover {
+
+    background-color:#F7F7F7;
+    
+
+}
+
+#elementList2 #profile_pic
+{
+    float:left;
+    margin-right:10px;
+    border: 1px solid #446600;
+}
+
+#clear{
+    clear:both;  
+}
+
+#user_name
+{
+    line-height: 18px;
+    font-size: 16px;
+    color: navy;
+}
+
+
