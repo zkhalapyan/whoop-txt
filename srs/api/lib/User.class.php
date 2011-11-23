@@ -21,8 +21,14 @@ class User extends ActiveRecord
         
     }
     
-    public function getMessages($limit = 100)
+    public function getMessages($token = null, $limit = 100)
     {
+       if($token != null && !$token->exists()) 
+       {
+           throw new APIException("Token [ID:".$token->getKey()."] does not exist.");
+           return;
+       }
+        
        $user_id = $this->getKey();
         
        $query = "SELECT messages.id, 
@@ -38,8 +44,8 @@ class User extends ActiveRecord
                  FROM messages 
                  
                  INNER JOIN users on users.id = messages.author_id 
-                 INNER JOIN user_messages ON messages.id = user_messages.messages_id 
-                 
+                 INNER JOIN user_messages ON messages.id = user_messages.messages_id
+       
                  WHERE user_messages.users_id = '$user_id' 
                    AND user_messages.deleted <> 1 
                  
@@ -69,12 +75,28 @@ class User extends ActiveRecord
             $message["opened"]      = ($row["opened"] == "1")? true : false;
             $message["important"]   = ($row["important"] == "1")? true : false;
             
-            $message_list[] = $message;
+            $include_message = false;
+            
+            if($token != null)
+            {
+                foreach($message["tokens"] as $msg_token)
+                {
+                    if($msg_token["id"] == $token->getKey())
+                    {
+                        $include_message = true;
+                    }
+                    
+                }
+            }
+            
+            if($token == null || $include_message)
+                $message_list[] = $message;
 
     	}
         
         return $message_list;        
     } 
+    
     
 
     /**
