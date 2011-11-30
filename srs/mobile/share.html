@@ -6,10 +6,10 @@
 <title>Whoop Txt | Share New Whoop</title>
 <link rel="stylesheet" href="http://m.ucla.edu/assets/css.php" type="text/css">
 <script type="text/javascript" src="http://m.ucla.edu/assets/js.php?standard_libs=geolocation"></script>
-<script type="text/javascript" src="javascript/CommunicationUtility.js"></script>
-<script type="text/javascript" src="javascript/WhoopTxtUtility.js"></script>
-<script type="text/javascript" src="javascript/common.js"></script>
-<script type="text/javascript" src="javascript/actb.js"></script>
+<script type="text/javascript" src="js/CommunicationUtility.js"></script>
+<script type="text/javascript" src="js/WhoopTxtUtility.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/actb.js"></script>
 </head>
 
 <body>
@@ -55,7 +55,6 @@ autoCompleteIds = new Array();
 
 getTokens(function (tokens) {
 	
-	var tokens = response.data.tokens;
 	for (index in tokens)
 	{
 		if(tokens[index].pending === false && tokens[index].active === true)
@@ -91,15 +90,9 @@ function submitWhoop () {
 	
 	var messageBody = document.getElementById('body').value;
 	
-	mwf.touch.geolocation.getPosition(
-		function(pos){
-			var lat = pos['latitude'];
-			var lon = pos['longitude'];
-			
-			shareWhoop(messageBody, tokenIds, lon, lat);
-		}, 
-		function(err){ alert("Err:"+err); }
-	);
+	getLocation(function (lat, lon) {
+		shareWhoop(messageBody, tokenIds, lon, lat);
+	});
 	
 };
 
