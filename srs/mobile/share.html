@@ -40,16 +40,20 @@
 
 <script type="text/javascript">
 
+var tokenNames = getUrlVars()["tokenNames"];
+if(tokenNames) {
+	document.getElementById("audience").value = tokenNames;
+}
+
+var text = getUrlVars()["text"];
+if(text) {
+	document.getElementById("body").value = text;
+}
+
 autoCompleteArray = new Array();
 autoCompleteIds = new Array();
 
-AJAXRequest("https://rocking-apps.com/whooptxt/api/api.php?action=get_tokens", function (response) {
-	
-	if(response.status != "success")
-	{
-		handleError(response);
-		return;
-	}
+getTokens(function (tokens) {
 	
 	var tokens = response.data.tokens;
 	for (index in tokens)
@@ -92,20 +96,7 @@ function submitWhoop () {
 			var lat = pos['latitude'];
 			var lon = pos['longitude'];
 			
-			var url = "https://rocking-apps.com/whooptxt/api/api.php?action=send_message";
-			url += "&message=" + messageBody;
-			url += "&token_ids=" + tokenIds;
-			url += "&lon=" + lon;
-			url += "&lat=" + lat;
-			
-			AJAXRequest(url, function (response) {
-				if(response.status != "success")
-				{
-					alert("Connection to server failed:\n" + url);
-					return;
-				}
-				window.location = "messages.html";
-			});
+			shareWhoop(messageBody, tokenIds, lon, lat);
 		}, 
 		function(err){ alert("Err:"+err); }
 	);

@@ -13,6 +13,22 @@ function getUrlVars()
     return vars;
 }
 
+function handleUnauthenticatedUser() {
+	window.location = "https://apps.facebook.com/whoop_txt";
+};
+
+function handleError(error) {
+	if(response.error == "Unauthenticated user.")
+	{
+		handleUnauthenticatedUser();
+	}
+	else
+	{
+		alert("Error: " + error);
+		return;
+	}
+};
+
 function AJAXRequest(url, callbackFunction)
 {
 	var xmlhttp;
@@ -39,7 +55,12 @@ function AJAXRequest(url, callbackFunction)
 					var stringResponse = xmlhttp.responseText;
 					var JSONResponse = eval('(' + stringResponse + ')');
 					
-					callbackFunction(JSONResponse);
+					if(JSONResponse.status == "success") {
+						callbackFunction(JSONResponse);
+					}
+					else {
+						handleError(JSONResponse.error);
+					}
 				}
 			}
 			else

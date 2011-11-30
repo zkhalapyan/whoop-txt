@@ -26,12 +26,8 @@
 </div>
 
 <div class="button-full button-padded">
-    <a onclick="alert('Responding has yet to be implemented!')" class="button-first">Reply</a>
-    <a onclick="alert('Re-sharing! has yet to be implemented!')" class="button-last">Re-Share</a>
-</div>
-
-<div class="button-full button-padded">
-    <a onclick="deleteMessage(id)">Delete</a>
+    <a onclick="reshareMsg()" class="button-first">Reshare</a>
+    <a onclick="deleteMsg()" class="button-last">Delete</a>
 </div>
 
 <a href="messages.html" class="button-full button-light button-padded">Back</a>
@@ -44,7 +40,14 @@
 
 document.getElementById('subject').innerHTML = getUrlVars()["subject"];
 document.getElementById('body').innerHTML = getUrlVars()["body"];
-var id = getUrlVars()["id"];
+
+function deleteMsg() {
+	deleteMessage(getUrlVars()["id"]);
+};
+
+function reshareMsg() {
+	reshareMessage(getUrlVars()["id"]);
+};
 
 </script>
 
