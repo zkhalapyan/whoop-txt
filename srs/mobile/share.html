@@ -52,6 +52,9 @@ if(text) {
 autoCompleteArray = new Array();
 autoCompleteIds = new Array();
 
+autoCompleteArray.push("Nearby");
+autoCompleteIds.push(-1);
+
 getTokens(function (tokens) {
 	
 	for (index in tokens)
@@ -89,9 +92,16 @@ function submitWhoop () {
 	
 	var messageBody = document.getElementById('body').value;
 	
-	getLocation(function (lat, lon) {
-		shareWhoop(messageBody, tokenIds, lon, lat);
-	});
+	if(tokenIds.indexOf("-1") != -1)
+	{
+		getLocation(function (lat, lon) {
+				shareWhoop(messageBody, tokenIds, lon, lat);
+		});
+	}
+	else
+	{
+		shareWhoop(messageBody, tokenIds, 0, 0);
+	}
 	
 };
 

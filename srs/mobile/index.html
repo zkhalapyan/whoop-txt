@@ -12,6 +12,27 @@
 
 <body class="front-page">
 
+<div id="fb-root"></div>
+<script>
+  (function() {
+    var e = document.createElement('script'); e.async = true;
+        e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+        document.getElementById('fb-root').appendChild(e);
+        }());
+</script>
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({ appId: '188715111203638', 
+      status: true, 
+      cookie: true,
+      xfbml: true,
+      oauth: true});
+
+      FB.Event.subscribe('auth.statusChange', handleStatusChange);  
+    };
+</script>
+
 <h1 id="header">
     <span>Whoop Txt</span> 
 </h1>
@@ -49,7 +70,7 @@
 <script type="text/javascript">
 
 generateFooterCode();
-validateAuthentication();
+//validateAuthentication();
 
 </script>
 
