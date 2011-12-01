@@ -15,7 +15,7 @@ function actb(obj,ca){
 	this.actb_textColor = '#FFFFFF';
 	this.actb_hColor = '#004DFF';
 	this.actb_fFamily = 'Verdana';
-	this.actb_fSize = '12px';
+	this.actb_fSize = '18px';
 	this.actb_hStyle = 'text-decoration:underline;font-weight="bold"';
 	/* --- Styles --- */
 

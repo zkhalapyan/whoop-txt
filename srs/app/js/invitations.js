@@ -151,9 +151,9 @@ function mcancelclosetime()
 	}
 }
 
-function loadGroup(id)
-{
-    window.location = "view_group_msg.php";
+function token_msg(token_id,token_name)
+{    
+      window.location= "index.php?token_id="+token_id+"&token_name="+token_name;           
 }
 
 function addElement(listDOMId, name, id) {
@@ -349,7 +349,8 @@ function addElement2(listDOMId, name, id) {
     div2.setAttribute("id", "user_name");
     var group_link = document.createElement("a");
     group_link.innerHTML = name;
-    group_link.onclick = new Function ("loadGroup("+id+")");
+    group_link.setAttribute("href", "javascript:token_msg(\""+id+"\",\""+name+"\")");
+    group_link.setAttribute("id", "group_attr");
     
     div2.appendChild(group_link);
     div1.appendChild(div2);

@@ -72,6 +72,9 @@ body
 	{
 	   font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
 	   font-size: 11px;
+/*           text-align: center;*/
+           background-color:#CCCCCC;
+           
 	}
 
 
@@ -79,11 +82,24 @@ body
  * CLASSES FOR FACEBOOK-STYLED PRIVACY POLICY  *
  * * * * * * * * * * * * * * * * * * * * * * * */
 
+.policy_header 
+	{
+            
+           color: #333;
+	   font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+	   font-size: 24px;
+           text-transform: uppercase;
+           text-align: center;
+	   
+	}
+        
 .policy_title 
 	{
 	   color: #333;
 	   font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
-	   font-size: 34px;
+	   font-size: 14px;
+           text-align: left;
+           font-weight: bold; 
 	   
 	}
 
@@ -92,6 +108,16 @@ body
 	   color: #333;
 	   font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
 	   font-size: 11px;
+           text-align: left;
+           
+	}
+        
+ .policy_footer
+	{
+	   color: #333;
+	   font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+	   font-size: 11px;
+           text-align: center;
 	}
 
 
@@ -105,7 +131,7 @@ body
         color: #3B5998; 
         text-decoration: none; 
         font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
-        font-size:11px; 
+        font-size:14px; 
     }
  a.fb_link:hover 
     {

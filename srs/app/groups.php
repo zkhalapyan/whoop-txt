@@ -24,8 +24,7 @@ require_once (dirname(dirname(__FILE__))."/api/config/ConfigFactory.class.php");
         <script language="javascript" type="text/javascript" src="js/actb.js"></script>
         <script language="javascript" type="text/javascript" src="js/common.js"></script>
         <script language="javascript" type="text/javascript" src="js/invitations.js"></script>
-        <link rel="stylesheet" href="css/menu_group.css" type="text/css" />
-        <script type="text/javascript" src="js/popup.js"></script>
+        <link rel="stylesheet" href="css/menu_group.css" type="text/css" /> 
         
         <script type="text/javascript">
         
