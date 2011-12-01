@@ -4,10 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>Whoop Txt | Share New Whoop</title>
-<link rel="stylesheet" href="http://m.ucla.edu/assets/css.php" type="text/css">
-<script type="text/javascript" src="http://m.ucla.edu/assets/js.php?standard_libs=geolocation"></script>
+<link rel="stylesheet" href="https://m.ucla.edu/assets/css.php" type="text/css">
+<script type="text/javascript" src="https://m.ucla.edu/assets/js.php?standard_libs=geolocation"></script>
 <script type="text/javascript" src="js/CommunicationUtility.js"></script>
 <script type="text/javascript" src="js/WhoopTxtUtility.js"></script>
+<script type="text/javascript" src="js/MWFUtility.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/actb.js"></script>
 </head>
@@ -39,6 +40,8 @@
 </div>
 
 <script type="text/javascript">
+
+generateFooterCode();
 
 var tokenNames = getUrlVars()["tokenNames"];
 if(tokenNames) {

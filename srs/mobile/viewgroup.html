@@ -4,10 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>Whoop Txt | Groups</title>
-<link rel="stylesheet" href="http://m.ucla.edu/assets/css.php" type="text/css">
-<script type="text/javascript" src="http://m.ucla.edu/assets/js.php"></script>
+<link rel="stylesheet" href="https://m.ucla.edu/assets/css.php" type="text/css">
+<script type="text/javascript" src="https://m.ucla.edu/assets/js.php"></script>
 <script type="text/javascript" src="js/CommunicationUtility.js"></script>
 <script type="text/javascript" src="js/WhoopTxtUtility.js"></script>
+<script type="text/javascript" src="js/MWFUtility.js"></script>
 </head>
 
 <body>
@@ -32,13 +33,11 @@
 
 <a href="groups.html" class="button-full button-light button-padded">Back</a>
 
-<div id="footer"> 
-    <p><a href="help.html">Help</a> | <a href="../desktop/menu.html">View Full Site</a></p> 
-</div>
-
 <script type="text/javascript">
 
-var id = getUrlVars()["id"]
+generateFooterCode();
+
+var id = getUrlVars()["id"];
 
 function invite()
 {

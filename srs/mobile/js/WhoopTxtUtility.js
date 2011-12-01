@@ -1,5 +1,8 @@
 // JavaScript Document
 
+function validateAuthentication () {
+};
+
 function deleteMessage (id) {
 	AJAXRequest("https://rocking-apps.com/whooptxt/api/api.php?action=mark_message&deleted=true&opened=true&important=false&message_id="+id, function (response) {
 		
