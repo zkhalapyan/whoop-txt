@@ -72,4 +72,8 @@ function AJAXRequest(url, callbackFunction)
 	
 	xmlhttp.send();
 	
-}
+};
+
+function validateAuthentication () {
+	AJAXRequest("https://rocking-apps.com/whooptxt/api/api.php?action=say_hello", function () {} );
+};

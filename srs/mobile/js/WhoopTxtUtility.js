@@ -1,31 +1,13 @@
 // JavaScript Document
 
-function validateAuthentication () {
-};
-
-function deleteMessage (id) {
+function deleteMessage(id) {
 	AJAXRequest("https://rocking-apps.com/whooptxt/api/api.php?action=mark_message&deleted=true&opened=true&important=false&message_id="+id, function (response) {
-		
-		if(response.status != "success")
-		{
-			handleError(response);
-			return;
-		}
-		
 		window.location = "messages.html";
-		
 	});
 };
 
 function getMessages(callback) {
 	AJAXRequest("https://rocking-apps.com/whooptxt/api/api.php?action=get_messages", function (response) {
-	
-		if(response.status != "success")
-		{
-			handleError(response);
-			return;
-		}
-		
 		callback(response.data.messages);
 	});
 };
