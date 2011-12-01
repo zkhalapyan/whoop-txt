@@ -53,7 +53,7 @@ getMessages(function (messages) {
 		
 		msgText += messages[index]["author_name"] + ": " + messages[index]["text"];
 		
-		addElement("elementList", tokensText, msgText, "viewmessage.html?id=" + messages[index].id);
+		addElementWithPicture("elementList", messages[index]["author_id"], tokensText, msgText, "viewmessage.html?id=" + messages[index].id);
 	}
 
 });

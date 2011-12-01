@@ -35,3 +35,22 @@ function addElement(listDOMId, subject, text, baseOnClickURL) {
 	
 };
 
+function addElementWithPicture(listDOMId, userId, subject, text, baseOnClickURL) {
+	
+	var msgLink = document.createElement("a");
+	if(baseOnClickURL) {
+		msgLink.setAttribute("href", baseOnClickURL+"&subject="+subject+"&body="+text);
+	}
+	msgLink.innerHTML =  subject + "<br />";
+	msgLink.innerHTML += "<span class='smallprint'>" + text + "</span>";
+	
+	var profPic = document.createElement("img");
+	profPic.setAttribute("src", "https://graph.facebook.com/"+userId+"/picture");
+	
+	var msg = document.createElement("li");
+	msg.appendChild(msgLink);
+	msg.setAttribute("style", "padding-left: 60px; background: white url(https://graph.facebook.com/"+userId+"/picture) 2px 2px no-repeat;");
+	
+	document.getElementById(listDOMId).appendChild(msg);
+	
+};
