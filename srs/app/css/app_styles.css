@@ -11,26 +11,6 @@
    Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
 
-/*#header_messages{
-    position:absolute;
-         padding-bottom:0px;
-     margin-bottom:0px;
-     left:100px;
-     bottom:1000px;
-    z-index:1;
-}
-#header_bars{
-     position:absolute;
-     
-     
-     padding-bottom:0px;
-     margin-bottom:0px;
-     
-     bottom:500px;
-     top:50px;
-     z-index:0;
-     
-}*/
 #bodyContent{
     
     font-family:Arial, Helvetica, Sans-Serif;
@@ -227,34 +207,7 @@ margin-top:5px;
 
 
 }
-/*.whoop_butn {
-        float:right;
-	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
-	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
-        background-color:#1547a2;
-	-moz-border-radius:9px;
-	-webkit-border-radius:9px;
-	
-	border:2px solid #dcdcdc;
-	display:inline-block;
-	color:white;
-	font-family:georgia;
-	font-size:15px;
 
-	padding:6px 24px;
-	text-decoration:none;
-	text-shadow:1px 1px 0px #ffffff;
-}
-.whoop_butn:hover {
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
-        background-color:#475cdd;
-        cursor:pointer;
-}
-.whoop_butn:active {
-	position:relative;
-	top:1px;
-}*/
 /*************************************************/
 /***************  list of messages ***************/
 /*************************************************/    
@@ -449,6 +402,16 @@ margin-top:5px;
     cursor: pointer;
 }
 
+
+#group_attr{
+    text-decoration: none;
+    color: #1547a2;
+}
+
+#group_attr:hover{
+    text-decoration: underline;  
+}
+
 #user_name a:hover{
     text-decoration:underline;
 }
@@ -522,8 +485,14 @@ margin-top:5px;
   margin-top: 5px;
   width: 250px;
   border: 1px solid black;
-/* background-color: #777 ;*/
   background-image: url(../img/bg-pup.png);
   color: white;
   font-size: 1em;
+}
+
+#geo_button{
+    float:right;
+    cursor: pointer;
+    margin-top:20px;
+    margin-left:30px;
 }

@@ -22,11 +22,11 @@
         <p class = "policy_text">NOTE: This is not the official "report" page of Facebook!
             You are reporting an application that is in violation of 
             the <a href="http://www.facebook.com/terms.php" target="blank" class="fb_link"> 
-            <font size="1">Statement of Rights and Responsibilities</font></a> Developers will 
+            Statement of Rights and Responsibilities</a>. Developers will 
             accept your report and work on it at once.</p>
                                          
          <p class = "policy_text"><b>Description & Steps to Reproduce:</b>
-            <span>Include step-by-step instructions to reach content and sample user IDs where applicable.</span></p>  
+            <span style="color:darkred">Include step-by-step instructions to reach content and sample user IDs where applicable.</span></p>  
          
          <table>     
 

@@ -37,66 +37,36 @@ require_once (dirname(dirname(__FILE__))."/api/config/ConfigFactory.class.php");
     
           var url_vars = getUrlVars();
                  
-          var url = "https://rocking-apps.com/whooptxt/api/api.php?action=get_messages";
-          var url2 = "https://rocking-apps.com/whooptxt/api/api.php?action=get_messages&token_id="+url_vars["token_id"];
-        
-        
-        // LOAD ALL MESSAGES 
-        if(url_vars["token_id"]==undefined)
-        {                 
-            AJAXRequest(url, function (response) {
+          var lat = url_vars["lat"];
+          var lon = url_vars["lon"];
+         
+          var url = "https://rocking-apps.com/whooptxt/api/api.php?action=get_geomessages&lat="+lat+"&lon="+lon; 
+          
+           
+         AJAXRequest(url, function (response) {
 
-                    if(response.status != "success")
-                    {
-                            alert("Server Error!");
-                    }
+                if(response.status != "success")
+                {
+                        alert("Server Error!");
+                }
 
-                    var messages = response.data.messages;
+                var messages = response.data;
 
-                    for (index in messages)
-                    {
-                        var names_array = new Array();
-                        var token_id_array = new Array();
+                for (index in messages)
+                {
+                    var names_array = new Array();
+                    var token_id_array = new Array();
 
-                        for(index2 in messages[index]["tokens"])
-                            {
-                                token_id_array.push(messages[index]["tokens"][index2]["id"]);
-                                names_array.push( messages[index]["tokens"][index2]["name"]  );
-                            }
+                    for(index2 in messages[index]["tokens"])
+                        {
+                            token_id_array.push(messages[index]["tokens"][index2]["id"]);
+                            names_array.push( messages[index]["tokens"][index2]["name"]  );
+                        }
 
-                        addElement("elementList",messages[index]["id"], messages[index]["author_name"], messages[index]["author_id"], messages[index]["text"], token_id_array,names_array, messages[index]["post_time"]);
-                    }
-            });               
-        }
-        
-        // LOAD ALL MESSAGES WITHIN CERTAIN TOKEN
-        else{
-             AJAXRequest(url2, function (response) {
+                    addElement("elementList",messages[index]["id"], messages[index]["author_name"], messages[index]["author_id"], messages[index]["text"], token_id_array,names_array, messages[index]["post_time"]);
+                }
+        }); 
 
-                    if(response.status != "success")
-                    {
-                            alert("Server Error");
-                    }
-
-                    var messages = response.data.messages;
-                 
-                   document.getElementById('msgPage').innerText = url_vars["token_name"];
-               
-                    for (index in messages)
-                    {
-                        var names_array = new Array();
-                        var token_id_array = new Array();
-
-                        for(index2 in messages[index]["tokens"])
-                            {
-                                token_id_array.push(messages[index]["tokens"][index2]["id"]);
-                                names_array.push( messages[index]["tokens"][index2]["name"]  );
-                            }
-
-                        addElement("elementList",messages[index]["id"], messages[index]["author_name"], messages[index]["author_id"], messages[index]["text"], token_id_array,names_array, messages[index]["post_time"]);
-                    }
-            });      
-        }
 
 
         /*GET TOKENS FOR AUTOCOMPLETE AJAX REQUEST*/
@@ -127,14 +97,13 @@ require_once (dirname(dirname(__FILE__))."/api/config/ConfigFactory.class.php");
         function submitfunc(url){
           AJAXRequest(url, function (response) {
                   if(response.status == "success"){
-                        window.location = "index.php";
+                        window.location= "geo_messages.php?lat="+lat+"&lon="+lon;
                     }
                     else{
                         //alert("Error connecting to server!");
                     }
             });
         }
-
 
 
 
@@ -195,8 +164,8 @@ require_once (dirname(dirname(__FILE__))."/api/config/ConfigFactory.class.php");
 
         <!-- CONTENT IN THE BODY , MESSAGES, COMMENT BOX-->
         <div id="bodyContent">
-            <img src="img/nearby_messages.png" id ="geo_button" onclick="getLoc();"/>
-            <h1 id ="msgPage"> Messages </h1>
+            
+            <h1 id ="msgPage1"> Messages Nearby </h1>
             
 
             <!--COMMENT BOX IN A TABLE-->
@@ -212,7 +181,7 @@ require_once (dirname(dirname(__FILE__))."/api/config/ConfigFactory.class.php");
                         <td id ="tbl_msg">
                              <img id ="msg_img" alt="" src="img/msg_icon.png" onmouseover="popup('Write the message to the associated groups you want to send to.')"/>
                             <textarea id ="text_area"onfocus="ChangeSize(this);" off></textarea>    
-                            <img src="img/whoop.png" onclick="submitWhoop()" id ="whoop_butn"/>  
+                            <img src="img/new_whoop_button.png" onclick="submitWhoop()" id ="whoop_butn"/>  
                         </td>
                     </tr>
                     <tr>
@@ -225,45 +194,7 @@ require_once (dirname(dirname(__FILE__))."/api/config/ConfigFactory.class.php");
             
             
             <!--SHOW MESSAGE LIST-->
-            <ul id="elementList">
-                
-               <li>
-                    <div id ="groups_assoc">
-                        <ul id="group_list">
-                            <li>
-                                <a href="#" onmouseover="mopen('m1');popup('The groups associated with this message are listed here.')" onmouseout="mclosetime()">
-                                    <img src = "img/group_side.png"/>
-                                </a>
-                                <div id="m1" onmouseover="mcancelclosetime();popup('Clicking on any of the groups here will redirect you to the messages associated with this group.')" onmouseout="mclosetime()">
-                                    <a href="javascript:group_sample()">Group1</a>
-                                    <a href="javascript:group_sample()">Group2</a>
-                                    <a href="javascript:group_sample()">Group3</a>
-                                    
-                                </div>
-                            </li>
-                          
-                        </ul>
-                        <div style="clear:both"></div>    
-                    </div>
-                   
-                        <a href ="#" onmouseover="popup('Clicking on the profile picture of this user will redirect you to their Facebook profile.')"> 
-                            <img id="profile_pic" src="img/avatar.jpg" width="48" height="48" alt="profile_pic" />
-                        </a>
-                       <div id="msg_txt">
-                        <div id="user_name" onmouseover="popup('Clicking on the user name will redirect you to their Facebook profile.')">Whoop-Txt</div>
-                        Welcome to Whoop-Txt. Share your messages and view them here! Highlight over the links for a brief description of how things work!                   
-                        <div id ="rsd" >
-                            <ul>
-                                <li><a onmouseover="popup('Reply will allow you to reply to the group the message originated from.')" href="#">Reply</a></li>
-                                <li><a onmouseover="popup('Share will allow you to re-share this message to other groups.')" href="#">Share</a></li>
-                                <li><a onmouseover="popup('Delete will delete the message from your message stream.')" href="#">Delete</a></li>
-                             </ul>
-                        </div>                                               
-                    </div>
-                    
-                    <div id="clear"></div>                      
-                </li>  
-            </ul>
+            <ul id="elementList"></ul>
 
             <br/>
             <br/>

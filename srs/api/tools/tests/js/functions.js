@@ -1,4 +1,10 @@
 
+var d=new Date();
+var t=d.getDate();
+var y = d.getFullYear();
+var h = d.getHours();
+var m = d.getMinutes();
+var s = d.getSeconds();
 
 
 
@@ -76,7 +82,7 @@ function addElement(listDOMId, msg_id, author_name, author_id, text,token_array_
   
     // image of groups
     var grps_list_pic = document.createElement("img");
-    grps_list_pic.setAttribute("src","img/group_side.png");
+    grps_list_pic.setAttribute("src","img/groups_icon.png");
     
     // div of groups in a box 
     var grps_list_div_m1 = document.createElement("div");
@@ -89,7 +95,7 @@ function addElement(listDOMId, msg_id, author_name, author_id, text,token_array_
     for(var i = 0; i < token_array.length; i++)
     {        
             var grps_list_link = document.createElement("a");
-            grps_list_link.setAttribute("href","javascript:token_msg(\""+token_array_id[i]+"\",\""+token_array[i]+"\")");
+            grps_list_link.setAttribute("href","javascript:token_msg(\""+token_array_id[i]+"\")");
             grps_list_link.innerHTML = token_array[i];      
             grps_list_div_m1.appendChild(grps_list_link);
     }
@@ -98,6 +104,7 @@ function addElement(listDOMId, msg_id, author_name, author_id, text,token_array_
     // clear div
     var div_clear = document.createElement("div");
     div_clear.style.clear = "both";
+    
     
      
     grps_list_a.appendChild(grps_list_pic); 
@@ -134,7 +141,6 @@ function addElement(listDOMId, msg_id, author_name, author_id, text,token_array_
     name_link.innerHTML = author_name;
     
     div2.appendChild(name_link);
-
     div1.appendChild(div2);
     div1.innerHTML += text;
 
@@ -149,13 +155,11 @@ function addElement(listDOMId, msg_id, author_name, author_id, text,token_array_
     var li4 = document.createElement("li");
     
     var link1 = document.createElement("a");
-    link1.setAttribute("href", "javascript:reply_msg(\""+token_array_id[0]+"\",\""+token_array[0]+"\")");
+    link1.setAttribute("href", "javascript:reply_msg()");
     link1.innerHTML = "Reply";
 
     var link2 = document.createElement("a");
-    var msg_txt = text;
-    //author_name
-    link2.setAttribute("href", "javascript:share_msg(\""+text+"\",\""+author_name+"\")");
+    link2.setAttribute("href", "javascript:anchortest()");
     link2.innerHTML = "Share";
     
     var link3 = document.createElement("a");
@@ -180,22 +184,12 @@ function addElement(listDOMId, msg_id, author_name, author_id, text,token_array_
     var ampm = "";
     if(hour>12)
     {
-        if(hour==13){
-            fixed_hour = 12;
-        }
-        else{
-        fixed_hour = (hour-12)-1;
-        }
+        fixed_hour = hour-12;
         ampm = "PM";
     }
     else
     {
-        if(hour==1){
-            fixed_hour =12;
-        }
-        else{
-            fixed_hour = hour-1;
-        }
+        fixed_hour = hour;
         ampm = "AM";
     }
     
@@ -203,7 +197,7 @@ function addElement(listDOMId, msg_id, author_name, author_id, text,token_array_
     var seconds = new_time[2];
     
 
-    link4.innerHTML = month+"/"+day+"/"+year+"  "+fixed_hour+":"+minute+ampm;
+    link4.innerHTML = month+"/"+day+"/"+year+"  "+(fixed_hour-1) +":"+minute+ampm;
     
     li1.appendChild(link1);
     li2.appendChild(link2);
@@ -238,25 +232,24 @@ function showElement(layer)
 {
         var myLayer = document.getElementById(layer);
         if(myLayer.style.display=="none"){
-            myLayer.style.display="block";
-            myLayer.backgroundPosition="top";
+        myLayer.style.display="block";
+        myLayer.backgroundPosition="top";
         } 
         else{ 
-            myLayer.style.display="none";
+        myLayer.style.display="none";
         }
 }
 
- function reply_msg(token_id,token_name)
-{   
-    window.scroll(0,0);    
-    $("#demo-input-facebook-theme").tokenInput("add",{id: token_id, name: token_name});  
-}
- function share_msg(msg,user_name)
+ function reply_msg()
 {
-    var share = document.getElementById("text_area");
-    share.value +=  "Originally shared by " + user_name + ": " + msg;
-    share.style.height = "100px";
-    window.scroll(0,0); 
+
+window.alert("This is an anchor test.");
+
+}
+ function share_msg()
+{
+
+window.alert("This is an anchor test.");
 }
 
  function delete_msg(msg_id)
@@ -278,14 +271,16 @@ function showElement(layer)
 }
 
 
-//https://rocking-apps.com/whooptxt/api/api.php?action=get_geomessages&lat=34.069650&lon=-118.444245
+ function token_msg(token_id)
+{
+    
+    top.location = "view_group_msg.php?id="+token_id;
 
-
-function token_msg(token_id,token_name)
-{   
-     
-      window.location= "index.php?token_id="+token_id+"&token_name="+token_name;           
+        
 }
+
+
+
 
 /************************************************************************
                            SEND MESSAGE FUNCTIONS
@@ -294,7 +289,6 @@ function token_msg(token_id,token_name)
     function ChangeSize (){
         var area_size = document.getElementById ("text_area");
         area_size.style.height = "100px";
-       
 
 }
     function submitWhoop() {
@@ -337,21 +331,5 @@ function token_msg(token_id,token_name)
 }
 
 
-function getLoc(){
-                msglocation.getPosition(
 
-                        function(pos){
-                                var lat = pos['latitude'];
-                                var lon = pos['longitude'];
-                                
-                                 window.location= "geo_messages.php?lat="+lat+"&lon="+lon;
-                                
-                        }, 
-                        function(err)
-                        { 
-                            var lat = 0;
-                            var lon = 0;
-                         window.location= "geo_messages.php?lat="+lat+"&lon="+lon;
-                        }
-                );
-            }
+

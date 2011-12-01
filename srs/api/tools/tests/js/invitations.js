@@ -9,7 +9,7 @@ function acceptInvite(token_id)
         else
         {
             alert("Error connecting to server!");
-        } 
+        }
     });
 }
 
@@ -85,8 +85,8 @@ function inviteMembers(id2) {
 
                 var form = '<form name="inviteForm" > '
                 + '<input type="text" id="demo-input-facebook-theme"/>'
-                + ' <img src="img/invite.png" id = "inviteStyle" onclick="sendInvite('+id2+');">'
-                + ' <img src="img/cancel.png" id = "cancelStyle2" onclick="redirectSelf();">'
+                + ' <input type="button" value="Invite" onclick="sendInvite('+id2+');">'
+                + ' <input type="button" value="Cancel" onclick="redirectSelf();">'
                 + '</form>';
 
                 $('#invite_friends'+id2).html(form);
@@ -151,84 +151,14 @@ function mcancelclosetime()
 	}
 }
 
-function token_msg(token_id,token_name)
-{    
-      window.location= "index.php?token_id="+token_id+"&token_name="+token_name;           
+function loadGroup(id)
+{
+    window.location = "view_group_msg.php";
 }
 
 function addElement(listDOMId, name, id) {
     
     var inv = document.createElement("li");
-    
-    var grps_assc = document.createElement("div");
-    grps_assc.setAttribute("id", "groups_assoc");
-    
-    //ul
-    var grps_list_ul = document.createElement("ul");
-    grps_list_ul.setAttribute("id","group_list");
-    
-    //li
-    var grps_list_li = document.createElement("li");
-    
-    // image of groups link
-    var grps_list_a = document.createElement("a");
-    grps_list_a.setAttribute("href","#");
-    grps_list_a.setAttribute("onmouseover","mopen("+id+")");
-    grps_list_a.setAttribute("onmouseout","mclosetime()");
-  
-    // image of groups
-    var grps_list_pic = document.createElement("img");
-    grps_list_pic.setAttribute("src","img/group_members.png");
-    
-    // div of groups in a box 
-    var grps_list_div_m1 = document.createElement("div");
-    grps_list_div_m1.setAttribute("id",id);
-    grps_list_div_m1.setAttribute("onmouseover","mcancelclosetime()");
-    grps_list_div_m1.setAttribute("onmouseout","mclosetime()");
-
-    var url = "https://rocking-apps.com/whooptxt/api/api.php?action=get_token_users";
-    url += "&token_id=" + id;
-    
-    AJAXRequest(url, function (response) {
-        if(response.status != "success")
-        {
-            alert("Connection to server failed!");
-            return;
-        }
-        
-        var token_users = response.data;
-        var token_users_array = new Array();
-
-        for (index in token_users)
-        {
-            if(token_users[index]["active"] == "1" && token_users[index]["pending"] == "0")
-            {
-                token_users_array.push(token_users[index]["name"]);
-            }
-        }
-        
-         // link of groups and text
-        for(var i = 0; i < token_users_array.length; i++)
-        {
-            var grps_list_link = document.createElement("a");
-            grps_list_link.setAttribute("href","#");
-            grps_list_link.innerHTML = token_users_array[i];
-            grps_list_div_m1.appendChild(grps_list_link);
-        }
-     });
-
-    // clear div
-    var div_clear = document.createElement("div");
-    div_clear.style.clear = "both";
-         
-    grps_list_a.appendChild(grps_list_pic); 
-    grps_list_li.appendChild(grps_list_a);
-    grps_list_li.appendChild(grps_list_div_m1);
-    grps_list_ul.appendChild(grps_list_li);    
-    grps_assc.appendChild(grps_list_ul);
-    grps_assc.appendChild(div_clear);
-    
-    inv.appendChild(grps_assc);
     
     var div1 = document.createElement("div");
     div1.setAttribute("id", "inv_txt");
@@ -243,16 +173,15 @@ function addElement(listDOMId, name, id) {
     var div3 = document.createElement("div");
     div3.setAttribute("id", "edit_menu");
 
-    var accept = document.createElement("img"); 
-    accept.setAttribute("src", "img/accept.png");
-    accept.setAttribute("id","acceptStyle");
+    var accept = document.createElement("input"); 
+    accept.value = 'Accept'; 
+    accept.type  = 'button';
     accept.onclick = new Function("acceptInvite("+id+")");
 
-    var decline = document.createElement("img"); 
-    decline.setAttribute("src", "img/decline.png");
-    decline.setAttribute("id","declineStyle");
+    var decline = document.createElement("input"); 
+    decline.value = 'Decline'; 
+    decline.type  = 'button';
     decline.onclick = new Function("rejectInvite("+id+")");
-    
 
     div3.appendChild(accept);
     div3.appendChild(decline);
@@ -290,7 +219,7 @@ function addElement2(listDOMId, name, id) {
   
     // image of groups
     var grps_list_pic = document.createElement("img");
-    grps_list_pic.setAttribute("src","img/group_members.png");
+    grps_list_pic.setAttribute("src","img/groups_icon.png");
     
     // div of groups in a box 
     var grps_list_div_m1 = document.createElement("div");
@@ -349,8 +278,7 @@ function addElement2(listDOMId, name, id) {
     div2.setAttribute("id", "user_name");
     var group_link = document.createElement("a");
     group_link.innerHTML = name;
-    group_link.setAttribute("href", "javascript:token_msg(\""+id+"\",\""+name+"\")");
-    group_link.setAttribute("id", "group_attr");
+    group_link.onclick = new Function ("loadGroup("+id+")");
     
     div2.appendChild(group_link);
     div1.appendChild(div2);
@@ -359,15 +287,18 @@ function addElement2(listDOMId, name, id) {
     div3.setAttribute("id", "edit_menu");
 
     var link1 = document.createElement("a");
-    link1.style.margin = "6px";
     link1.innerHTML = "Leave Group";
     link1.onclick = new Function("rejectInvite("+id+")");
 
     var link2 = document.createElement("a");
     link2.innerHTML = "Invite More Friends";
     link2.onclick = new Function("inviteMembers("+id+")");
+    
+    var space = document.createElement();
+    space.innerHTML = " ";
 
     div3.appendChild(link2);
+    div3.appendChild(space);
     div3.appendChild(link1);
     
     div1.appendChild(div3);   

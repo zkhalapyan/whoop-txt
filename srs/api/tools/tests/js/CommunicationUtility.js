@@ -1,6 +1,6 @@
 // JavaScript Document
 
-    function getUrlVars()
+function getUrlVars()
 {
     var vars = [], hash;
     var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
@@ -13,6 +13,19 @@
     return vars;
 }
 
+
+function getUrlVars2()
+{
+    var vars = [], hash;
+var hashes = top.location.href.slice(top.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = unescape(hash[1]);
+    }
+    return vars;
+}
 
 function AJAXRequest(url, callbackFunction)
 {
