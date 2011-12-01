@@ -18,19 +18,19 @@ function handleUnauthenticatedUser() {
 };
 
 function handleError(error) {
+	
+	console.log("Error: " + error);
+	
 	if(error == "Unauthenticated user.")
 	{
 		handleUnauthenticatedUser();
 	}
-	else
-	{
-		alert("Error: " + error);
-		return;
-	}
+	
 };
 
 function AJAXRequest(url, callbackFunction)
 {
+	
 	var xmlhttp;
 	if (window.XMLHttpRequest)
 	{// code for IE7+, Firefox, Chrome, Opera, Safari
