@@ -10,18 +10,22 @@ $app_name = "Whoop-Txt";
 
 <head>
 
-<link rel="StyleSheet" href="../css/fb_styles.css" type="text/css" media="screen">
-
+<link rel="StyleSheet" href="css/fb_styles.css" type="text/css" media="screen"/>
+<link rel="StyleSheet" href="css/app_styles.css" type="text/css" media="screen"/>
 <title><?=$app_name?> - Privacy Policy</title>
 
 </head>
 
 
 <body>
-
+    <?PHP  include("app_header.php"); ?>
+    
+    <div id="bodyContent">
+        
+        <h1 class="policy_header"> User Rights and Responsibilities</h1>
+        <br/>
 	
-	
-	<span class="policy_title">Privacy Policy</span>
+	<span class="policy_title">1. Privacy Policy</span>
 	
 	<p class = "policy_text">Your privacy is important to us. We maintain strict policies to ensure the privacy and security of your personal 
 	   information that we may collect through your use of <?=$app_name?>. We do not collect or ask for any data
@@ -31,7 +35,7 @@ $app_name = "Whoop-Txt";
 	   your personal information as outlined in this privacy policy.</p>
 	   
 	
-	<span class="policy_title">Information Collection and Use</span>
+	<span class="policy_title">2. Information Collection and Use</span>
 	
 	<p class = "policy_text">We do not collect or have access to Facebook usernames and passwords. However, we have to store the Facebook user id 
 	   (which is numerical) to associate your Facebook profile with relevant information used to create a photomontage. We 
@@ -56,20 +60,25 @@ $app_name = "Whoop-Txt";
 	   Once you have removed it, all personal information given to us is deleted. However, any content created by you 
 	   (photomontages you saved in your albums or posted on your friends' walls) is not deleted automatically.</p>
 	
-	<span class="policy_title">Use by Children</span>
+	<span class="policy_title">3. Advertisements</span>
+	
+	<p class = "policy_text"><?=$app_name?> seeks to deliver advertisements valuable to the user. A user's personal information will not be shared with advertisers without the user's consent. </p>
+        
+        <span class="policy_title">4. Use by Children</span>
 	
 	<p class = "policy_text">Some templates provided by <?=$app_name?> contain adult content. Although you can leave them out by unchecking this 
 	   type of effects, the application is not recommended for use by children under the age of 13 without parental control.</p>
-	
-	<p class = "policy_text">We reserve the right to change this Privacy Policy and any other application guidelines at any time, so check back this 
+        <br/>
+        <hr/>
+	<p class = "policy_footer">We reserve the right to change this Privacy Policy and any other application guidelines at any time, so check back this 
 	   privacy policy periodically for changes.<p class = "policy_text">
 	
-	<p class = "policy_text">If you have any questions after reading this Privacy Policy, don't hesitate to contact our support group.</p>
+	<p class = "policy_footer">If you have any questions after reading this Privacy Policy, don't hesitate to contact our support group.</p>
 	
 	<hr>
+        <?PHP include("app_footer.php"); ?>
 	
-	<a href="https://apps.facebook.com/whoop_txt">Back to the App</a>
-	
+	</div>
 
 </body>
 
