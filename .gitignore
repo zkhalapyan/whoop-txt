@@ -36,7 +36,7 @@ ehthumbs.db
 Icon?
 Thumbs.db
 *.bak
-_notes
+_notes/*
 
 # NetBeans generated files #
 ############################
