@@ -3,9 +3,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>Whoop Txt | My Whoops</title>
+<title>Whoop Txt | Nearby Whoops</title>
 <link rel="stylesheet" href="https://m.ucla.edu/assets/css.php" type="text/css">
-<script type="text/javascript" src="https://m.ucla.edu/assets/js.php"></script>
+<script type="text/javascript" src="https://m.ucla.edu/assets/js.php?standard_libs=geolocation"></script>
 <script type="text/javascript" src="js/MWFUtility.js"></script>
 <script type="text/javascript" src="js/CommunicationUtility.js"></script>
 <script type="text/javascript" src="js/WhoopTxtUtility.js"></script>
@@ -22,7 +22,7 @@
 </a>
 
 <div class="menu-full menu-detailed menu-padded">
-    <h1 class="light menu-first">My Whoops</h1> 
+    <h1 class="light menu-first">Nearby Whoops</h1> 
     <ol id="elementList">
     
     </ol>
@@ -32,7 +32,7 @@
 
 generateFooterCode();
 	
-getMessages(function (messages) {
+getNearbyMessages(function (messages) {
 
 	for (var index in messages)
 	{

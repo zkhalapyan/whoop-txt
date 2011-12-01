@@ -12,6 +12,14 @@ function getMessages(callback) {
 	});
 };
 
+function getNearbyMessages(callback) {
+	getLocation(function (lat, lon) {
+		AJAXRequest("https://rocking-apps.com/whooptxt/api/api.php?action=get_geomessages&lat="+lat+"&lon="+lon, function (response) {
+			callback(response.data);
+		});
+	});
+};
+
 function getMessageById(id, callback) {
 	getMessages(function (messages) {
 		
