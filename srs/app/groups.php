@@ -17,12 +17,15 @@ require_once (dirname(dirname(__FILE__))."/api/config/ConfigFactory.class.php");
         
         <link rel="stylesheet" href="css/app_styles.css" type="text/css" />   
         <link rel="stylesheet" href="css/fb_styles.css" type="text/css" />    
-        
+        <script type="text/javascript" src="js/jquery.tokeninput.js"></script>
+        <link rel="stylesheet" href="css/token-input-facebook-groups.css" type="text/css" />
         <script type="text/javascript" src="js/CommunicationUtility.js"></script>
         
         <script language="javascript" type="text/javascript" src="js/actb.js"></script>
         <script language="javascript" type="text/javascript" src="js/common.js"></script>
         <script language="javascript" type="text/javascript" src="js/invitations.js"></script>
+        <link rel="stylesheet" href="css/menu_group.css" type="text/css" />
+        <script type="text/javascript" src="js/popup.js"></script>
         
         <script type="text/javascript">
         
@@ -48,6 +51,7 @@ require_once (dirname(dirname(__FILE__))."/api/config/ConfigFactory.class.php");
                 {
                     counter2++;
                     var token_name = stripslashes(token[index]["name"]);
+                    
                     addElement2("elementList2", token_name, token[index]["id"]);    
                 }
             } 
@@ -64,8 +68,10 @@ require_once (dirname(dirname(__FILE__))."/api/config/ConfigFactory.class.php");
                 var form = '<form name="createGroupForm" > '
                 + ' <label for="group">Group Name</label> '
                 + ' <input type="text" name="group" id="group" /> '
-                + ' <input type="button" value="Create" onclick="submitGroup();">'
-                + ' <input type="button" value="Cancel" onclick="redirectSelf();">'
+                + '<div>'
+                + ' <img src="img/create.png" id="createStyle" onclick="submitGroup();">'
+                + ' <img src="img/cancel.png" id ="cancelStyle1" onclick="redirectSelf();">'
+                + '</div>'
                 + '</form>';
                 $('#newgroup').html(form);
             };
@@ -77,12 +83,12 @@ require_once (dirname(dirname(__FILE__))."/api/config/ConfigFactory.class.php");
         <?PHP include("app_header.php"); ?>
         
         <div id="bodyContent">
-       
+
             <h1>Invitations</h1>
             <ul id="elementList"></ul>
                 
             <h1> Groups </h1>
-            <button type="button" onclick="loadGroupForm();">Create New Group</button><br/>
+            <img src="img/create_new_group.png" id ="group_butn" onclick="loadGroupForm();"/><br/>
             <div id="newgroup"></div>
             
             <br><ul id="elementList2"></ul><br/>
