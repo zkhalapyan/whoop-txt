@@ -4,9 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>Whoop Txt | Create Group</title>
-<link rel="stylesheet" href="http://m.ucla.edu/assets/css.php" type="text/css">
-<script type="text/javascript" src="http://m.ucla.edu/assets/js.php"></script>
-<script type="text/javascript" src="javascript/CommunicationUtility.js"></script>
+<link rel="stylesheet" href="https://m.ucla.edu/assets/css.php" type="text/css">
+<script type="text/javascript" src="https://m.ucla.edu/assets/js.php"></script>
+<script type="text/javascript" src="js/CommunicationUtility.js"></script>
+<script type="text/javascript" src="js/MWFUtility.js"></script>
 </head>
 
 <body>
@@ -15,14 +16,14 @@
     <span>Whoop Txt</span> 
 </h1>
 
-<a id="button-top" button-full class="button-full button-padded" href="menu.html">
+<a id="button-top" button-full class="button-full button-padded" href="index.html">
 	Menu
 </a>
 
 <form name="createGroupForm" class="form-full form-padded">
     <h1 class="light form-first">Create New Group</h1>
 	<label for="group">Group Name</label>
-    <input type="text" name="group" id="group" />
+    <input type="text" name="group" id="group" autocomplete="off" />
 </form>
 
 
@@ -30,11 +31,10 @@
     <a href=javascript:void() onclick=submitGroup() class="button-first">Create</a>
 </div>
 
-<div id="footer"> 
-    <p><a href="help.html">Help</a> | <a href="../desktop/menu.html">View Full Site</a></p> 
-</div>
-
 <script type="text/javascript">
+
+generateFooterCode();
+
 function submitGroup() {
 	
 	var groupName = document.forms["createGroupForm"]["group"].value;
@@ -52,6 +52,7 @@ function submitGroup() {
 	});
 
 };
+
 </script>
 
 </body>

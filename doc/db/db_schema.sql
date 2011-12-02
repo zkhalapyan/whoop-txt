@@ -9,7 +9,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 DROP TABLE IF EXISTS `users` ;
 
 CREATE  TABLE IF NOT EXISTS `users` (
-  `id` INT NOT NULL ,
+  `id` BIGINT UNSIGNED NOT NULL ,
   `full_name` VARCHAR(256) NOT NULL ,
   `email` VARCHAR(256) NULL ,
   `access_token` VARCHAR(256) NULL ,
@@ -30,7 +30,7 @@ DROP TABLE IF EXISTS `messages` ;
 
 CREATE  TABLE IF NOT EXISTS `messages` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `author_id` INT NOT NULL ,
+  `author_id` BIGINT UNSIGNED NOT NULL ,
   `text` VARCHAR(256) NOT NULL ,
   `post_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
   PRIMARY KEY (`id`, `author_id`) ,
@@ -82,7 +82,7 @@ DROP TABLE IF EXISTS `tokens_users` ;
 CREATE  TABLE IF NOT EXISTS `tokens_users` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `tokens_id` INT NOT NULL ,
-  `users_id` INT NOT NULL ,
+  `users_id` BIGINT UNSIGNED NOT NULL ,
   `active` TINYINT(1)  NOT NULL ,
   `pending` TINYINT(1)  NOT NULL ,
   PRIMARY KEY (`id`, `tokens_id`, `users_id`) ,
@@ -133,8 +133,8 @@ DROP TABLE IF EXISTS `locations` ;
 
 CREATE  TABLE IF NOT EXISTS `locations` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `longitude` VARCHAR(45) NOT NULL ,
-  `latitude` VARCHAR(45) NOT NULL ,
+  `longitude` DOUBLE NOT NULL ,
+  `latitude` DOUBLE NOT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
@@ -171,9 +171,9 @@ DROP TABLE IF EXISTS `user_messages` ;
 
 CREATE  TABLE IF NOT EXISTS `user_messages` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `users_id` INT NOT NULL ,
+  `users_id` BIGINT UNSIGNED NOT NULL ,
   `messages_id` INT NOT NULL ,
-  `read` TINYINT(1)  NOT NULL DEFAULT false ,
+  `opened` TINYINT(1)  NOT NULL DEFAULT false ,
   `deleted` TINYINT(1)  NOT NULL DEFAULT false ,
   `important` TINYINT(1)  NOT NULL DEFAULT false ,
   PRIMARY KEY (`id`, `users_id`, `messages_id`) ,

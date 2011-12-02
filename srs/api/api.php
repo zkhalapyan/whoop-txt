@@ -1,6 +1,4 @@
 <?PHP
-error_reporting(E_ALL);
-ini_set('display_errors','On');
 
 require_once("./lib/APIException.class.php");
 require_once("./config/ConfigFactory.class.php");
@@ -32,6 +30,7 @@ $facebook = ConfigFactory::get_facebook();
 //the user is unauthenticated and should not return any data.
 //FIXME: Check if the user hasa a valid access token.
 $user_id = $facebook->getUser();
+
 
 
 //Detect unauthenticated users and return a failure response.
@@ -120,6 +119,7 @@ function process_get_api_call($user, $data)
         
         $msg       = $data["message"];
         $token_ids = explode(',', $data["token_ids"]);
+           
         $lon       = $data["lon"];
         $lat       = $data["lat"];
         
@@ -128,33 +128,35 @@ function process_get_api_call($user, $data)
 
     case "get_messages":
         
-        //TODO: Consider adding filter arguments so that a call can download messages that are deleted along with
-        //normal messages, or only get messages within a specified time frame. 
-        sendSuccessResponse(array("messages"=>$user->getMessages()));
+        $token = (isset($data["token_id"]))? new Token($data["token_id"]) : null;
+        
+        sendSuccessResponse(array("messages"=>$user->getMessages($token)));
         break;
 
     case "mark_message":
-        param_check($data, array("message_id", "opened", "delete", "important"));
+        param_check($data, array("message_id", "opened", "deleted", "important"));
         
         $msg_id = $data["message_id"];
+        
+        $message = new Message($data["message_id"]);
+        
+        if(!$message->exists())
+        {
+            throw new APIException("Message [ID: $msg_id] doesn't exist.");
+        }
+        
+        //Get the appropriate flags from the user.
         $opened = $data["opened"];
-        $delete = $data["delete"];
+        $deleted = $data["deleted"];
         $important = $data["important"];
-        sendSuccessResponse(array("mark_succes"=>$user->markMessage($msg_id, $opened, $delete, $important)));
+        
+        //Mark the message.
+        $message->mark($user, $opened, $deleted, $important);
+            
+        sendSuccessResponse();
         
         break;
 
-    case "whoop":
-        param_check($data, array("message", "lon", "lat"));
-        
-        
-        throw new APIException("Action [".$data['action']."] not implemented.");
-        break;
-    
-    case "get_whoops":
-        param_check($data, array("message", "lon", "lat"));
-        throw new APIException("Action [".$data['action']."] not implemented.");
-        break;
     /* * * * * * * * * * * * * * *
      * TOKEN RELATED CASES BELOW *
      * * * * * * * * * * * * * * */
@@ -173,7 +175,7 @@ function process_get_api_call($user, $data)
         //Set the parameter requirements for this API call.
         param_check($data, array("token_id"));
  
-        $user->joinToken($data["token_id"]);
+        $user->joinToken(new Token($data["token_id"]));
         
         sendSuccessResponse();
         
@@ -212,7 +214,7 @@ function process_get_api_call($user, $data)
         //Set the parameter requirements for this API call.
         param_check($data, array("token_id"));
         
-        $user->ignoreToken($data["token_id"]);
+        $user->ignoreToken(new Token($data["token_id"]));
         
         sendSuccessResponse();
 
@@ -234,6 +236,11 @@ function process_get_api_call($user, $data)
         sendSuccessResponse($friends["data"]);
         
         break;
+    
+    case "publish":
+        //Set the parameter requirements for this API call.
+        param_check($data, array("token_id"));
+        
         
     default:
         throw new APIException("Action [".$data['action']."] not supported.");

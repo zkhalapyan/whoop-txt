@@ -12,14 +12,31 @@
 */
 
 #bodyContent{
-    width : 770px ;
+    
+    font-family:Arial, Helvetica, Sans-Serif;
+    font-size: 14px;
+    color:#464646;
+    width : 670px ;
     text-align : left ;
     margin-left : auto ;
     margin-right : auto ;
+    margin-top: 50px;
+    margin-bottom: 40px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
     position : static ;
-    background-color: #f8f8ff;
+    border-width: .2em; 
+    border-style: groove; 
+    border-color: navy-blue; 
+    background-color: white;
+    -moz-border-radius: 15px;
+        border-radius: 15px; 
 }
 
+h1{
+    color:#464646;
+}
 body {
     
     font-family:Arial, Helvetica, Sans-Serif; 
@@ -27,73 +44,50 @@ body {
     margin:0px;
     text-align : center ;
     min-width : 770px ;
+    color:#464646;
+    background-image:url("../img/stripe_bg.gif");
+    background-repeat:repeat;
     
-    
-}
-
-/*
-#menu {
-    background: #333;
-    float:left;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-
 
 }
-#menu li {
-    float: left;
-    font: 80% "Lucida Sans Unicode", "Bitstream Vera Sans", "Trebuchet Unicode MS", "Lucida Grande", Verdana, Helvetica, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-#menu a {
-    background: #333 url("images/seperator.gif") bottom right no-repeat;
-    color: #ccc;
-    display: block;
-    float: left;
-    margin: 0;
-    padding: 10px 14px;
-    text-decoration: none;
-    font-weight:normal;
-}
-#menu a:hover {
-    background: #154f7d url("images/hover.gif") bottom center no-repeat;
-    color: #fff;
-    padding-bottom: 8px;
-}
-*/
 
-
-/* menu */ 
+/*************************************************/
+/****************    menu bar    *****************/
+/*************************************************/
 #menu{ 
 margin:0px; 
 padding:0px; 
 list-style:none; 
-background-color:#172322;
+background-color:#1547a2;
 line-height:45px; 
 display:inline-block; 
 float:left;
-width:560px;
-z-index:1000;  
+width:578px;
+z-index:1000; 
+-moz-border-bottom-right-radius: 15px;
+border-bottom-right-radius: 15px;
 }
 
 #menu a 
 { 
 color:#fff; 
 text-decoration:none; 
+font-size: 14px;
 }
 
 #menu > li 
-{background:#172322 none repeat scroll 0 0; 
-cursor:pointer; float:left; 
+{background:#1547a2 none repeat scroll 0 0; 
+cursor:pointer; 
+float:left; 
 position:relative;
-padding:0px 10px;}
+padding:0px 10px;
+
+}
 
 #menu > li a:hover 
 {
-color:#0075EB;
+color:#a5beec; 
+text-decoration:underline;
 }
 
 /* corners*/
@@ -104,21 +98,401 @@ color:#0075EB;
 #menu .corner_right { position:absolute; left:132px; top:0px;}
 #menu .middle { position:absolute; left:18px; height: 20px; width: 115px; top:0px;}
 
-
-
-textarea{
-
-    font-size: 16px;
-    height: 20px;width: 500px;
-    resize:vertical; max-height:100px; min-height:0px;
-}
-
 #form_div{
     font-family:Arial, Helvetica, Sans-Serif; 
     font-size:18px; 
     }
+/*************************************************/
+  /************** COMMENT BOX ******************/
+/*************************************************/
+
+table
+{
+        
+        -moz-border-radius: 15px;
+        border-radius: 15px;    
+        border-color:#999999;
+        
+}
+
+td{
+  
+}
+
+#tbl_msg{
     
-    #audience, #subject{    
-        font-family:Arial, Helvetica, Sans-Serif; 
-        font-size:16px; 
+    border-bottom-width: 0;
+}
+#tbl_tags{
+    border-right-color: white;
+    border-top-color: white;
+    border-left-color: white;
+}
+
+#tbl_buttons{
+/*    background-color: gainsboro;  */
+}
+
+#text_area{
+
+    font-size: 18px;
+    height: 40px;width: 600px;
+    resize:vertical; max-height:100px; min-height:0px;
+       
+        border-radius: 5px; 
+         -moz-border-radius: 5px;
+        border-color:#999999;
+        margin-top: 10px;
+        padding-top:5 px;
+        padding-left: 5px;
+        padding-right: 5px;
+
+}
+
+#text_area:focus{outline:none;}
+
+#tag_img{
+        float:left;
+        margin-right:5px;
+        padding-right: 5px;
+        padding-left:5px; 
+        padding-bottom:0;
     }
+#msg_img{
+        float:left;
+        margin-right:5px;
+        padding-right: 5px;
+        padding-left:5px; 
+        margin-top:10px;
+        
+        left:0;
+    }
+        
+#audience{    
+        font-size:16px;
+        color: #172322;
+        width: 200px;
+        height: 30px;
+        border-width: 1px;
+        line-height: 30px;
+        color: #122cbb; 
+/*        -moz-border-radius: 15px;
+        border-radius: 15px;*/
+        border-color: #999999;
+    }
+
+#audience:focus{
+    outline:none;
+}
+#audience:hover{
+    cursor:text;
+}
+#whoop_butn{
+/*background-image:url("../img/new_whoop_button.png");
+background-repeat: no-repeat;
+background-color:transparent;*/
+width:115px;
+height:40px;
+padding-left:0;
+padding-right:5px;
+
+float:right;
+margin-top:5px;
+    	-moz-border-radius:18px;
+	-webkit-border-radius:18px;
+
+}
+#whoop_butn:hover{
+    cursor:pointer;
+
+
+}
+
+/*************************************************/
+/***************  list of messages ***************/
+/*************************************************/    
+    
+#elementList{
+
+    margin:0;
+    padding: 0;
+}
+
+#elementList li {
+
+    position:relative;
+    border-bottom:1px solid #D2DADA;
+    padding:15px 15px 15px 10px;
+    list-style:none;    
+}
+
+
+#elementList li:first-child{
+    border-top:1px solid #D2DADA;
+
+}
+
+
+#elementList li:hover {
+    background-color:#F7F7F7;
+}
+
+#msg_txt{
+    float:left;
+    width: 545px;
+    overflow:hidden;
+    display:block;
+    font-size:14px;
+
+}
+
+#user_name{
+    font-size: 18px;
+    font-weight: bold;
+    
+}
+
+#user_name_invitations{
+    font-size: 18px;
+    font-weight: bold;
+    color: #1547a2;
+}
+
+#elementList #profile_pic
+{
+    float:left;
+    margin-right:10px;
+    border: 1px solid #446600;
+}
+
+#name_link{
+    color:#1547a2;
+    text-decoration: none;
+    
+}
+#name_link:hover{
+    text-decoration: underline;
+    cursor:pointer;
+}
+
+
+/*************************************************/
+/***************reply, share, delete ***************/
+/*************************************************/
+
+#rsd
+{
+   clear:both;
+   width: 250px;
+
+}
+#rsd ul
+{  
+    list-style-type: none;
+    margin:0;
+    padding:0;
+}
+
+#rsd li { 
+    display: inline; 
+    position:relative;
+    border-bottom:0;
+    border-top:0;
+    padding:0px 0px 0px 0px;
+    list-style:none;
+    font-size:12px;
+    margin-left: 3px;
+    margin-right: 3px;
+    
+       
+}
+#rsd li:first-child{
+    margin-left: 0px;
+    border-top:0;
+}
+
+#rsd li a
+{
+    
+    font-size:12px;
+    color:#1547a2;
+    text-decoration: none;
+    
+}
+
+#rsd li a:hover
+{
+     
+    text-decoration:underline;
+    cursor: pointer;
+   
+}
+#date{
+    color:#999999;
+}
+/*************************************/
+/*************** groups ***************/
+/*************************************/
+#edit_menu
+{
+   
+}
+#edit_menu a
+{
+    line-height:18px;
+    font-size:12px;
+    color:#999999;     
+}
+
+#edit_menu a:hover
+{
+    color:blue;  
+    text-decoration:underline;
+    cursor: pointer;
+}
+
+
+
+#elementList2{
+
+    margin:0;
+    padding: 0;
+}
+
+#elementList2 li {
+
+    position:relative;
+    border-bottom:1px solid #D2DADA;
+    padding:15px 15px 15px 10px;
+    list-style:none;
+    font-size:16px;
+}
+
+
+#elementList2 li:first-child{
+
+    border-top:1px solid #D2DADA;
+
+}
+
+ 
+
+#elementList2 li:hover {
+
+    background-color:#F7F7F7;
+    
+
+}
+
+#elementList2 #profile_pic
+{
+    float:left;
+    margin-right:10px;
+    border: 1px solid #446600;
+}
+
+#clear{
+    clear:both;  
+}
+
+#user_name{
+    line-height: 18px;
+    font-size: 16px;
+    color: #1547a2;
+    cursor: pointer;
+}
+
+
+#group_attr{
+    text-decoration: none;
+    color: #1547a2;
+}
+
+#group_attr:hover{
+    text-decoration: underline;  
+}
+
+#user_name a:hover{
+    text-decoration:underline;
+}
+
+
+#groups_assoc{
+   font-size:14px;
+   color:#999999;
+   position:absolute;
+   top:5px;
+   right: 0;
+   
+}
+
+#acceptStyle{
+  margin-top:10px;
+  margin-right:10px;
+  cursor:pointer;
+}
+
+#declineStyle{
+    margin-top:10px;
+    cursor:pointer;
+}
+
+#createStyle{
+    margin-left:4px;
+    margin-right:5px;
+    cursor:pointer;
+    margin-top:10px;
+}
+#cancelStyle1{
+    cursor:pointer;
+    margin-top:10px;
+}
+
+#group{
+    font-size:14px;
+    margin-top:5px;
+    margin-bottom:5px;
+    height:20px;
+    width:120px;
+        -moz-border-radius: 5px;
+        border-radius: 5px; 
+        border:1px solid #999999;
+}
+
+#inviteStyle{
+    margin-top:10px;
+    margin-right:5px;
+    cursor:pointer;
+}
+#cancelStyle2{
+    margin-top:10px;
+    cursor:pointer;
+}
+
+#group_butn{
+    cursor:pointer;
+    margin-bottom:10px;
+}
+
+
+
+
+#pup {
+  position:absolute;
+  z-index:200; /* aaaalways on top*/
+  padding: 3px;
+  margin-left: 10px;
+  margin-top: 5px;
+  width: 250px;
+  border: 1px solid black;
+  background-image: url(../img/bg-pup.png);
+  color: white;
+  font-size: 1em;
+}
+
+#geo_button{
+    float:right;
+    cursor: pointer;
+    margin-top:20px;
+    margin-left:30px;
+}

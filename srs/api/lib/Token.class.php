@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors','On');
+
 require_once (dirname(dirname(__FILE__))."/config/ConfigFactory.class.php");
 require_once(dirname(__FILE__).'/db/ActiveRecord.class.php');
 require_once(dirname(__FILE__).'/APIException.class.php');
@@ -16,7 +19,6 @@ class Token extends ActiveRecord
     
     public function inviteUsers($user_ids)
     {
-        
         //If the user is not a valid Facebook user, throw an exception.
         //On the other hand if the user is a valid Facebook user, but doesn't
         //have a record within the whoop-txt API, create a record and use it.
@@ -63,7 +65,7 @@ class Token extends ActiveRecord
                 $tokenUser->users_id = $user_id;
                 $tokenUser->tokens_id = $this->getKey();
                 
-                $tokenUser->active = 0;
+                $tokenUser->active = 1;
                 $tokenUser->pending = 1;
                 
                 $tokenUser->add();
@@ -72,8 +74,55 @@ class Token extends ActiveRecord
         }
       
     }
-  
+    
+    
+    /**
+     * Returns a list of users associated with this token. Information returned
+     * will include user's ID, full name, and flags pending and active.
+     * 
+     * @return array 
+     */
+    public function getUsers()
+    {
+        $query = "SELECT u.id, 
+                         u.full_name, 
+                         t_u.pending,
+                         t_u.active
+                  
+                  FROM tokens_users t_u 
+                  INNER JOIN users u ON u.id = t_u.users_id 
+                  INNER JOIN tokens t ON t.id = t_u.tokens_id
+                  WHERE  t.id = ".$this->getKey();
+        
+        $result = DB::mysqli()->query($query);
 
+        if ($result === false)
+        {
+            throw new ARException('MySQL Error: '.DB::mysqli()->error);
+        }
+                
+        $users = array();
+        
+        //Read the result row by row.
+        while($row = mysqli_fetch_assoc($result))
+    	{
+            $user = array();
+            
+            $user["id"]      = $row["id"];
+            $user["name"]    = $row["full_name"];
+            $user["pending"] = $row["pending"];
+            $user["active"]  = $row["active"];
+            
+            $users[] = $user;
+
+    	}
+        
+        
+        return $users;
+        
+        
+    }
+   
 }
 
 ?>

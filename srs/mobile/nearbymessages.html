@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>Whoop Txt | Nearby Whoops</title>
+<link rel="stylesheet" href="https://m.ucla.edu/assets/css.php" type="text/css">
+<script type="text/javascript" src="https://m.ucla.edu/assets/js.php?standard_libs=geolocation"></script>
+<script type="text/javascript" src="js/MWFUtility.js"></script>
+<script type="text/javascript" src="js/CommunicationUtility.js"></script>
+<script type="text/javascript" src="js/WhoopTxtUtility.js"></script>
+</head>
+
+<body>
+
+<h1 id="header">
+    <span>Whoop Txt</span> 
+</h1>
+
+<a id="button-top" class="button-full button-padded" href="index.html">
+	Menu
+</a>
+
+<div class="menu-full menu-detailed menu-padded">
+    <h1 class="light menu-first">Nearby Whoops</h1> 
+    <ol id="elementList">
+    
+    </ol>
+</div>
+
+<script type="text/javascript">
+
+generateFooterCode();
+	
+getNearbyMessages(function (messages) {
+
+	for (var index in messages)
+	{
+		var tokens = messages[index].tokens;
+		var tokensText = "";
+		
+		for (var ti in tokens)
+		{
+			tokensText += tokens[ti].name + ", ";
+		}
+		
+		if(tokens.length > 0)
+		{
+			tokensText = tokensText.substr(0, tokensText.length-2);
+		}
+		
+		var msgText = "";
+		
+		msgText += messages[index]["author_name"] + ": " + messages[index]["text"];
+		
+		addElementWithPicture("elementList", messages[index]["author_id"], tokensText, msgText, "viewmessage.html?id=" + messages[index].id);
+	}
+
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+ <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-git.css" type="text/css"/>
+ <script src="http://code.jquery.com/jquery-latest.js"> </script>
+ <script type="text/javascript" src="http://code.jquery.com/qunit/qunit-git.js"></script>
+ <script type="text/javascript" src="js/CommunicationUtility.js"></script>
+ <script type="text/javascript">
+     
+  // --- Unittest Code goes here ---
+ 
+module("Happy Path API Scenarios");
+
+var new_message_id;
+var new_token_id;
+
+asyncTest("say_hello", function() {
+    setTimeout(function() {
+        AJAXRequest("https://rocking-apps.com/whooptxt/api/api.php?action=say_hello", function (response)
+        {
+                start();
+                ok(response.status == "success", response.data);
+        });
+    }, 300);
+});
+
+asyncTest("send_message", function() {
+    setTimeout(function() {
+        AJAXRequest("https://rocking-apps.com/whooptxt/api/api.php?action=send_message&message=Unit_Test_Whoop&token_ids=3&lon=-118.4367551&lat=34.0631451", function (response)
+        {
+                new_message_id = response.data.message_id;
+                start();
+                ok(response.status == "success", "Message ID:" + response.data.message_id);
+        });
+    }, 300);
+}); 
+
+asyncTest("get_messages", function() {
+    setTimeout(function() {
+        AJAXRequest("https://rocking-apps.com/whooptxt/api/api.php?action=get_messages", function (response)
+        {   
+                start();
+                ok(response.status == "success", response.status);
+                var responseString = JSON.stringify(response);
+//                ok(responseString.indexOf(new_message_id) != -1, responseString.indexOf(new_message_id));
+        });
+    }, 300);
+});
+
+asyncTest("mark_message", function() {
+    setTimeout(function() {
+        AJAXRequest("https://rocking-apps.com/whooptxt/api/api.php?action=mark_message&message_id=134&opened=1&deleted=1&important=1", function (response)
+        {   
+                start();
+                ok(response.status == "success", response.status);
+        });
+    }, 300); 
+});
+
+asyncTest("create_token", function() {
+    setTimeout(function() {
+        AJAXRequest("https://rocking-apps.com/whooptxt/api/api.php?action=create_token&name=UNIT_TEST_GROUP", function (response)
+        {
+                start();
+                ok(response.status == "success", response.data.token_id);
+        });
+    }, 300);
+});
+
+
+module("Error handling API Scenarios");
+
+asyncTest("join_token", function() {
+    setTimeout(function() {
+        AJAXRequest("https://rocking-apps.com/whooptxt/api/api.php?action=join_tokens&token_id=3", function (response)
+        {
+                start();
+                ok(response.status != "success", "Cannot join token you are already a member of");
+        });
+    }, 300);
+});
+      
+      
+      
+  
+ </script>
+</head>
+<body>
+ <h1 id="qunit-header">Whoop-txt</h1>
+ <h2 id="qunit-banner"></h2>
+ <h2 id="qunit-userAgent"></h2>
+ <ol id="qunit-tests"></ol>
+</body>
+</html>

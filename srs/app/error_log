@@ -1,4 +1,168 @@
-[14-Nov-2011 02:05:56] CSRF state token does not match one provided.
-[14-Nov-2011 03:51:46] CSRF state token does not match one provided.
-[14-Nov-2011 03:51:57] CSRF state token does not match one provided.
-[14-Nov-2011 03:52:05] CSRF state token does not match one provided.
+[16-Nov-2011 02:41:53] CSRF state token does not match one provided.
+[16-Nov-2011 14:09:40] CSRF state token does not match one provided.
+[16-Nov-2011 18:40:16] CSRF state token does not match one provided.
+[16-Nov-2011 18:40:22] CSRF state token does not match one provided.
+[16-Nov-2011 18:40:30] CSRF state token does not match one provided.
+[16-Nov-2011 18:40:32] CSRF state token does not match one provided.
+[16-Nov-2011 18:40:34] CSRF state token does not match one provided.
+[16-Nov-2011 18:40:36] CSRF state token does not match one provided.
+[16-Nov-2011 18:40:47] CSRF state token does not match one provided.
+[16-Nov-2011 18:40:54] CSRF state token does not match one provided.
+[16-Nov-2011 18:41:12] CSRF state token does not match one provided.
+[16-Nov-2011 18:44:08] CSRF state token does not match one provided.
+[16-Nov-2011 18:48:16] CSRF state token does not match one provided.
+[16-Nov-2011 18:48:23] CSRF state token does not match one provided.
+[16-Nov-2011 21:51:10] CSRF state token does not match one provided.
+[17-Nov-2011 12:50:00] CSRF state token does not match one provided.
+[17-Nov-2011 17:07:36] CSRF state token does not match one provided.
+[17-Nov-2011 18:09:15] CSRF state token does not match one provided.
+[17-Nov-2011 18:52:35] CSRF state token does not match one provided.
+[17-Nov-2011 19:11:46] PHP Fatal error:  Uncaught exception 'ARException' with message 'MySQL Error: Duplicate entry '2147483647' for key 'PRIMARY'' in /home8/zorayrkh/public_html/whooptxt/api/lib/db/ActiveRecord.class.php:182
+Stack trace:
+#0 /home8/zorayrkh/public_html/whooptxt/api/auth/auth.php(90): ActiveRecord->create()
+#1 /home8/zorayrkh/public_html/whooptxt/app/index.php(3): require_once('/home8/zorayrkh...')
+#2 {main}
+  thrown in /home8/zorayrkh/public_html/whooptxt/api/lib/db/ActiveRecord.class.php on line 182
+[17-Nov-2011 22:54:47] CSRF state token does not match one provided.
+[18-Nov-2011 01:14:23] CSRF state token does not match one provided.
+[18-Nov-2011 16:06:02] CSRF state token does not match one provided.
+[18-Nov-2011 16:50:40] CSRF state token does not match one provided.
+[18-Nov-2011 16:51:04] CSRF state token does not match one provided.
+[18-Nov-2011 19:49:07] CSRF state token does not match one provided.
+[19-Nov-2011 04:20:56] CSRF state token does not match one provided.
+[19-Nov-2011 14:56:22] CSRF state token does not match one provided.
+[19-Nov-2011 15:19:15] CSRF state token does not match one provided.
+[19-Nov-2011 15:36:37] CSRF state token does not match one provided.
+[19-Nov-2011 15:37:30] CSRF state token does not match one provided.
+[19-Nov-2011 15:55:26] CSRF state token does not match one provided.
+[19-Nov-2011 16:12:23] CSRF state token does not match one provided.
+[19-Nov-2011 16:39:57] CSRF state token does not match one provided.
+[19-Nov-2011 16:40:27] CSRF state token does not match one provided.
+[19-Nov-2011 17:01:24] PHP Fatal error:  Cannot use [] for reading in /home8/zorayrkh/public_html/whooptxt/api/lib/User.class.php on line 390
+[19-Nov-2011 17:01:29] PHP Fatal error:  Cannot use [] for reading in /home8/zorayrkh/public_html/whooptxt/api/lib/User.class.php on line 390
+[19-Nov-2011 17:02:07] PHP Fatal error:  Cannot use [] for reading in /home8/zorayrkh/public_html/whooptxt/api/lib/User.class.php on line 390
+[19-Nov-2011 17:02:11] PHP Fatal error:  Cannot use [] for reading in /home8/zorayrkh/public_html/whooptxt/api/lib/User.class.php on line 390
+[19-Nov-2011 19:29:56] CSRF state token does not match one provided.
+[19-Nov-2011 21:07:08] CSRF state token does not match one provided.
+[20-Nov-2011 01:21:06] CSRF state token does not match one provided.
+[20-Nov-2011 01:28:54] PHP Parse error:  syntax error, unexpected '}' in /home8/zorayrkh/public_html/whooptxt/api/lib/Message.class.php on line 23
+[20-Nov-2011 01:29:14] PHP Parse error:  syntax error, unexpected '}' in /home8/zorayrkh/public_html/whooptxt/api/lib/Message.class.php on line 23
+[20-Nov-2011 01:34:27] PHP Notice:  Undefined index:  gender in /home8/zorayrkh/public_html/whooptxt/api/auth/auth.php on line 58
+[20-Nov-2011 01:34:29] CSRF state token does not match one provided.
+[20-Nov-2011 01:43:56] CSRF state token does not match one provided.
+[20-Nov-2011 01:58:46] CSRF state token does not match one provided.
+[20-Nov-2011 14:52:15] CSRF state token does not match one provided.
+[20-Nov-2011 17:06:36] PHP Warning:  simplexml_load_file(http://rocking-apps.com/whooptxt/api/config/loaders/whoop_txt.xml) [<a href='function.simplexml-load-file'>function.simplexml-load-file</a>]: failed to open stream: Connection timed out in /home8/zorayrkh/public_html/whooptxt/api/config/ConfigFactory.class.php on line 41
+[20-Nov-2011 19:27:43] CSRF state token does not match one provided.
+[20-Nov-2011 19:40:58] CSRF state token does not match one provided.
+[20-Nov-2011 21:09:05] CSRF state token does not match one provided.
+[20-Nov-2011 21:39:50] CSRF state token does not match one provided.
+[20-Nov-2011 23:30:31] CSRF state token does not match one provided.
+[21-Nov-2011 01:45:18] CSRF state token does not match one provided.
+[21-Nov-2011 03:26:02] PHP Fatal error:  Uncaught CurlException: 56: SSL read: error:00000000:lib(0):func(0):reason(0), errno 104
+  thrown in /home8/zorayrkh/public_html/whooptxt/api/lib/fb/base_facebook.php on line 820
+[21-Nov-2011 03:36:32] PHP Fatal error:  Uncaught CurlException: 56: SSL read: error:00000000:lib(0):func(0):reason(0), errno 104
+  thrown in /home8/zorayrkh/public_html/whooptxt/api/lib/fb/base_facebook.php on line 820
+[21-Nov-2011 13:01:09] PHP Fatal error:  Uncaught CurlException: 56: SSL read: error:00000000:lib(0):func(0):reason(0), errno 104
+  thrown in /home8/zorayrkh/public_html/whooptxt/api/lib/fb/base_facebook.php on line 820
+[21-Nov-2011 13:38:48] CSRF state token does not match one provided.
+[21-Nov-2011 16:17:48] PHP Fatal error:  Uncaught CurlException: 28: connect() timed out!
+  thrown in /home8/zorayrkh/public_html/whooptxt/api/lib/fb/base_facebook.php on line 820
+[21-Nov-2011 20:10:35] PHP Warning:  simplexml_load_file(http://rocking-apps.com/whooptxt/api/config/loaders/whoop_txt.xml) [<a href='function.simplexml-load-file'>function.simplexml-load-file</a>]: failed to open stream: Connection timed out in /home8/zorayrkh/public_html/whooptxt/api/config/ConfigFactory.class.php on line 41
+[21-Nov-2011 20:10:35] PHP Warning:  simplexml_load_file() [<a href='function.simplexml-load-file'>function.simplexml-load-file</a>]: I/O warning : failed to load external entity &quot;http://rocking-apps.com/whooptxt/api/config/loaders/whoop_txt.xml&quot; in /home8/zorayrkh/public_html/whooptxt/api/config/ConfigFactory.class.php on line 41
+[21-Nov-2011 20:10:35] PHP Warning:  Invalid argument supplied for foreach() in /home8/zorayrkh/public_html/whooptxt/api/config/ConfigFactory.class.php on line 46
+[21-Nov-2011 20:10:35] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: Cannot send session cache limiter - headers already sent (output started at /home8/zorayrkh/public_html/whooptxt/api/config/ConfigFactory.class.php:41) in /home8/zorayrkh/public_html/whooptxt/api/lib/fb/facebook.php on line 37
+[21-Nov-2011 20:10:35] Bad Signed JSON signature!
+[21-Nov-2011 20:10:35] Bad Signed JSON signature!
+[21-Nov-2011 21:16:30] CSRF state token does not match one provided.
+[21-Nov-2011 21:16:31] PHP Fatal error:  Uncaught exception 'ARException' with message 'MySQL Error: Duplicate entry '2147483647' for key 'PRIMARY'' in /home8/zorayrkh/public_html/whooptxt/api/lib/db/ActiveRecord.class.php:182
+Stack trace:
+#0 /home8/zorayrkh/public_html/whooptxt/api/auth/auth.php(90): ActiveRecord->create()
+#1 /home8/zorayrkh/public_html/whooptxt/app/groups.php(3): require_once('/home8/zorayrkh...')
+#2 {main}
+  thrown in /home8/zorayrkh/public_html/whooptxt/api/lib/db/ActiveRecord.class.php on line 182
+[21-Nov-2011 21:17:20] PHP Fatal error:  Uncaught exception 'ARException' with message 'MySQL Error: Duplicate entry '2147483647' for key 'PRIMARY'' in /home8/zorayrkh/public_html/whooptxt/api/lib/db/ActiveRecord.class.php:182
+Stack trace:
+#0 /home8/zorayrkh/public_html/whooptxt/api/auth/auth.php(90): ActiveRecord->create()
+#1 /home8/zorayrkh/public_html/whooptxt/app/index.php(3): require_once('/home8/zorayrkh...')
+#2 {main}
+  thrown in /home8/zorayrkh/public_html/whooptxt/api/lib/db/ActiveRecord.class.php on line 182
+[21-Nov-2011 21:17:27] PHP Fatal error:  Uncaught exception 'ARException' with message 'MySQL Error: Duplicate entry '2147483647' for key 'PRIMARY'' in /home8/zorayrkh/public_html/whooptxt/api/lib/db/ActiveRecord.class.php:182
+Stack trace:
+#0 /home8/zorayrkh/public_html/whooptxt/api/auth/auth.php(90): ActiveRecord->create()
+#1 /home8/zorayrkh/public_html/whooptxt/app/index.php(3): require_once('/home8/zorayrkh...')
+#2 {main}
+  thrown in /home8/zorayrkh/public_html/whooptxt/api/lib/db/ActiveRecord.class.php on line 182
+[21-Nov-2011 21:19:43] PHP Catchable fatal error:  Object of class User could not be converted to string in /home8/zorayrkh/public_html/whooptxt/api/auth/auth.php on line 45
+[21-Nov-2011 21:19:54] PHP Fatal error:  Uncaught exception 'ARException' with message 'MySQL Error: Duplicate entry '2147483647' for key 'PRIMARY'' in /home8/zorayrkh/public_html/whooptxt/api/lib/db/ActiveRecord.class.php:182
+Stack trace:
+#0 /home8/zorayrkh/public_html/whooptxt/api/auth/auth.php(92): ActiveRecord->create()
+#1 /home8/zorayrkh/public_html/whooptxt/app/index.php(3): require_once('/home8/zorayrkh...')
+#2 {main}
+  thrown in /home8/zorayrkh/public_html/whooptxt/api/lib/db/ActiveRecord.class.php on line 182
+[21-Nov-2011 21:22:45] PHP Fatal error:  Uncaught exception 'ARException' with message 'MySQL Error: Duplicate entry '2147483647' for key 'PRIMARY'' in /home8/zorayrkh/public_html/whooptxt/api/lib/db/ActiveRecord.class.php:182
+Stack trace:
+#0 /home8/zorayrkh/public_html/whooptxt/api/auth/auth.php(90): ActiveRecord->create()
+#1 /home8/zorayrkh/public_html/whooptxt/app/groups.php(3): require_once('/home8/zorayrkh...')
+#2 {main}
+  thrown in /home8/zorayrkh/public_html/whooptxt/api/lib/db/ActiveRecord.class.php on line 182
+[21-Nov-2011 21:38:42] CSRF state token does not match one provided.
+[21-Nov-2011 23:51:21] PHP Warning:  simplexml_load_file(http://rocking-apps.com/whooptxt/api/config/loaders/whoop_txt.xml) [<a href='function.simplexml-load-file'>function.simplexml-load-file</a>]: failed to open stream: Connection timed out in /home8/zorayrkh/public_html/whooptxt/api/config/ConfigFactory.class.php on line 41
+[21-Nov-2011 23:51:21] PHP Warning:  simplexml_load_file() [<a href='function.simplexml-load-file'>function.simplexml-load-file</a>]: I/O warning : failed to load external entity &quot;http://rocking-apps.com/whooptxt/api/config/loaders/whoop_txt.xml&quot; in /home8/zorayrkh/public_html/whooptxt/api/config/ConfigFactory.class.php on line 41
+[21-Nov-2011 23:51:21] PHP Warning:  Invalid argument supplied for foreach() in /home8/zorayrkh/public_html/whooptxt/api/config/ConfigFactory.class.php on line 46
+[21-Nov-2011 23:51:21] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: Cannot send session cache limiter - headers already sent (output started at /home8/zorayrkh/public_html/whooptxt/api/config/ConfigFactory.class.php:41) in /home8/zorayrkh/public_html/whooptxt/api/lib/fb/facebook.php on line 37
+[21-Nov-2011 23:51:21] Bad Signed JSON signature!
+[21-Nov-2011 23:51:21] Bad Signed JSON signature!
+[21-Nov-2011 23:52:28] PHP Warning:  simplexml_load_file(http://rocking-apps.com/whooptxt/api/config/loaders/whoop_txt.xml) [<a href='function.simplexml-load-file'>function.simplexml-load-file</a>]: failed to open stream: Connection timed out in /home8/zorayrkh/public_html/whooptxt/api/config/ConfigFactory.class.php on line 41
+[21-Nov-2011 23:52:28] PHP Warning:  simplexml_load_file() [<a href='function.simplexml-load-file'>function.simplexml-load-file</a>]: I/O warning : failed to load external entity &quot;http://rocking-apps.com/whooptxt/api/config/loaders/whoop_txt.xml&quot; in /home8/zorayrkh/public_html/whooptxt/api/config/ConfigFactory.class.php on line 41
+[21-Nov-2011 23:52:28] PHP Warning:  Invalid argument supplied for foreach() in /home8/zorayrkh/public_html/whooptxt/api/config/ConfigFactory.class.php on line 46
+[21-Nov-2011 23:52:28] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: Cannot send session cache limiter - headers already sent (output started at /home8/zorayrkh/public_html/whooptxt/api/config/ConfigFactory.class.php:41) in /home8/zorayrkh/public_html/whooptxt/api/lib/fb/facebook.php on line 37
+[22-Nov-2011 01:10:03] CSRF state token does not match one provided.
+[22-Nov-2011 01:11:30] CSRF state token does not match one provided.
+[22-Nov-2011 03:00:23] CSRF state token does not match one provided.
+[22-Nov-2011 03:52:15] PHP Fatal error:  Uncaught CurlException: 28: connect() timed out!
+  thrown in /home8/zorayrkh/public_html/whooptxt/api/lib/fb/base_facebook.php on line 820
+[22-Nov-2011 04:13:43] CSRF state token does not match one provided.
+[22-Nov-2011 17:59:57] CSRF state token does not match one provided.
+[22-Nov-2011 20:24:59] CSRF state token does not match one provided.
+[22-Nov-2011 23:51:02] PHP Fatal error:  Uncaught CurlException: 28: connect() timed out!
+  thrown in /home8/zorayrkh/public_html/whooptxt/api/lib/fb/base_facebook.php on line 820
+[23-Nov-2011 12:08:25] CSRF state token does not match one provided.
+[23-Nov-2011 13:01:03] PHP Parse error:  syntax error, unexpected ';' in /home8/zorayrkh/public_html/whooptxt/api/lib/User.class.php on line 77
+[23-Nov-2011 13:06:03] PHP Parse error:  syntax error, unexpected ';' in /home8/zorayrkh/public_html/whooptxt/api/lib/User.class.php on line 77
+[23-Nov-2011 13:06:15] PHP Parse error:  syntax error, unexpected ';' in /home8/zorayrkh/public_html/whooptxt/api/lib/User.class.php on line 77
+[23-Nov-2011 14:05:24] PHP Warning:  require_once(/home8/zorayrkh/public_html/whooptxt/api/lib/GeoException.class.php) [<a href='function.require-once'>function.require-once</a>]: failed to open stream: No such file or directory in /home8/zorayrkh/public_html/whooptxt/api/lib/Message.class.php on line 7
+[23-Nov-2011 14:05:24] PHP Fatal error:  require_once() [<a href='function.require'>function.require</a>]: Failed opening required '/home8/zorayrkh/public_html/whooptxt/api/lib/GeoException.class.php' (include_path='.:/usr/lib64/php:/usr/lib/php:/usr/share/pear') in /home8/zorayrkh/public_html/whooptxt/api/lib/Message.class.php on line 7
+[23-Nov-2011 14:07:25] PHP Warning:  require_once(/home8/zorayrkh/public_html/whooptxt/api/lib/GeoException.class.php) [<a href='function.require-once'>function.require-once</a>]: failed to open stream: No such file or directory in /home8/zorayrkh/public_html/whooptxt/api/lib/Message.class.php on line 7
+[23-Nov-2011 14:07:25] PHP Fatal error:  require_once() [<a href='function.require'>function.require</a>]: Failed opening required '/home8/zorayrkh/public_html/whooptxt/api/lib/GeoException.class.php' (include_path='.:/usr/lib64/php:/usr/lib/php:/usr/share/pear') in /home8/zorayrkh/public_html/whooptxt/api/lib/Message.class.php on line 7
+[23-Nov-2011 14:29:04] CSRF state token does not match one provided.
+[23-Nov-2011 22:54:11] CSRF state token does not match one provided.
+[24-Nov-2011 00:12:04] CSRF state token does not match one provided.
+[24-Nov-2011 00:12:05] CSRF state token does not match one provided.
+[25-Nov-2011 15:05:04] CSRF state token does not match one provided.
+[25-Nov-2011 15:59:19] CSRF state token does not match one provided.
+[25-Nov-2011 17:49:45] CSRF state token does not match one provided.
+[25-Nov-2011 18:04:01] CSRF state token does not match one provided.
+[25-Nov-2011 19:31:41] PHP Fatal error:  Uncaught CurlException: 56: SSL read: error:00000000:lib(0):func(0):reason(0), errno 104
+  thrown in /home8/zorayrkh/public_html/whooptxt/api/lib/fb/base_facebook.php on line 820
+[25-Nov-2011 19:38:59] CSRF state token does not match one provided.
+[25-Nov-2011 21:30:52] CSRF state token does not match one provided.
+[26-Nov-2011 00:55:58] CSRF state token does not match one provided.
+[29-Nov-2011 19:35:36] CSRF state token does not match one provided.
+[29-Nov-2011 19:35:37] CSRF state token does not match one provided.
+[29-Nov-2011 20:20:17] CSRF state token does not match one provided.
+[29-Nov-2011 20:20:18] CSRF state token does not match one provided.
+[29-Nov-2011 21:39:37] CSRF state token does not match one provided.
+[29-Nov-2011 21:49:03] PHP Fatal error:  Uncaught CurlException: 28: connect() timed out!
+  thrown in /home8/zorayrkh/public_html/whooptxt/api/lib/fb/base_facebook.php on line 820
+[29-Nov-2011 22:21:41] PHP Fatal error:  Uncaught CurlException: 28: connect() timed out!
+  thrown in /home8/zorayrkh/public_html/whooptxt/api/lib/fb/base_facebook.php on line 820
+[29-Nov-2011 23:27:10] CSRF state token does not match one provided.
+[29-Nov-2011 23:29:50] PHP Notice:  Undefined index:  id in /home8/zorayrkh/public_html/whooptxt/app/view_group_msg.php on line 36
+[30-Nov-2011 01:05:12] CSRF state token does not match one provided.
+[30-Nov-2011 01:17:32] CSRF state token does not match one provided.
+[30-Nov-2011 01:33:58] PHP Notice:  Undefined index:  id in /home8/zorayrkh/public_html/whooptxt/app/view_group_msg.php on line 36
+[30-Nov-2011 01:35:31] PHP Notice:  Undefined index:  id in /home8/zorayrkh/public_html/whooptxt/app/view_group_msg.php on line 36
+[30-Nov-2011 01:55:03] CSRF state token does not match one provided.
+[30-Nov-2011 01:55:04] CSRF state token does not match one provided.
+[30-Nov-2011 02:30:48] PHP Notice:  Undefined index:  id in /home8/zorayrkh/public_html/whooptxt/app/view_group_msg.php on line 36

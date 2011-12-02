@@ -4,12 +4,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>Whoop Txt | Share New Whoop</title>
-<link rel="stylesheet" href="http://m.ucla.edu/assets/css.php" type="text/css">
-<script type="text/javascript" src="http://m.ucla.edu/assets/js.php"></script>
-<script type="text/javascript" src="http://m.ucla.edu/assets/js.php?standard_libs=geolocation"></script>
-<script type="text/javascript" src="javascript/CommunicationUtility.js"></script>
-<script type="text/javascript" src="javascript/common.js"></script>
-<script type="text/javascript" src="javascript/actb.js"></script>
+<link rel="stylesheet" href="https://m.ucla.edu/assets/css.php" type="text/css">
+<script type="text/javascript" src="https://m.ucla.edu/assets/js.php?standard_libs=geolocation"></script>
+<script type="text/javascript" src="js/CommunicationUtility.js"></script>
+<script type="text/javascript" src="js/WhoopTxtUtility.js"></script>
+<script type="text/javascript" src="js/MWFUtility.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/actb.js"></script>
 </head>
 
 <body>
@@ -18,37 +19,44 @@
     <span>Whoop Txt</span> 
 </h1>
 
-<a id="button-top" class="button-full button-padded" href="menu.html">
+<a id="button-top" class="button-full button-padded" href="index.html">
 	Menu
 </a>
 
 <form class="form-full form-padded">
     <h1 class="light form-first">Share New Whoop</h1>
     <label for="audience">Tags</label>
-    <input type="textbox" name="audience" id="audience" />
+    <input type="textbox" name="audience" id="audience" autocomplete="off" />
     <label for="body">Message</label>
     <textarea id="body"></textarea>
-    <input type="submit" name="submit" value="Whoop It" onclick="submitWhoop()">
 </form>
 
-<div id="footer"> 
-    <p><a href="help.html">Help</a> | <a href="../desktop/menu.html">View Full Site</a></p> 
+<div class="button-full button-padded">
+    <a onclick="submitWhoop()" class="button-first">Whoop It</a>
 </div>
 
 <script type="text/javascript">
 
+generateFooterCode();
+
+var tokenNames = getUrlVars()["tokenNames"];
+if(tokenNames) {
+	document.getElementById("audience").value = tokenNames;
+}
+
+var text = getUrlVars()["text"];
+if(text) {
+	document.getElementById("body").value = text;
+}
+
 autoCompleteArray = new Array();
 autoCompleteIds = new Array();
 
-AJAXRequest("https://rocking-apps.com/whooptxt/api/api.php?action=get_tokens", function (response) {
+autoCompleteArray.push("Nearby");
+autoCompleteIds.push(-1);
+
+getTokens(function (tokens) {
 	
-	if(response.status != "success")
-	{
-		alert("Connection to server failed!");
-		return;
-	}
-	
-	var tokens = response.data.tokens;
 	for (index in tokens)
 	{
 		if(tokens[index].pending === false && tokens[index].active === true)
@@ -65,7 +73,7 @@ AJAXRequest("https://rocking-apps.com/whooptxt/api/api.php?action=get_tokens", f
 function submitWhoop () {
 	
 	var tokenIds = "";
-	var tokenNames = document.getElementById('audience').value.split(', ');
+	var tokenNames = document.getElementById('audience').value.split(',');
 	for (var i=0; i<tokenNames.length; i++)
 	{
 		for (index in autoCompleteArray)
@@ -84,25 +92,18 @@ function submitWhoop () {
 	
 	var messageBody = document.getElementById('body').value;
 	
-	mwf.touch.geolocation.getPosition(
-		function(pos){
-			var lat = pos['latitude'];
-			var lon = pos['longitude'];
-			
-			var url = "https://rocking-apps.com/whooptxt/api/api.php?action=send_message";
-			url += "&message=" + messageBody;
-			url += "&tokenIds=" + tokenIds;
-			url += "&lon=" + lon;
-			url += "&lat=" + lat;
-			
-			AJAXRequest(url, function (response) {
-				alert(JSON.stringify(response));
-			});
-		}, 
-		function(err){ alert("Err:"+err); }
-	);
+	if(tokenIds.indexOf("-1") != -1)
+	{
+		getLocation(function (lat, lon) {
+				shareWhoop(messageBody, tokenIds, lon, lat);
+		});
+	}
+	else
+	{
+		shareWhoop(messageBody, tokenIds, 0, 0);
+	}
 	
-}
+};
 
 </script>
 

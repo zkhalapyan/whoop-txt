@@ -24,8 +24,9 @@ require_once (dirname(dirname(__FILE__))."/api/config/ConfigFactory.class.php");
         
         <div id="bodyContent">
         <h1> Invitations </h1>
-        </div>
         <?PHP include("app_footer.php"); ?>
+        </div>
+        
     </body>
     
 </html>

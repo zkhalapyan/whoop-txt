@@ -1,9 +1,8 @@
 <?php
-
+error_reporting(E_ALL);
+ini_set('display_errors','On');
+require_once('ARException.class.php');
 require_once('DB.class.php');
-
-
-class ARException extends Exception {}
 
 class ActiveRecord
 {
@@ -88,7 +87,7 @@ class ActiveRecord
      *
      * @return t
      */
-    public function get_PK()
+    public function getKey()
     {
         return $this->_key;
     }

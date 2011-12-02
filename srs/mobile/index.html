@@ -1,59 +1,78 @@
 <!DOCTYPE html>
-<html> 
-
+<html>
 <head>
-<title>Whoop-Txt | Home</title>
-<style type="text/css">
-
-img.center { 
-    display: block; 
-    margin-left: auto; 
-    margin-right: auto;
-}
-
-#background {
-    width: 100%; 
-    height: 100%; 
-    position: fixed; 
-    left: 0px; 
-    top: 0px; 
-    z-index: -1;
-}
-
-.stretch {
-    width:100%;
-    height:100%;
-}
-
-	
-</style>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>Whoop Txt | Menu</title>
+<link rel="stylesheet" href="https://m.ucla.edu/assets/css.php" type="text/css">
+<script type="text/javascript" src="https://m.ucla.edu/assets/js.php"></script>
+<script type="text/javascript" src="js/MWFUtility.js"></script>
+<script type="text/javascript" src="js/CommunicationUtility.js"></script>
 </head>
 
-<body>
+<body class="front-page">
 
-<div id="background">
-    <img src="index-background.gif" class="stretch" alt="" />
-</div>
-
-
-<img src="index-whooptxtlogo.png" class="center"/>
 <div id="fb-root"></div>
-<script src="http://connect.facebook.net/en_US/all.js"></script>
 <script>
-         FB.init({ 
-            appId:'188715111203638', cookie:true, 
-            status:true, xfbml:true 
-         });
-         FB.Event.subscribe('auth.login', function () {
-          window.location = "http://whoop-txt.com/messages.html";
-         });
-      </script>
-<div class="fb-login-button" 
-         data-perms="email,user_checkins" align="center"> Login with Facebook </div>
+  (function() {
+    var e = document.createElement('script'); e.async = true;
+        e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+        document.getElementById('fb-root').appendChild(e);
+        }());
+</script>
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({ appId: '188715111203638', 
+      status: true, 
+      cookie: true,
+      xfbml: true,
+      oauth: true});
+
+      FB.Event.subscribe('auth.statusChange', handleStatusChange);  
+    };
+</script>
+
+<h1 id="header">
+    <span>Whoop Txt</span> 
+</h1>
+
+<div class="menu-full menu-padded">
+    <ol>
+        <li id="news">
+            <a href="share.html">
+            Whoop It
+            </a>
+        </li>
+        <li id="social-media">
+            <a href="messages.html">
+            My Whoops
+            </a>
+        </li>
+        <li id="social-media">
+            <a href="nearbymessages.html">
+            Nearby Whoops
+            </a>
+        </li>
+        <li id="campus-life">
+            <a href="groups.html">
+            Groups
+            </a>
+        </li>
+        <li id="library" class="menu-last">
+            <a href="invitations.html">
+            Invitations
+            </a>
+        </li>
+    </ol>
 </div>
 
+<script type="text/javascript">
 
+generateFooterCode();
+//validateAuthentication();
+
+</script>
 
 </body>
-
 </html>

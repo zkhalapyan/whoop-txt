@@ -42,6 +42,8 @@ else
  //Create a new user with the current user's ID.
  $user = new User($user_id);
  
+ $user->read();
+ 
  //Get user's profile information i.e. name, gender. 
  $user_profile = $facebook->api('/me');
 
